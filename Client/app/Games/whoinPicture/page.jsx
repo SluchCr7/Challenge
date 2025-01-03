@@ -37,7 +37,7 @@ const Page = () => {
             <span onClick={()=> selectRandomObject(team , remainingObjects , setLastSelected , setRemainingObjects)}><IoMdRefresh  className='text-2xl text-white cursor-pointer' /></span>
           </div>
           :
-          <GameIntro team={team} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={selectRandomObject}
+          <GameIntro team={team} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={selectRandomObject}
             text={"تظهر صورة لفريق معين وعليك تخمين اللاعبين الموجودين في الصورة"}/>
       }
     </div>
