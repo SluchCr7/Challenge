@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.Result{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.textAra {
+  direction: rtl; 
+}
+
+.paragraph{
+  line-height: 1.5;
+  -webkit-text-stroke: 1px #fff;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Base menu styling */
+.menu {
+  border: 1px solid #ca8a04 ;
+  padding: 1.25rem;
+  width: 60%;
+  border-radius: 10px;
+  transition: opacity 0.3s ease;
+}
+
+/* Show menu (visible state) */
+.menu.visible {
+  display: block;
+  opacity: 1;
+}
+
+/* Hide menu (invisible state) */
+.menu_hidden {
+  display: none;
+  opacity: 0;
+}
+
+
+/* scrollbar  hidden */
+
+::-webkit-scrollbar{
+  display: none;
+}
+
+.linkeffect::after{
+  content: '';
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -5px;
+  left: 0;
+  background-color: #ca8a04;
+  transition: width 0.25s ease-out;
+}
+
+.linkeffect:hover::after{
+  width: 100%;
+}
+
+.textYellow {
+  color: #ca8a04;
+}
+.effect{
+  animation: animatCircle 4s infinite ease;
+  border-right-color: beige;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 10px;
+}
+
+@keyframes animatCircle {
+  100%{
+    transform: rotate(360deg);
+  }
+}
