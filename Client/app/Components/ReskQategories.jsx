@@ -47,7 +47,7 @@ const CategoryCard = ({ category, index, setQategory, values, randomDouble, setV
   );
 };
 
-const CategoriesGrid = ({ randomReskCategories, setQategory, values, randomDouble, setValues }) => {
+export const CategoriesGrid = ({ randomReskCategories, setQategory, values, randomDouble, setValues }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 w-full">
       {randomReskCategories.map((category, index) => (
@@ -65,4 +65,3 @@ const CategoriesGrid = ({ randomReskCategories, setQategory, values, randomDoubl
   );
 };
 
-export default CategoriesGrid;

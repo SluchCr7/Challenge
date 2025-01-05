@@ -4,7 +4,7 @@ import  getRandomObjects  from "@/utils/getRandomObjects"
 import { FaCheck } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { ReskContext } from '@/app/Context/Games/ReskContext'
-import CategoriesGrid from '@/app/Components/reskQategories';
+import { CategoriesGrid } from '@/app/Components/ReskQategories';
 const Resk = () => {
   const [show, setShow] = useState(false)
   const [qategory , setQategory] = useState({question : null , answer : null , value : 0})
