@@ -10,7 +10,7 @@ const DifficultyButton = ({ id, difficulty, questionData, setQategory, values, r
     border-[1px] ${isDisabled ? "pointer-events-none bg-yellow-600 text-black" : "text-yellow-600"}
     hover:bg-yellow-600 hover:text-black transition-all duration-500
     p-3 rounded-md w-[100%] h-[60px] flex items-center justify-center
-    ${randomDouble == id}? "border-green-700" : "border-yellow-700"
+    ${randomDouble == id? "border-green-700" : "border-yellow-700"}
   `;
 
   return (
