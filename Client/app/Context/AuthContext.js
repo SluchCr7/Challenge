@@ -13,7 +13,6 @@ const AuthContextProvider = (props) => {
     const [user, setUser] = useState({})
     const [users, setUsers] = useState([])
     const [isVerify, setIsVerify] = useState(false)
-
     // Login Function
     const Login = (Email, Password, e) => {
         e.preventDefault()
@@ -48,7 +47,7 @@ const AuthContextProvider = (props) => {
                     window.location.href = "/Auth/Login"
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => toast.error("Logout Failed"))
     }
     // Create New User Function
     const registerNewUser = (Name, Email, Password, e) => {
@@ -72,7 +71,8 @@ const AuthContextProvider = (props) => {
             toast.success("Account Verified")
         })
         .catch((err) => {
-            console.log(err)
+            // console.log(err)
+            toast.error("Account Not Verified")
         })
     }
     const UpdatePhoto = async(image, id) => {
@@ -90,7 +90,6 @@ const AuthContextProvider = (props) => {
         })
         .catch((err) => {
             toast.error("Uploading Image Failed")
-            console.log(err)
         })
     }
 

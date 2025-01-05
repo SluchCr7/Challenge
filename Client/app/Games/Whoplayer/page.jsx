@@ -16,15 +16,27 @@ const Game = () => {
     <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
       {
         lastSelected ? 
-          <div className='flex items-center flex-col gap-3'>
+          <div className='flex items-center flex-col gap-5'>
             {
-              lastSelected?.Clos.map((Clo , index) => {
-                return (
-                  <motion.div initial={{ opacity: 0 , y: 50 }} animate={{ opacity: 1 , y: 0 }} transition={{ duration: 2 , delay : index * 2 }}  key={index}  className='w-[90%] text-right bg-white p-5 rounded-lg text-black font-bold'>
+              <motion.div
+                key={lastSelected?._id}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+                className='flex items-center md:items-end flex-col gap-4 w-full'
+              >
+                {lastSelected?.Clos.map((Clo, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: index * 4 }}
+                    className="border-[1px] border-yellow-600 rounded-sm text-yellow-600 w-[85%] md:w-full text-right p-6"
+                  >
                     {Clo}
                   </motion.div>
-                )
-              })
+                ))}
+            </motion.div>
             }
             <button onClick={()=> setShow(true)} className='border-[1px] border-yellow-600 p-3 rounded-md font-bold'>Show Answer</button>
             <div className={`Result ${show ? "flex" : "hidden"}`}>
@@ -33,7 +45,10 @@ const Game = () => {
                 <span className='absolute top-1 right-2 text-2xl' onClick={()=> setShow(false)}><IoIosClose/></span>
               </div>
             </div>
-            <span className='text-lg text-yellow-600 cursor-pointer' onClick={()=> { selectRandomObject(player , remainingObjects , setLastSelected , setRemainingObjects) } }><IoMdRefresh/></span>
+            <span className='text-lg text-yellow-600 cursor-pointer'
+              onClick={() => { selectRandomObject(player, remainingObjects, setLastSelected, setRemainingObjects);}}>
+              <IoMdRefresh />
+            </span>
           </div>
           :
           <>

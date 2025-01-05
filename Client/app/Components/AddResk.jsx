@@ -1,7 +1,6 @@
 'use client'
 import React, { useContext, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
-import { addQuiston } from '@/utils/addQuestion'
 import { ReskContext } from '../Context/Games/ReskContext';
 const AddResk = ({setShow , show}) => {
     const [name, setName] = useState("")    

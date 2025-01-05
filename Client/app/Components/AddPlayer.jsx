@@ -5,7 +5,6 @@ import { IoIosClose } from "react-icons/io";
 import { PassContext } from '../Context/Games/PassContext';
 import { BankContext } from '../Context/Games/BankContext';
 import { usePathname } from 'next/navigation';
-import { addQuiston } from '@/utils/addQuestion';
 import { PlayerContext } from '../Context/Games/PlayersContext';
 import { GussContext } from '../Context/Games/GussContext';
 import { AuctionContext } from '../Context/Games/AuctionContext';
@@ -27,12 +26,10 @@ const AddPlayer = ({setShow , show}) => {
   const [playerClos, setPlayerClos] = useState([])
   const [playerClo , setPlayerClo] = useState("") 
   const [auction, setAuction] = useState("")
-
   const [imageTeam,setImageTeam] = useState("")
   const [TeamName, setTeamName] = useState("")
   const [Team, setTeam] = useState([])
-  const [teamMember, setTeamMember] = useState("")
-  
+  const [teamMember, setTeamMember] = useState("")  
   const { addPlayer } = useContext(PassContext)
   const { addBank } = useContext(BankContext)
   const { addPlayerClos } = useContext(PlayerContext)

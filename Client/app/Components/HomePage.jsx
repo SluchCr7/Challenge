@@ -5,6 +5,7 @@ import { AuthContext } from '../Context/AuthContext'
 import Nav from './Nav'
 import Profile from './Profile'
 import DownlowdData from './DownlowdData'
+import { motion } from 'framer-motion'
 const HomePage = () => {
     const games = [
         {
@@ -74,10 +75,10 @@ return (
                             {
                                 games.map(game => {
                                     return (
-                                        <div key={game.id} className={`flex items-center flex-col gap-3 w-full ${game.state == "متاحة قريبا" ? "pointer-events-none " : ""}`}>
+                                        <motion.div initial={{ opacity: 0 , y: 50 }} animate={{ opacity: 1 , y: 0 }} transition={{ duration: 2 , delay : game.id * .5 }} key={game.id} className={`flex items-center flex-col gap-3 w-full ${game.state == "متاحة قريبا" ? "pointer-events-none " : ""}`}>
                                             <Link key={game.id} href={game.link} className={`md:w-[200px] w-[100%] text-center flex flex-col justify-center items-center ${game.state == "متاحة قريبا" ? "bg-gray-950" : "bg-yellow-700"} p-5 rounded-sm text-white font-bold`}>{game.title}</Link>
                                             <span className='text-yellow-600 text-sm'>{game.state}</span>
-                                        </div>
+                                        </motion.div>
                                     )
                                 })
                             }
