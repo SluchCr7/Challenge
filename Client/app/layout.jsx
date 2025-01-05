@@ -10,7 +10,7 @@ const MadaFont = Mada({
 })
 
 export const metadata = {
-  title: "Saba7o Challenge",
+  title: "Challenge Football",
   description: "عايز تلعب تحديات صباحو كوورة وعمرونصوحي .. هنا هتقدر تلاقي كل العاب صباحو",
 };
 
