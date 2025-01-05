@@ -14,7 +14,7 @@ const cloudUpload = async (fileToUpload) =>{
         });
         return data
     } catch (error) {
-        throw new Error("Something went wrong")
+        throw new Error(error)
     }
 }
 

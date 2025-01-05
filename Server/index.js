@@ -16,7 +16,6 @@ ConnectDb()
 app.use(cors({
     origin: process.env.DOMAIN_NAME,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    // allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json()) 
 

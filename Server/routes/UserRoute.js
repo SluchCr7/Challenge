@@ -21,7 +21,7 @@ route.route("/admin/:id")
 route.route("/:id/verify/:token")
     .get(verifyAccount)
 
-route.route("/photo/:id")
+route.route("/photo")
     .post(photoUpload.single("image"), uploadPhoto)
 
 module.exports = route

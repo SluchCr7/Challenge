@@ -220,7 +220,7 @@ const uploadPhoto = asyncHandler(async (req, res) => {
     // Upload Image
     const result = await cloudUpload(imagePath)
     // Get Player
-    const user = await User.findById(req.params.id)
+    const user = await User.findById(req.user._id)
     if(user.profilePhoto.publicId !== null){
         await cloudRemove(user.profilePhoto.publicId)
     }

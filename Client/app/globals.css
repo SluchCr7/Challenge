@@ -83,3 +83,6 @@
     transform: rotate(360deg);
   }
 }
+.main_heading{
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}

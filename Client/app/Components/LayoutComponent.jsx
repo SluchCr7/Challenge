@@ -28,8 +28,10 @@ const LayoutComponent = ({ children }) => {
                           <div className="flex items-center flex-col gap-2">
                               <Nav setShowProfile={setShowProfile} />
                               {children}
-                              <div className={`${showProfile ? "flex":"hidden"}`}>
-                                  <Profile setShowProfile={setShowProfile} />
+                              <div className={`${showProfile ? "Result" : ""} w-full`}>
+                                  <div className={`${showProfile ? "flex" : "hidden"} absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-[999]`}>
+                                    <Profile setShowProfile={setShowProfile} />
+                                  </div>
                               </div>
                           </div>
                           </AuctionContextProvider>

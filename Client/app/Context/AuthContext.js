@@ -75,23 +75,23 @@ const AuthContextProvider = (props) => {
             console.log(err)
         })
     }
-    // Upload New Photo (Change Profile Photo)
-    const changeProfilePhoto = async(image , id) => {
+    const UpdatePhoto = async(image, id) => {
         const formData = new FormData();
-        formData.append('image', image); 
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/photo/${id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                },
-            })
-                .then(res => {
-                    localStorage.setItem("userData" , JSON.stringify({...user , profilePhoto : res.data}))
-                    toast.success("Uploading Image Successfully")
-            })
-        } catch (error) {
-            console.error('Error uploading the file:', error);
-        }
+        formData.append('image', image)
+        await axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${user.token}`
+            }
+        })
+        .then(() => {
+            localStorage.setItem("userData" , JSON.stringify({...user , profilePhoto : res.data}))
+            toast.success("Uploading Image Successfully")
+        })
+        .catch((err) => {
+            toast.error("Uploading Image Failed")
+            console.log(err)
+        })
     }
 
     useEffect(() => {
@@ -108,7 +108,7 @@ const AuthContextProvider = (props) => {
     <>  
         <ToastContainer/>
         <AuthContext.Provider
-            value={{ loginState, user, Login, Logout, registerNewUser , users ,  verifyAccount , isVerify , changeProfilePhoto}}>
+            value={{ loginState, user, Login, Logout, registerNewUser , users ,  verifyAccount , isVerify , UpdatePhoto}}>
             {props.children}
         </AuthContext.Provider>
     </>
