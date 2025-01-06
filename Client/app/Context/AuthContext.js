@@ -22,13 +22,14 @@ const AuthContextProvider = (props) => {
                 setLoginState(true)
                 localStorage.setItem('userData', JSON.stringify(res.data))
                 swal("Good job!", res.data.message, "success");
+                setTimeout(() => {
+                    window.location.href = "/"
+                },2000)
             })
             .catch((err) => { 
                 swal("Oops!", err.response.data.message, "error");
             })
-            .finally(() => {
-                window.location.href = "/"
-            })
+
     }
     // Logout Function
     const Logout = () => {
