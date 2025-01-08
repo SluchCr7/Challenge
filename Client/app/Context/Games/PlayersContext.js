@@ -11,7 +11,7 @@ const PlayerContextProvider = ({ children }) => {
     useEffect(() => {
         getAllData({ link: "questions", setter: setPlayer })
     }, [])
-    const addPlayerClos = (Name, Clos) => {
+    const addPlayerClos = (e,Name, Clos) => {
         e.preventDefault()
         axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/questions`, { Name, Clos })
             .then(res => {
