@@ -36,7 +36,7 @@ const AuctionPage = () => {
           </div>
 
         </div>
-        <div className="grid grid-cols-2 gap-3 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
           {auction
             .filter((item)=> item.question.toLowerCase().includes(searchTerm.toLowerCase()))
             .map((item, index) => (

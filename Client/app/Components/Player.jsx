@@ -19,7 +19,7 @@ const Player = ({ pla}) => {
         </div>
         <div className='flex items-center flex-col md:flex-row gap-3'>
             <button onClick={() => setViewClow(!viewClow)} className='border-[1px] border-yellow-600 p-2 w-[120px] rounded-sm text-yellow-600'>View Clos</button>
-            <button onClick={()=> deleteItem("player", pla._id)} className='border-[1px] border-yellow-600 p-2 w-[120px] rounded-sm text-yellow-600'>Delete Player</button>
+            <button onClick={()=> deleteItem("questions", pla._id)} className='border-[1px] border-yellow-600 p-2 w-[120px] rounded-sm text-yellow-600'>Delete Player</button>
         </div>
         <div className={`Result ${viewClow ? "block" : "hidden"}`}>
             <div className='absolute flex items-end flex-col gap-3 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]'>

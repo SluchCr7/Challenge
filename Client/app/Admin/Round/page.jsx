@@ -30,7 +30,7 @@ const RoundPage = () => {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3 w-full">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full">
         {rounds
             .filter((item)=> item.question.toLowerCase().includes(searchTerm.toLowerCase()))
             .map((round, index) => (

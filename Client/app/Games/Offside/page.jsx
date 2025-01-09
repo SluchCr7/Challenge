@@ -14,7 +14,7 @@ const Page = () => {
         {
             lastSelected ?
                 <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
-                    <span className='border-[1px] border-yellow-600 text-lg w-[80%] md:w-[100%] p-4 text-center text-yellow-700 font-bold'>{lastSelected?.Clo}</span>
+                    <span className='border-[1px] border-yellow-600 text-lg w-[80%] p-4 text-center text-yellow-700 font-bold'>{lastSelected?.Clo}</span>
                     <span><IoMdRefresh onClick={() => selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects)} className='text-2xl text-white cursor-pointer' /></span>
                 </div>
                 :
