@@ -19,13 +19,13 @@ const Bank = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [Question, setQuestion] = useState(1)
   const intervalRef = useRef(null); // To keep track of the interval ID
-  const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsBank');
-        return stored ? JSON.parse(stored) : [...data];
-      }
-  );
+  const [remainingObjects, setRemainingObjects] = useState([]);
   const [lastSelected, setLastSelected] = useState(null);
-
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsBank') : null;
+    setRemainingObjects(stored ? JSON.parse(stored) : [...data]);
+  }, []);
   const rounds = [
     "1",
     "2",

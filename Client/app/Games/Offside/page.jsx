@@ -7,12 +7,13 @@ import { IoMdRefresh } from "react-icons/io";
 import GameIntro from '@/app/Components/GameIntro';
 const Page = () => {
     const {data} = useContext(OffsideContext)
-    const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsOffside');
-        return stored ? JSON.parse(stored) : [...data];
-      }
-    );
-    const [lastSelected, setLastSelected] = useState(null);
+    const [remainingObjects, setRemainingObjects] = useState([]);
+  const [lastSelected, setLastSelected] = useState(null);
+    useEffect(() => {
+      // Access localStorage only on the client side
+      const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsOffside') : null;
+      setRemainingObjects(stored ? JSON.parse(stored) : [...data]);
+    }, []);
   return (
     <div>
         {

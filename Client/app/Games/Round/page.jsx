@@ -11,15 +11,16 @@ const Round = () => {
   const [circlesUserOne , setCirclesUserOne] = useState([false  , false , false])
   const {data} = useContext(RoundContext)
   const [circlesUserTwo, setCirclesUserTwo] = useState([false, false, false])
-  const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsRound');
-        return stored ? JSON.parse(stored) : [...data];
-      }
-  );
+  const [remainingObjects, setRemainingObjects] = useState([]);
   const [lastSelected, setLastSelected] = useState(null);
   const [showName, setShowName] = useState(false)
   const [passTeamOne, setPassTeamOne] = useState(false)
   const [passTeamTwo, setPassTeamTwo] = useState(false)
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsRound') : null;
+    setRemainingObjects(stored ? JSON.parse(stored) : [...data]);
+  }, []);
   const teams = [
     {
       id:1,

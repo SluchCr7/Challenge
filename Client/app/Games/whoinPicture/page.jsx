@@ -10,11 +10,13 @@ import GameIntro from '@/app/Components/GameIntro';
 const Page = () => {
   const [showPlayers, setShowPlayers] = useState(false)
   const {team} = useContext(PictureContext)
-    const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsPicture');
-        return stored ? JSON.parse(stored) : [...team];
-      }
-    );  const [lastSelected, setLastSelected] = useState(null);
+  const [remainingObjects, setRemainingObjects] = useState([]);
+  const [lastSelected, setLastSelected] = useState(null);
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPicture') : null;
+    setRemainingObjects(stored ? JSON.parse(stored) : [...team]);
+  }, []);
   return (
     <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
       {

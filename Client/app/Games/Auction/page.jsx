@@ -16,11 +16,14 @@ const Auction = () => {
   const [teamTwoScore , setTeamTwoScore] = useState(0)
   const intervalRef = useRef(null); // To keep track of the interval ID
   const {auction} = useContext(AuctionContext)
-    const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsAuction');
-        return stored ? JSON.parse(stored) : [...auction];
-      }
-    );  const [lastSelected, setLastSelected] = useState(null);
+    const [remainingObjects, setRemainingObjects] = useState([]
+  );
+  const [lastSelected, setLastSelected] = useState(null);
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsAuction') : null;
+    setRemainingObjects(stored ? JSON.parse(stored) : [...auction]);
+  }, []);
   const startTimer = () => {
     if (isRunning) return; // Prevent restarting the timer while running
     setIsRunning(true);

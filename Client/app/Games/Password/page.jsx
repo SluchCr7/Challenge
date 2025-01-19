@@ -8,12 +8,13 @@ import { PassContext } from '@/app/Context/Games/PassContext'
 import GameIntro from '@/app/Components/GameIntro';
 const Password = () => {
     const { pass } = useContext(PassContext)
-    const [remainingObjects, setRemainingObjects] = useState(() => {
-        const stored = localStorage.getItem('remainingObjectsPass');
-        return stored ? JSON.parse(stored) : [...pass];
-      }
-  );
+    const [remainingObjects, setRemainingObjects] = useState([]);
   const [lastSelected, setLastSelected] = useState(null);
+  useEffect(() => {
+    // Access localStorage only on the client side
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPass') : null;
+    setRemainingObjects(stored ? JSON.parse(stored) : [...pass]);
+  }, []);
   return (
     <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
         <div className='flex items-center flex-col gap-3'>
