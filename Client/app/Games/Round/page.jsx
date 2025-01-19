@@ -11,7 +11,11 @@ const Round = () => {
   const [circlesUserOne , setCirclesUserOne] = useState([false  , false , false])
   const {data} = useContext(RoundContext)
   const [circlesUserTwo, setCirclesUserTwo] = useState([false, false, false])
-  const [remainingObjects, setRemainingObjects] = useState([...data]);
+  const [remainingObjects, setRemainingObjects] = useState(() => {
+        const stored = localStorage.getItem('remainingObjectsRound');
+        return stored ? JSON.parse(stored) : [...data];
+      }
+  );
   const [lastSelected, setLastSelected] = useState(null);
   const [showName, setShowName] = useState(false)
   const [passTeamOne, setPassTeamOne] = useState(false)
@@ -33,7 +37,6 @@ const Round = () => {
   const handleRefresh = () => {
     setCirclesUserOne([false  , false , false])
     setCirclesUserTwo([false, false, false])
-    selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects)
     setPassTeamOne(false)
     setPassTeamTwo(false)
   }
@@ -69,7 +72,7 @@ const Round = () => {
         lastSelected ?
           <div className='flex items-center flex-col gap-5 w-full'>
             <div className='flex items-center flex-col gap-3 w-full'>
-              <span><IoMdRefresh onClick={()=> {handleRefresh() ; selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects)}} className='text-2xl text-white cursor-pointer' /></span>
+              <span><IoMdRefresh onClick={()=> {handleRefresh() ; selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects , "Round")}} className='text-2xl text-white cursor-pointer' /></span>
               <div className='border-[1px] border-yellow-700 p-6 md:w-[500px] w-[80%] rounded-md font-bold text-xl text-center'>
                 <span>{lastSelected?.question}</span>
               </div>
@@ -95,7 +98,7 @@ const Round = () => {
             </div>
           </div>
           :
-          <button onClick={()=> selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects)} className='border-[1px] border-yellow-600 p-5 rounded-md text-yellow-600 font-bold'>Start New Game</button>
+          <button onClick={()=> selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects , "Round")} className='border-[1px] border-yellow-600 p-5 rounded-md text-yellow-600 font-bold'>Start New Game</button>
       }
 
     </div>

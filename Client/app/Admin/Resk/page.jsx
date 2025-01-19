@@ -43,7 +43,7 @@ const ReskPage = () => {
                 className="flex items-center border-[1px] border-yellow-600 p-5 flex-col gap-5 mx-auto w-[85%]"
               >
                 <span>{index + 1}</span>
-                <span className="text-yellow-600 tracking-[3px] font-bold">{item.name}</span>
+                <span className="text-yellow-600 tracking-[3px] text-center font-bold">{item.name}</span>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 w-full">
                   <div className="flex items-center flex-col gap-1">
                     <span className="text-center text-white text-sm">

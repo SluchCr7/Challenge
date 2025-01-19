@@ -10,8 +10,11 @@ import GameIntro from '@/app/Components/GameIntro';
 const Page = () => {
   const [showPlayers, setShowPlayers] = useState(false)
   const {team} = useContext(PictureContext)
-  const [remainingObjects, setRemainingObjects] = useState([...team]);
-  const [lastSelected, setLastSelected] = useState(null);
+    const [remainingObjects, setRemainingObjects] = useState(() => {
+        const stored = localStorage.getItem('remainingObjectsPicture');
+        return stored ? JSON.parse(stored) : [...team];
+      }
+    );  const [lastSelected, setLastSelected] = useState(null);
   return (
     <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
       {
@@ -34,10 +37,10 @@ const Page = () => {
                 }
               </div>
             </div>
-            <span onClick={()=> selectRandomObject(team , remainingObjects , setLastSelected , setRemainingObjects)}><IoMdRefresh  className='text-2xl text-white cursor-pointer' /></span>
+            <span onClick={()=> selectRandomObject(team , remainingObjects , setLastSelected , setRemainingObjects , "Picture")}><IoMdRefresh  className='text-2xl text-white cursor-pointer' /></span>
           </div>
           :
-          <GameIntro team={team} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects}
+          <GameIntro name="Picture" team={team} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects}
             text={"تظهر صورة لفريق معين وعليك تخمين اللاعبين الموجودين في الصورة"}/>
       }
     </div>

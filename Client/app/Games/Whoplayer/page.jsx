@@ -10,7 +10,11 @@ import GameIntro from '@/app/Components/GameIntro';
 const Game = () => {
   const [show, setShow] = useState(false)
   const { player } = useContext(PlayerContext)
-  const [remainingObjects, setRemainingObjects] = useState([...player]);
+    const [remainingObjects, setRemainingObjects] = useState(() => {
+        const stored = localStorage.getItem('remainingObjectsPlayer');
+        return stored ? JSON.parse(stored) : [...player];
+      }
+  );
   const [lastSelected, setLastSelected] = useState(null);
   return (
     <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
@@ -46,13 +50,13 @@ const Game = () => {
               </div>
             </div>
             <span className='text-lg text-yellow-600 cursor-pointer'
-              onClick={() => { selectRandomObject(player, remainingObjects, setLastSelected, setRemainingObjects);}}>
+              onClick={() => { selectRandomObject(player, remainingObjects, setLastSelected, setRemainingObjects , 'Player');}}>
               <IoMdRefresh />
             </span>
           </div>
           :
           <>
-            <GameIntro team={player} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text='هناك من 5 الي 6 ادلة والمهمة هي ان تخمن اللاعب وفي حالة التخمين الخطا يكون الدليل القادم للفريق الاخر فقط ' />
+            <GameIntro name={"Player"} team={player} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text='هناك من 5 الي 6 ادلة والمهمة هي ان تخمن اللاعب وفي حالة التخمين الخطا يكون الدليل القادم للفريق الاخر فقط ' />
           </>
       }
     </div>

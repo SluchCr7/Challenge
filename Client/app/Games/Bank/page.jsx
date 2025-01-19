@@ -19,7 +19,11 @@ const Bank = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [Question, setQuestion] = useState(1)
   const intervalRef = useRef(null); // To keep track of the interval ID
-  const [remainingObjects, setRemainingObjects] = useState([...data]);
+  const [remainingObjects, setRemainingObjects] = useState(() => {
+        const stored = localStorage.getItem('remainingObjectsBank');
+        return stored ? JSON.parse(stored) : [...data];
+      }
+  );
   const [lastSelected, setLastSelected] = useState(null);
 
   const rounds = [
@@ -136,7 +140,7 @@ const Bank = () => {
               <span><FaCheck className='text-green-600 text-xl'/></span>
               <span>Correct</span>
             </div>
-            <div onClick={() => { handleNext(); selectRandomObject(data , remainingObjects , setLastSelected , setRemainingObjects) }} className='flex items-center gap-3 justify-center w-full border-[1px] border-yellow-600 p-4'>
+            <div onClick={() => { handleNext(); selectRandomObject(data , remainingObjects , setLastSelected , setRemainingObjects , "Bank") }} className='flex items-center gap-3 justify-center w-full border-[1px] border-yellow-600 p-4'>
               <span><FaArrowAltCircleRight className=''/></span>
               <span>Next</span>
             </div>
@@ -157,7 +161,7 @@ const Bank = () => {
           </div>
           </div>
           :
-          <GameIntro team={data} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text={"يتم سؤال الفريق 12 سؤال في 120 ثانية في حالة الاجابة الصحيحة يتضاعف السكور كل مرة وفي حالة الخطاء يصبح النتيجه 0"}/>
+          <GameIntro name={"Bank"} team={data} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text={"يتم سؤال الفريق 12 سؤال في 120 ثانية في حالة الاجابة الصحيحة يتضاعف السكور كل مرة وفي حالة الخطاء يصبح النتيجه 0"}/>
       }
     </div>
   )

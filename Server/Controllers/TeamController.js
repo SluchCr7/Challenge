@@ -20,6 +20,7 @@ const addTeam = async (req, res) => {
         })
         await team.save()
         res.status(201).json(team)
+        fs.unlinkSync(image[0].path)
     } catch (error) {
         res.status(500).json({ message: error.message })
     }

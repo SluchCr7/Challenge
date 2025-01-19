@@ -26,7 +26,7 @@ const AddPlayer = ({setShow , show}) => {
   const [playerClos, setPlayerClos] = useState([])
   const [playerClo , setPlayerClo] = useState("") 
   const [auction, setAuction] = useState("")
-  const [imageTeam,setImageTeam] = useState("")
+  const [imageTeam,setImageTeam] = useState(null)
   const [TeamName, setTeamName] = useState("")
   const [Team, setTeam] = useState([])
   const [teamMember, setTeamMember] = useState("")  
@@ -158,7 +158,7 @@ const AddPlayer = ({setShow , show}) => {
                     <span className='text-sm text-yellow-600 tracking-[3px]'>Members</span>
                     <div className='flex items-center flex-col md:flex-row gap-3 w-full'>
                       <input className='md:w-[80%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" value={teamMember} id="" onChange={(e) => setTeamMember(e.target.value)}  />
-                      <button onClick={(e) => { setTeam([...Team, teamMember]); setTeamMember("") }} className='md:w-[20%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg'>Add</button>
+                      <button onClick={() => { setTeam([...Team, teamMember]); setTeamMember("") }} className='md:w-[20%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg'>Add</button>
                     </div>
                   </div>  
               </div>

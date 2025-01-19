@@ -16,8 +16,11 @@ const Auction = () => {
   const [teamTwoScore , setTeamTwoScore] = useState(0)
   const intervalRef = useRef(null); // To keep track of the interval ID
   const {auction} = useContext(AuctionContext)
-  const [remainingObjects, setRemainingObjects] = useState([...auction]);
-  const [lastSelected, setLastSelected] = useState(null);
+    const [remainingObjects, setRemainingObjects] = useState(() => {
+        const stored = localStorage.getItem('remainingObjectsAuction');
+        return stored ? JSON.parse(stored) : [...auction];
+      }
+    );  const [lastSelected, setLastSelected] = useState(null);
   const startTimer = () => {
     if (isRunning) return; // Prevent restarting the timer while running
     setIsRunning(true);
@@ -103,7 +106,7 @@ const Auction = () => {
                   </div>
                   {
                     time == 0 || numAuction == 0 ?
-                      <span onClick={() => { setQuestionMode(false); stopTimer(); setTime(30);  selectRandomObject(auction , remainingObjects , setLastSelected , setRemainingObjects)}}><IoMdRefresh className='text-2xl text-white cursor-pointer' /></span>
+                      <span onClick={() => { setQuestionMode(false); stopTimer(); setTime(30);  selectRandomObject(auction , remainingObjects , setLastSelected , setRemainingObjects , "Auction")}}><IoMdRefresh className='text-2xl text-white cursor-pointer' /></span>
                       :
                       ""
                   }
@@ -128,7 +131,7 @@ const Auction = () => {
           
           </>
           :
-          <GameIntro team={auction} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text={"يقوم كل فريق بالمزايدة علي الفريق الاخر بعد معرفة السؤال .. واذا اجبت عن العدد المتزايد به في 30 ثانية .. تحصل علي نقطه"}/>
+          <GameIntro name={"Auction"} team={auction} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text={"يقوم كل فريق بالمزايدة علي الفريق الاخر بعد معرفة السؤال .. واذا اجبت عن العدد المتزايد به في 30 ثانية .. تحصل علي نقطه"}/>
       }
     </div>
   )
