@@ -215,9 +215,6 @@ const Bank = () => {
             <button onClick={handleCorrect} className="flex justify-center items-center gap-2 px-4 py-3 border border-green-600 rounded-md text-green-600 hover:bg-green-100">
               <FaCheck /> صحيحة
             </button>
-            <button onClick={handleNext} className="flex justify-center items-center gap-2 px-4 py-3 border border-yellow-600 rounded-md text-yellow-600 hover:bg-yellow-100">
-              <FaArrowAltCircleRight /> التالي
-            </button>
             <button onClick={handleWrong} className="flex justify-center items-center gap-2 px-4 py-3 border border-red-600 rounded-md text-red-600 hover:bg-red-100">
               <AiOutlineClose /> خاطئة
             </button>
