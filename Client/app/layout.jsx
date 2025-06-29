@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`bg-black text-white ${MadaFont.className}`}      >
+        className={`bg-gray-100 dark:bg-gray-900 ${MadaFont.className}`}      >
           <LayoutComponent>
             {children}
           </LayoutComponent>
