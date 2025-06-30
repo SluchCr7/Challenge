@@ -1,194 +1,157 @@
 'use client'
-import React, { useState , useContext, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import Image from 'next/image'
-import { IoIosClose } from "react-icons/io";
-import { PassContext } from '../Context/Games/PassContext';
-import { BankContext } from '../Context/Games/BankContext';
-import { usePathname } from 'next/navigation';
-import { PlayerContext } from '../Context/Games/PlayersContext';
-import { GussContext } from '../Context/Games/GussContext';
-import { AuctionContext } from '../Context/Games/AuctionContext';
-import { RoundContext } from '../Context/Games/RoundContext';
-import { OffsideContext } from '../Context/Games/OffsideContext';
-import { PictureContext } from '../Context/Games/PictureContext';
-const AddPlayer = ({setShow , show}) => {
-  const [image, setImage] = useState(null)
-  const [name, setName] = useState("")
-  const [question, setQuestion] = useState("")
-  const [Answer, setAnswer] = useState("")
-  const [Clo, setClo] = useState("")
-  const [GussQuestion, setGussQuestion] = useState("")
-  const [GussAnswer, setGussAnswer] = useState("")
-  const [roundQuestion, setRoundQuestion] = useState('')
-  const [roundExample, setRoundExample] = useState("")
-  const [example, setExample] = useState('')
-  const [playerName, setPlayerName] = useState("")
-  const [playerClos, setPlayerClos] = useState([])
-  const [playerClo , setPlayerClo] = useState("") 
-  const [auction, setAuction] = useState("")
-  const [imageTeam,setImageTeam] = useState(null)
-  const [TeamName, setTeamName] = useState("")
-  const [Team, setTeam] = useState([])
-  const [teamMember, setTeamMember] = useState("")  
-  const { addPlayer } = useContext(PassContext)
-  const { addBank } = useContext(BankContext)
-  const { addPlayerClos } = useContext(PlayerContext)
-  const { addGuss } = useContext(GussContext)
-  const { addAuction } = useContext(AuctionContext)
-  const {addRound} = useContext(RoundContext)
-  const { addOffside } = useContext(OffsideContext)
-  const {addTeam} = useContext(PictureContext)
-  const pathName = usePathname()
+import { IoIosClose } from 'react-icons/io'
+import { usePathname } from 'next/navigation'
+import { PassContext } from '../Context/Games/PassContext'
+import { BankContext } from '../Context/Games/BankContext'
+import { PlayerContext } from '../Context/Games/PlayersContext'
+import { GussContext } from '../Context/Games/GussContext'
+import { AuctionContext } from '../Context/Games/AuctionContext'
+import { RoundContext } from '../Context/Games/RoundContext'
+import { OffsideContext } from '../Context/Games/OffsideContext'
+import { PictureContext } from '../Context/Games/PictureContext'
+
+const AddPlayer = ({ setShow, show }) => {
+  const [formData, setFormData] = useState({
+    image: null,
+    name: '',
+    question: '',
+    answer: '',
+    clo: '',
+    gussQuestion: '',
+    gussAnswer: '',
+    roundQuestion: '',
+    roundExamples: [],
+    example: '',
+    playerName: '',
+    playerClos: [],
+    playerClo: '',
+    auction: '',
+    imageTeam: null,
+    teamName: '',
+    team: [],
+    teamMember: ''
+  });
+
+  const pathName = usePathname();
+  const { addPlayer } = useContext(PassContext);
+  const { addBank } = useContext(BankContext);
+  const { addPlayerClos } = useContext(PlayerContext);
+  const { addGuss } = useContext(GussContext);
+  const { addAuction } = useContext(AuctionContext);
+  const { addRound } = useContext(RoundContext);
+  const { addOffside } = useContext(OffsideContext);
+  const { addTeam } = useContext(PictureContext);
+
+  const handleChange = (field, value) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleAdd = (e) => {
+    if (pathName === '/Admin/Bank') return addBank(e, formData.question, formData.answer);
+    if (pathName === '/Admin/Password') return addPlayer(formData.image, formData.name, e);
+    if (pathName === '/Admin/Offside') return addOffside(formData.clo);
+    if (pathName === '/Admin/Players') return addPlayerClos(e, formData.playerName, formData.playerClos);
+    if (pathName === '/Admin/Guss') return addGuss(e, formData.gussQuestion, formData.gussAnswer);
+    if (pathName === '/Admin/Auction') return addAuction(e, formData.auction);
+    if (pathName === '/Admin/Round') return addRound(e, formData.roundQuestion, formData.roundExamples);
+    if (pathName === '/Admin/Team') return addTeam(formData.imageTeam, formData.teamName, formData.team);
+  };
+
   return (
-    <div className={`${show ? "Result" : ""}`}>
-      <div className={`${show ? "flex" : "hidden"} items-center flex-col gap-3 p-10 w-[90%] md:w-[600px] fixed top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-sm bg-black border-[1px] border-yellow-700`}>
-          {
-          pathName === "/Admin/Bank" ?
+    <div className={`${show ? 'fixed inset-0 z-50 bg-black bg-opacity-60 overflow-y-auto' : 'hidden'}`}>
+      <div className='flex items-center justify-center min-h-screen p-6'>
+        <div className='relative w-full max-w-2xl bg-gray-100 dark:bg-gray-900 border border-yellow-500 p-6 rounded-xl shadow-lg flex flex-col gap-5'>
+          <span onClick={() => setShow(false)} className='absolute top-3 right-4 text-yellow-600 text-2xl cursor-pointer hover:text-yellow-500 transition'><IoIosClose /></span>
+
+          {pathName === '/Admin/Bank' && (
             <>
-              <div className='flex items-start flex-col gap-2 w-full'>
-                <span className='text-sm text-yellow-600 tracking-[3px]'>question</span>
-                <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={question} onChange={(e)=> setQuestion(e.target.value)} />
-              </div>
-              <div className='flex items-start flex-col gap-2 w-full'>
-                <span className='text-sm text-yellow-600 tracking-[3px]'>Answer</span>
-                <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={Answer} onChange={(e)=> setAnswer(e.target.value)} />
+              <label className='text-yellow-600'>السؤال</label>
+              <input type='text' className='input' value={formData.question} onChange={(e) => handleChange('question', e.target.value)} />
+              <label className='text-yellow-600'>الإجابة</label>
+              <input type='text' className='input' value={formData.answer} onChange={(e) => handleChange('answer', e.target.value)} />
+            </>
+          )}
+
+          {pathName === '/Admin/Password' && (
+            <>
+              <label className='text-yellow-600'>صورة اللاعب</label>
+              <input type='file' onChange={(e) => handleChange('image', e.target.files[0])} className='mb-2' />
+              {formData.image && <Image src={URL.createObjectURL(formData.image)} width={100} height={100} alt='player' className='rounded-md' />}
+              <label className='text-yellow-600'>الاسم</label>
+              <input type='text' className='input' value={formData.name} onChange={(e) => handleChange('name', e.target.value)} />
+            </>
+          )}
+
+          {pathName === '/Admin/Offside' && (
+            <>
+              <label className='text-yellow-600'>الوصف</label>
+              <input type='text' className='input' value={formData.clo} onChange={(e) => handleChange('clo', e.target.value)} />
+            </>
+          )}
+
+          {pathName === '/Admin/Players' && (
+            <>
+              <label className='text-yellow-600'>الاسم</label>
+              <input type='text' className='input' value={formData.playerName} onChange={(e) => handleChange('playerName', e.target.value)} />
+              <label className='text-yellow-600'>الإشارات</label>
+              <div className='flex gap-2'>
+                <input type='text' className='input flex-1' value={formData.playerClo} onChange={(e) => handleChange('playerClo', e.target.value)} />
+                <button
+                  onClick={() => handleChange('playerClos', [...formData.playerClos, formData.playerClo]) || handleChange('playerClo', '')}
+                  className='btn border-yellow-600 text-yellow-600'>
+                  إضافة
+                </button>
               </div>
             </>
-          :
-          pathName === "/Admin/Password"?
+          )}
+
+          {pathName === '/Admin/Guss' && (
             <>
-              <div className='w-[100%] flex justify-center items-center'>
-                <input type="file" id='file' 
-                    className='hidden'
-                    onChange={(e) => setImage(e.target.files[0])}
-                />
-                <label htmlFor="file" className='w-full p-3'>
-                    <Image src={image ? URL.createObjectURL(image) : ""} alt='profile' width={80} height={80} className='w-[60%]' />
-                </label>
-              </div>
-              <div className='flex items-start flex-col gap-2 w-full'>
-                <span className='text-sm text-yellow-600 tracking-[3px]'>Name</span>
-                <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={name} onChange={(e)=> setName(e.target.value)} />
+              <label className='text-yellow-600'>السؤال</label>
+              <input type='text' className='input' value={formData.gussQuestion} onChange={(e) => handleChange('gussQuestion', e.target.value)} />
+              <label className='text-yellow-600'>الإجابة</label>
+              <input type='text' className='input' value={formData.gussAnswer} onChange={(e) => handleChange('gussAnswer', e.target.value)} />
+            </>
+          )}
+
+          {pathName === '/Admin/Auction' && (
+            <>
+              <label className='text-yellow-600'>سؤال المزاد</label>
+              <input type='text' className='input' value={formData.auction} onChange={(e) => handleChange('auction', e.target.value)} />
+            </>
+          )}
+
+          {pathName === '/Admin/Round' && (
+            <>
+              <label className='text-yellow-600'>السؤال</label>
+              <input type='text' className='input' value={formData.roundQuestion} onChange={(e) => handleChange('roundQuestion', e.target.value)} />
+              <label className='text-yellow-600'>مثال</label>
+              <div className='flex gap-2'>
+                <input type='text' className='input flex-1' value={formData.example} onChange={(e) => handleChange('example', e.target.value)} />
+                <button onClick={() => handleChange('roundExamples', [...formData.roundExamples, formData.example]) || handleChange('example', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
               </div>
             </>
-          :
-          pathName === "/Admin/Offside" ?
+          )}
+
+          {pathName === '/Admin/Team' && (
             <>
-              <div className='flex items-start flex-col gap-2 w-full'>
-                  <span className='text-sm text-yellow-600 tracking-[3px]'>Clo</span>
-                  <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={Clo} onChange={(e)=> setClo(e.target.value)} />
+              <label className='text-yellow-600'>صورة الفريق</label>
+              <input type='file' onChange={(e) => handleChange('imageTeam', e.target.files[0])} />
+              {formData.imageTeam && <Image src={URL.createObjectURL(formData.imageTeam)} width={100} height={100} alt='team' className='rounded-md' />}
+              <label className='text-yellow-600'>اسم الفريق</label>
+              <input type='text' className='input' value={formData.teamName} onChange={(e) => handleChange('teamName', e.target.value)} />
+              <label className='text-yellow-600'>أعضاء الفريق</label>
+              <div className='flex gap-2'>
+                <input type='text' className='input flex-1' value={formData.teamMember} onChange={(e) => handleChange('teamMember', e.target.value)} />
+                <button onClick={() => handleChange('team', [...formData.team, formData.teamMember]) || handleChange('teamMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
               </div>
             </>
-            :
-          pathName === "/Admin/Players" ?
-            <>
-              <div className='flex items-start flex-col gap-4 w-full'>
-                <div className='flex items-start flex-col gap-4 w-full'>
-                  <span className='text-sm text-yellow-600 tracking-[3px]'>Answer</span>
-                  <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={playerName} onChange={(e)=> setPlayerName(e.target.value)} />
-                </div>
-                <div className='flex items-start flex-col gap-4 w-full'>
-                  <span className='text-sm text-yellow-600 tracking-[3px]'>Clo</span>
-                  <div className='flex items-center gap-2 flex-col md:flex-row w-full'>
-                    <input className='md:w-[80%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id=""  value={playerClo} onChange={(e)=> setPlayerClo(e.target.value)} />
-                    <button onClick={(e) => {setPlayerClos([...playerClos , playerClo]); setPlayerClo("")}} className='md:w-[20%] w-[100%] p-3 border-[1px] border-yellow-600 rounded-lg'>Add Clo</button>
-                  </div>
-                </div>
-              </div>
-            </>
-            :   
-          pathName === "/Admin/Auction" ?
-            <>
-              <div className='flex items-start flex-col gap-5 w-full'>
-                  <div className='flex items-start flex-col gap-4 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Auction question</span>
-                    <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={auction} onChange={(e)=> setAuction(e.target.value)} />
-                  </div>
-              </div>
-            </>        
-            :
-          pathName === "/Admin/Round" ?
-            <>
-              <div className='flex items-start flex-col gap-5 w-full'>
-                  <div className='flex items-start flex-col gap-4 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Round question</span>
-                    <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={roundQuestion} onChange={(e)=> setRoundQuestion(e.target.value)} />
-                  </div>
-                  <div className='flex items-start flex-col gap-2 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Add Example Name</span>
-                    <div className='flex items-center flex-col md:flex-row gap-3 w-full'>
-                      <input className='md:w-[80%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" value={example} id="" onChange={(e) => setExample(e.target.value)}  />
-                      <button onClick={(e) => { setRoundExample([...roundExample, example]); setExample("") }} className='md:w-[20%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg'>Add</button>
-                    </div>
-                  </div>  
-              </div>
-            </>
-            :
-          pathName === "/Admin/Guss" ?
-            <>
-              <div className='flex items-start flex-col gap-5 w-full'>
-                  <div className='flex items-start flex-col gap-4 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Guss question</span>
-                    <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={GussQuestion} onChange={(e)=> setGussQuestion(e.target.value)} />
-                  </div>
-                  <div className='flex items-start flex-col gap-2 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Answer</span>
-                    <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" value={GussAnswer} id="" onChange={(e) => setGussAnswer(e.target.value)}  />
-                  </div>  
-              </div>
-            </>
-            :
-            pathName === "/Admin/Team" ?
-            <>
-              <div className='flex items-start flex-col gap-5 w-full'>
-                  <div className='w-[80%] flex justify-center items-center'>
-                    <input type="file" id='file' 
-                        className='hidden'
-                        onChange={(e) => setImageTeam(e.target.files[0])}
-                    />
-                    <label htmlFor="file" className='w-full p-3'>
-                        <Image src={imageTeam ? URL.createObjectURL(imageTeam) : ""} alt='profile' width={80} height={80} className='w-[60%]' />
-                    </label>
-                  </div>
-                  <div className='flex items-start flex-col gap-4 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Team Name</span>
-                    <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={TeamName} onChange={(e)=> setTeamName(e.target.value)} />
-                  </div>
-                  <div className='flex items-start flex-col gap-2 w-full'>
-                    <span className='text-sm text-yellow-600 tracking-[3px]'>Members</span>
-                    <div className='flex items-center flex-col md:flex-row gap-3 w-full'>
-                      <input className='md:w-[80%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" value={teamMember} id="" onChange={(e) => setTeamMember(e.target.value)}  />
-                      <button onClick={() => { setTeam([...Team, teamMember]); setTeamMember("") }} className='md:w-[20%] w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg'>Add</button>
-                    </div>
-                  </div>  
-              </div>
-            </>
-            :              
-            <>
-            </>
-          }
-        <button
-          onClick={(e) =>
-            pathName === "/Admin/Bank" ?
-              addBank(e, question, Answer) :
-            pathName === "/Admin/Password" ?
-              addPlayer(image, name, e) :
-            pathName === "/Admin/Offside" ?
-              addOffside(Clo) :
-            pathName === "/Admin/Players" ?
-              addPlayerClos(e, playerName, playerClos) :
-            pathName === "/Admin/Guss" ?
-              addGuss(e, GussQuestion, GussAnswer) :
-            pathName === "/Admin/Auction" ?
-              addAuction(e, auction) :
-            pathName === "/Admin/Round" ?
-              addRound(e, roundQuestion, roundExample) :
-            pathName === "/Admin/Team" ?
-              addTeam(imageTeam , TeamName , Team)
-              :""}
-          className='w-[100%] p-3 bg-white text-black font-bold'>Add
-        </button>
-        <span onClick={() => setShow(false)} className='absolute top-1 right-2 text-lg'><IoIosClose/></span>
+          )}
+
+          <button onClick={handleAdd} className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition'>حفظ</button>
+        </div>
       </div>
     </div>
   )

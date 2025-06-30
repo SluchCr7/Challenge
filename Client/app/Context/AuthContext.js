@@ -21,13 +21,13 @@ const AuthContextProvider = (props) => {
                 setUser(res.data)
                 setLoginState(true)
                 localStorage.setItem('userData', JSON.stringify(res.data))
-                swal("Good job!", res.data.message, "success");
+                toast.success("Login Successfully")
                 setTimeout(() => {
                     window.location.href = "/"
                 },2000)
             })
             .catch((err) => { 
-                swal("Oops!", err.response.data.message, "error");
+                toast.error("Login Failed")
             })
 
     }
@@ -106,7 +106,17 @@ const AuthContextProvider = (props) => {
     }, [])
   return (
     <>  
-        <ToastContainer/>
+        <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+        />
         <AuthContext.Provider
             value={{ loginState, user, Login, Logout, registerNewUser , users ,  verifyAccount , isVerify , UpdatePhoto}}>
             {props.children}

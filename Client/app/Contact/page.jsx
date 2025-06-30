@@ -1,71 +1,67 @@
 import React from 'react'
-import { FaWhatsapp } from "react-icons/fa";
-import { FaPhoneAlt } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
-import { FaFacebook } from "react-icons/fa";
-import { FaInstagramSquare } from "react-icons/fa";
-import { FaTwitter } from "react-icons/fa";
+import { FaWhatsapp, FaPhoneAlt, FaFacebook, FaInstagramSquare, FaTwitter } from 'react-icons/fa';
+import { MdEmail } from 'react-icons/md';
 
 const Contact = () => {
-    const ways = [
-        {
-            id:1,
-            icon: <FaPhoneAlt className='text-3xl text-yellow-600' />,
-            title : "+201550662103"
-        },
-        {
-            id: 2,
-            icon : <MdEmail className='text-3xl text-yellow-600' />,
-            title : "ahmedking10710@gmail.com"
-        },
-    ]
-    const social = [
-        {
-            icon: <FaFacebook />,
-            color : "bg-blue-500"
-        },
-        {
-            icon: <FaInstagramSquare />,
-            color : "bg-red-700"
-        },
-        {
-            icon: <FaTwitter />,
-            color : "bg-blue-700"
-        },
-        {
-            icon: <FaWhatsapp />,
-            color : "bg-green-500"
-        },
-    ]
-  return (
-    <div className='w-full flex items-center flex-col justify-center py-20'>
-        <span className='text-lg  font-bold tracking-[5px] paragraph uppercase'>Contact Us</span>
-        <p className='text-yellow-600 text-sm mt-5 tracking-[3px]'>You can contact with Us by send Message or Email by any next ways</p>
-        <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
-            {
-                ways.map((way , index) => {
-                    return (
-                        <div key={index} className='flex items-center flex-col gap-3 mt-10 border-[1px] border-yellow-600 p-5'>
-                            {way.icon}
-                            <span className='text-white text-sm tracking-[3px]'>{way.title}</span>
-                        </div>
-                    )
-                })
-            }
-        </div>
-        <div className='flex items-center my-5 gap-5 flex-col md:flex-row'>
-            {
-                social.map((icon , index) => {
-                    return (
-                        <div key={index} className={`outline-none bg-${icon.color} p-3 rounded-full w-[50px] text-xl h-[50px] flex items-center justify-center ${icon.color}`}>
-                            {icon.icon}
-                        </div>
-                    )
-                })
-            }
-        </div>
-    </div>
-  )
-}
+  const ways = [
+    {
+      id: 1,
+      icon: <FaPhoneAlt className="text-3xl text-green-600" />,
+      title: '+20 155 066 2103'
+    },
+    {
+      id: 2,
+      icon: <MdEmail className="text-3xl text-green-600" />,
+      title: 'ahmedking10710@gmail.com'
+    },
+  ];
 
-export default Contact
+  const social = [
+    {
+      icon: <FaFacebook className="text-white text-2xl" />,
+      bg: 'bg-blue-600'
+    },
+    {
+      icon: <FaInstagramSquare className="text-white text-2xl" />,
+      bg: 'bg-pink-600'
+    },
+    {
+      icon: <FaTwitter className="text-white text-2xl" />,
+      bg: 'bg-blue-400'
+    },
+    {
+      icon: <FaWhatsapp className="text-white text-2xl" />,
+      bg: 'bg-green-500'
+    },
+  ];
+
+  return (
+    <div className="w-full py-20 px-4 bg-gray-100 dark:bg-gray-900 text-center">
+      <h2 className="text-3xl md:text-4xl font-bold text-yellow-600 tracking-wider uppercase">Contact Us</h2>
+      <p className="text-gray-600 dark:text-gray-300 text-sm mt-3 max-w-xl mx-auto">Feel free to reach out to us through any of the following channels. We’d love to hear from you!</p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-8 max-w-4xl mx-auto">
+        {ways.map((way) => (
+          <div key={way.id} className="flex flex-col items-center bg-white dark:bg-gray-800 shadow rounded-lg p-6 transition hover:shadow-xl">
+            <div className="mb-4">{way.icon}</div>
+            <span className="text-sm text-gray-800 dark:text-white tracking-wide">{way.title}</span>
+          </div>
+        ))}
+      </div>
+
+      <h3 className="text-xl font-semibold text-yellow-600 mt-16 mb-4 tracking-widest">Follow Us</h3>
+      <div className="flex justify-center gap-5 flex-wrap">
+        {social.map((item, index) => (
+          <div
+            key={index}
+            className={`w-12 h-12 flex items-center justify-center rounded-full shadow-md hover:scale-110 transform transition ${item.bg}`}
+          >
+            {item.icon}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default Contact;

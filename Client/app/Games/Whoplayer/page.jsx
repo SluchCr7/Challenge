@@ -1,67 +1,98 @@
 'use client'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 import { IoMdRefresh } from "react-icons/io";
-import { useState } from 'react';
 import { PlayerContext } from '@/app/Context/Games/PlayersContext';
 import selectRandomObject from '@/utils/getUniqueObject';
 import { motion } from 'framer-motion';
 import GameIntro from '@/app/Components/GameIntro';
+
 const Game = () => {
-  const [show, setShow] = useState(false)
-  const { player } = useContext(PlayerContext)
-    const [remainingObjects, setRemainingObjects] = useState([]);
+  const [show, setShow] = useState(false);
+  const { player } = useContext(PlayerContext);
+  const [remainingObjects, setRemainingObjects] = useState([]);
   const [lastSelected, setLastSelected] = useState(null);
+
   useEffect(() => {
-    // Access localStorage only on the client side
     const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPlayer') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...player]);
-  }, []);
+  }, [player]);
+
   return (
-    <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
-      {
-        lastSelected ? 
-          <div className='flex items-center flex-col gap-5'>
-            {
+    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-4 flex flex-col items-center justify-center w-full">
+      {lastSelected ? (
+        <div className="flex flex-col items-center gap-6 w-full max-w-3xl">
+          <motion.div
+            key={lastSelected?._id}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="w-full space-y-4"
+          >
+            {lastSelected?.Clos.map((Clo, index) => (
               <motion.div
-                key={lastSelected?._id}
+                key={index}
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                className='flex items-center md:items-end flex-col gap-4 w-full'
+                transition={{ duration: 1, delay: index * 0.4 }}
+                className="border border-yellow-500 rounded-lg bg-white dark:bg-gray-800 text-yellow-600 p-6 shadow-md"
               >
-                {lastSelected?.Clos.map((Clo, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1, delay: index * 4 }}
-                    className="border-[1px] border-yellow-600 rounded-sm text-yellow-600 w-[85%] md:w-full text-right p-6"
-                  >
-                    {Clo}
-                  </motion.div>
-                ))}
-            </motion.div>
-            }
-            <button onClick={()=> setShow(true)} className='border-[1px] border-yellow-600 p-3 rounded-md font-bold'>Show Answer</button>
-            <div className={`Result ${show ? "flex" : "hidden"}`}>
-              <div className={`flex text-center items-center bg-white text-black md:w-[500px] w-[80%] p-9 rounded-md absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]`}>
-                <span className='text-2xl tracking-[3px] flex items-center justify-center w-full'>{lastSelected?.Answer}</span>
-                <span className='absolute top-1 right-2 text-2xl' onClick={()=> setShow(false)}><IoIosClose/></span>
-              </div>
-            </div>
-            <span className='text-lg text-yellow-600 cursor-pointer'
-              onClick={() => { selectRandomObject(player, remainingObjects, setLastSelected, setRemainingObjects , 'Player');}}>
-              <IoMdRefresh />
-            </span>
-          </div>
-          :
-          <>
-            <GameIntro name={"Player"} team={player} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text='هناك من 5 الي 6 ادلة والمهمة هي ان تخمن اللاعب وفي حالة التخمين الخطا يكون الدليل القادم للفريق الاخر فقط ' />
-          </>
-      }
-    </div>
-  )
-}
+                {Clo}
+              </motion.div>
+            ))}
+          </motion.div>
 
-export default Game
+          <button
+            onClick={() => setShow(true)}
+            className="px-6 py-3 bg-yellow-500 text-white font-bold rounded-xl hover:bg-yellow-600 transition"
+          >
+            عرض الإجابة
+          </button>
+
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={() => {
+              selectRandomObject(player, remainingObjects, setLastSelected, setRemainingObjects, 'Player');
+              setShow(false);
+            }}
+            className="text-yellow-600 text-3xl hover:text-yellow-700 transition"
+          >
+            <IoMdRefresh />
+          </motion.button>
+        </div>
+      ) : (
+        <GameIntro
+          name="Player"
+          team={player}
+          selectRandomObject={selectRandomObject}
+          remainingObjects={remainingObjects}
+          setLastSelected={setLastSelected}
+          setRemainingObjects={setRemainingObjects}
+          text="هناك من 5 إلى 6 أدلة، والمهمة هي أن تخمن اللاعب. في حالة التخمين الخطأ، يكون الدليل القادم للفريق الآخر فقط."
+        />
+      )}
+
+      {show && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div className="relative bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-2xl w-[85%] max-w-xl text-center">
+            <button
+              onClick={() => setShow(false)}
+              className="absolute top-3 right-3 text-2xl text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            >
+              <IoIosClose />
+            </button>
+            <h2 className="text-3xl font-bold text-green-700 dark:text-yellow-400 tracking-wide">
+              {lastSelected?.Answer}
+            </h2>
+          </div>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+export default Game;

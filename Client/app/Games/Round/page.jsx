@@ -5,6 +5,7 @@ import React, { useContext, useState , useEffect} from 'react'
 import { IoMdRefresh } from "react-icons/io";
 import selectRandomObject from '@/utils/getUniqueObject';
 import { FaArrowAltCircleDown } from "react-icons/fa";
+
 const Round = () => {
   const [scoreTeamOne , setScoreTeamOne] = useState(0)
   const [scoreTeamTwo, setScoreTeamTwo] = useState(0)
@@ -16,31 +17,34 @@ const Round = () => {
   const [showName, setShowName] = useState(false)
   const [passTeamOne, setPassTeamOne] = useState(false)
   const [passTeamTwo, setPassTeamTwo] = useState(false)
+
   useEffect(() => {
-    // Access localStorage only on the client side
     const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsRound') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...data]);
   }, []);
+
   const teams = [
     {
       id:1,
-      name: "First Team",
+      name: "الفريق الأول",
       score: scoreTeamOne,
       setter : setScoreTeamOne
     },
     {
       id:2,
-      name: "Second Team",
+      name: "الفريق الثاني",
       score: scoreTeamTwo,
       setter: setScoreTeamTwo
     },
   ]
+
   const handleRefresh = () => {
     setCirclesUserOne([false  , false , false])
     setCirclesUserTwo([false, false, false])
     setPassTeamOne(false)
     setPassTeamTwo(false)
   }
+
   useEffect(() => {
     if (circlesUserOne.every((state) => state === true)){
       setScoreTeamTwo(scoreTeamTwo + 1)
@@ -53,57 +57,63 @@ const Round = () => {
       selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects)
     }
   }, [circlesUserOne , circlesUserTwo])
+
   return (
-    <div className='flex items-center justify-center w-full min-h-[50vh] py-8 flex-col gap-5'>
-      <div className='flex items-center justify-between md:w-[40%] w-[80%]'>
-        {
-          teams.map((team) => {
-            return (
-              <div key={team.id} className='flex items-center flex-col gap-3'>
-                <span className='text-yellow-600 text-lg tracking-[5px] text-center'>{team.name}</span>
-                <div className='flex items-center flex-col gap-2'>
-                  <span>{team.score}</span>
-                </div>
+    <div className='flex items-center justify-center w-full min-h-screen py-10 px-4 bg-gray-100 dark:bg-gray-900'>
+      <div className='w-full max-w-5xl'>
+        <h1 className='text-center text-3xl md:text-4xl font-bold text-yellow-600 tracking-wider mb-8'>تحدي الدور</h1>
+
+        {lastSelected ? (
+          <div className='space-y-10 w-full'>
+            <div className='flex items-center w-full justify-between text-center text-lg font-semibold text-white mb-4'>
+              <div className='flex flex-col gap-2'>
+                <span className='text-yellow-500'>{teams[0].name}</span>
+                <span>{teams[0].score}</span>
               </div>
-            )
-          })
-        }
-      </div>
-      {
-        lastSelected ?
-          <div className='flex items-center flex-col gap-5 w-full'>
-            <div className='flex items-center flex-col gap-3 w-full'>
-              <span><IoMdRefresh onClick={()=> {handleRefresh() ; selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects , "Round")}} className='text-2xl text-white cursor-pointer' /></span>
-              <div className='border-[1px] border-yellow-700 p-6 md:w-[500px] w-[80%] rounded-md font-bold text-xl text-center'>
-                <span>{lastSelected?.question}</span>
-              </div>
-              <div onClick={()=> setShowName(!showName)} className='flex items-center gap-2'>
-                <span><FaArrowAltCircleDown className='text-xl text-white cursor-pointer' /></span>
-                <span className='text-yellow-600 text-lg tracking-[3px]'>اسماء مقترحة</span>
-              </div>
-              <div className={showName ? 'menu menu_show' : 'menu menu_hidden'}>
-                <div className='grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 textAra'>
-                  {
-                    lastSelected?.examples.map((answer , index) => {
-                      return (
-                        <span key={index} className='text-white text-sm md:text-base text-center'>{answer}</span>
-                      )
-                    })
-                  }
-                </div>
+              <div className='flex flex-col gap-2'>
+                <span className='text-yellow-500'>{teams[1].name}</span>
+                <span>{teams[1].score}</span>
               </div>
             </div>
-            <div className='flex items-center flex-col md:flex-row mt-5 gap-5 justify-between md:w-[40%] w-[80%]'>
+
+            <div className='text-center'>
+              <button onClick={() => { handleRefresh(); selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Round") }} className='text-3xl text-yellow-500 hover:text-yellow-400 transition'>
+                <IoMdRefresh />
+              </button>
+            </div>
+
+            <div className='bg-white dark:bg-gray-800 border border-yellow-500 p-6 rounded-lg text-center shadow text-xl font-semibold text-gray-800 dark:text-white'>
+              {lastSelected?.question}
+            </div>
+
+            <div onClick={() => setShowName(!showName)} className='flex items-center justify-center gap-2 cursor-pointer'>
+              <FaArrowAltCircleDown className='text-yellow-500 text-xl' />
+              <span className='text-yellow-500 font-medium tracking-wide'>أسماء مقترحة</span>
+            </div>
+
+            {showName && (
+              <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center'>
+                {lastSelected?.examples.map((answer, index) => (
+                  <span key={index} className='bg-gray-800 text-white py-2 px-3 rounded-lg text-sm'>{answer}</span>
+                ))}
+              </div>
+            )}
+
+            <div className='flex flex-col md:flex-row justify-evenly items-center w-full gap-6'>
               <TeamPoints team={teams[0]} pass={passTeamOne} setPass={setPassTeamOne} circles={circlesUserOne} setCircles={setCirclesUserOne} />
               <TeamPoints team={teams[1]} pass={passTeamTwo} setPass={setPassTeamTwo} circles={circlesUserTwo} setCircles={setCirclesUserTwo} />
             </div>
           </div>
-          :
-          <button onClick={()=> selectRandomObject(data, remainingObjects , setLastSelected , setRemainingObjects , "Round")} className='border-[1px] border-yellow-600 p-5 rounded-md text-yellow-600 font-bold'>Start New Game</button>
-      }
-
+        ) : (
+          <div className='flex justify-center'>
+            <button onClick={() => selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Round")} className='bg-yellow-500 hover:bg-yellow-600 text-white py-3 px-6 rounded-xl font-bold text-lg transition'>
+              بدء اللعبة
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
 
-export default Round
+export default Round;

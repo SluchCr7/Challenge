@@ -2,47 +2,63 @@
 import React, { useContext, useState } from 'react'
 import { IoIosClose } from "react-icons/io";
 import { ReskContext } from '../Context/Games/ReskContext';
-const AddResk = ({setShow , show}) => {
-    const [name, setName] = useState("")    
-    const {addResk } = useContext(ReskContext)
-    const [easy, setEasy] = useState({ question : "", answer : ""})
-    const [medium, setMedium] = useState({ question : "", answer : ""})
-    const [hard, setHard] = useState({ question : "", answer : ""}) 
-    const [expert, setExpert] = useState({ question : "", answer : ""})
-return (
-    <div className={`${show ? "Result" : ""}`}>            
-        <div className={`${show ? "flex" : "hidden"} items-center flex-col gap-3 p-10 w-[90%] md:w-[70%] fixed top-1/2 left-1/2 translate-y-[-50%] translate-x-[-50%] rounded-sm bg-black border-[1px] border-yellow-700`}>
-            <div className='flex items-start flex-col gap-2 w-full'>
-                <span className='text-sm text-yellow-600 tracking-[3px]'>name</span>
-                <input className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={name} onChange={(e)=> setName(e.target.value)} />
-            </div>
-            <div className='grid grid-cols-1 md:grid-cols-2 gap-6 w-full'>
-                <div className='flex items-start flex-col gap-2'>
-                    <label className="text-sm text-yellow-600 tracking-[3px]">Easy</label>
-                    <input placeholder='Easy Question' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={easy.question} onChange={(e)=> setEasy({question : e.target.value , answer : easy.answer})} />
-                    <input placeholder='Easy Answer' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={easy.answer} onChange={(e)=> setEasy({question : easy.question , answer : e.target.value})} />
-                </div>
-                <div className='flex items-start flex-col gap-2'>
-                    <label className="text-sm text-yellow-600 tracking-[3px]">Medium</label>
-                    <input placeholder='Medium Question' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={medium.question} onChange={(e)=> setMedium({question : e.target.value , answer : medium.answer})} />
-                    <input placeholder='Medium Answer' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={medium.answer} onChange={(e)=> setMedium({question : medium.question , answer : e.target.value})} />
-                </div>
-                <div className='flex items-start flex-col gap-2'>
-                    <label className="text-sm text-yellow-600 tracking-[3px]">Hard</label>
-                    <input placeholder='Hard Question' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={hard.question} onChange={(e)=> setHard({question : e.target.value , answer : hard.answer})} />
-                    <input placeholder='Hard Answer' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={hard.answer} onChange={(e)=> setHard({question : hard.question , answer : e.target.value})} />
-                </div>
-                <div className='flex items-start flex-col gap-2'>
-                    <label className="text-sm text-yellow-600 tracking-[3px]">Expert</label>
-                    <input placeholder='Expert Question' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={expert.question} onChange={(e)=> setExpert({question : e.target.value , answer : expert.answer})} />
-                    <input placeholder='Expert Answer' className='w-[100%] p-3 border-[1px] border-yellow-600 bg-transparent text-yellow-600 rounded-lg' type="text" name="" id="" value={expert.answer} onChange={(e)=> setExpert({question : expert.question , answer : e.target.value})} />
-                </div>
-            </div>
-            <button onClick={(e) => addResk(e , name , easy , medium , hard , expert)} className='w-[100%] p-3 bg-white text-black font-bold'>Add Guss quistion</button>
-            <span onClick={() => setShow(false)} className='absolute top-1 right-2 text-lg'><IoIosClose/></span>
-        </div>
-    </div>
-  )
-}
 
-export default AddResk
+const AddResk = ({ setShow, show }) => {
+  const [name, setName] = useState("");
+  const { addResk } = useContext(ReskContext);
+  const [easy, setEasy] = useState({ question: "", answer: "" });
+  const [medium, setMedium] = useState({ question: "", answer: "" });
+  const [hard, setHard] = useState({ question: "", answer: "" });
+  const [expert, setExpert] = useState({ question: "", answer: "" });
+
+  return (
+    <div className={`${show ? "fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto" : "hidden"}`}>
+      <div className="flex items-center justify-center min-h-screen py-10 px-4">
+        <div className="flex flex-col gap-6 p-8 w-[90%] md:w-[60%] bg-gray-100 dark:bg-gray-900 border-2 border-yellow-500 rounded-2xl shadow-xl relative">
+          <div className='flex flex-col gap-2 w-full'>
+            <label className='text-sm text-green-700 dark:text-yellow-400 tracking-widest'>اسم التحدي</label>
+            <input
+              className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+
+          {[{ label: 'Easy', state: easy, setState: setEasy }, { label: 'Medium', state: medium, setState: setMedium }, { label: 'Hard', state: hard, setState: setHard }, { label: 'Expert', state: expert, setState: setExpert }].map(({ label, state, setState }) => (
+            <div key={label} className='flex flex-col gap-4 w-full'>
+              <label className='text-sm text-green-700 dark:text-yellow-400 tracking-widest'>{label}</label>
+              <input
+                placeholder={`${label} Question`}
+                className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
+                type="text"
+                value={state.question}
+                onChange={(e) => setState({ ...state, question: e.target.value })}
+              />
+              <input
+                placeholder={`${label} Answer`}
+                className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
+                type="text"
+                value={state.answer}
+                onChange={(e) => setState({ ...state, answer: e.target.value })}
+              />
+            </div>
+          ))}
+
+          <button
+            onClick={(e) => addResk(e, name, easy, medium, hard, expert)}
+            className='w-full p-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-lg transition duration-300'
+          >
+            إضافة السؤال
+          </button>
+
+          <span onClick={() => setShow(false)} className='absolute top-3 right-4 text-2xl text-yellow-500 cursor-pointer hover:text-yellow-600 transition'>
+            <IoIosClose />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AddResk;

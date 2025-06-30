@@ -211,7 +211,7 @@ const Bank = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
             <button onClick={handleCorrect} className="flex justify-center items-center gap-2 px-4 py-3 border border-green-600 rounded-md text-green-600 hover:bg-green-100">
               <FaCheck /> صحيحة
             </button>

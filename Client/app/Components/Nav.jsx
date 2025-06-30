@@ -16,9 +16,9 @@ const Nav = ({ setShowProfile }) => {
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link
           href="/"
-          className="text-2xl font-bold tracking-wide text-green-700 hover:text-yellow-500 transition"
+          className="text-2xl uppercase font-bold tracking-wide text-green-700 hover:text-yellow-500 transition"
         >
-          Challenge
+          PlayTactic
         </Link>
 
         <div className="relative">
