@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { ReskContext } from "@/app/Context/Games/ReskContext";
@@ -50,6 +50,8 @@ const Resk = () => {
     setValueTeamOne(0);
     setValueTeamTwo(0);
     setTurn("First");
+    setTime(0);        // إعادة الوقت
+    setIsRunning(true); // تشغيل التايمر تلقائيًا
   };
 
   return (
