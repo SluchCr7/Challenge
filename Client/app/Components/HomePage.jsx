@@ -18,6 +18,7 @@ const HomePage = () => {
     { id: 8, title: 'الدور', link: '/Games/Round', state: 'متاحة قريبا', description: 'قريباً: جولات متتابعة في تحدٍ سريع' },
     { id: 9, title: 'المزايدة', link: '/Games/Auction', state: 'متاحة قريبا', description: 'قريباً: راوغ وراهن في لعبة المزايدة الذكية' },
     { id: 10, title: 'توب 10', link: '/Games/Top10', state: 'متاحة قريبا', description: 'قريباً: يكون عليك تخمين من هم اكثر 10 لاعبين قاموا شئ معين مثل مشاركه او اهداف' },
+    { id: 11, title: 'اسكور شيت', link: '/Games/Squad', state: 'متاحة قريبا', description: 'يتم عرض فريقين وكل فريق ياخ فريق من الاثنين ويكون مطالبا بتخميين اللاعبين في تشكيلة ذلك الفريق' },
   ]
 
   const { loginState } = useContext(AuthContext)
