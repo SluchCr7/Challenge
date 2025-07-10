@@ -25,7 +25,7 @@ const SignUp = () => {
         </div>
 
         <form
-          onSubmit={(e) => registerNewUser(name, email, password, e)}
+          
           className='w-full flex flex-col gap-4'
         >
           <input
@@ -56,8 +56,8 @@ const SignUp = () => {
           />
 
           <button
-            type='submit'
             className='bg-yellow-500 hover:bg-yellow-600 transition text-white font-bold py-3 rounded-lg w-full'
+            onClick={() => registerNewUser(name, email, password)}
           >
             تسجيل
           </button>

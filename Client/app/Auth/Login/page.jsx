@@ -24,7 +24,7 @@ const Login = () => {
         </div>
 
         <form
-          onSubmit={(e) => Login(email, password, e)}
+          
           className='w-full flex flex-col gap-4'
         >
           <input
@@ -46,7 +46,7 @@ const Login = () => {
           />
 
           <button
-            type='submit'
+            onClick={() => Login(email, password)}
             className='bg-yellow-500 hover:bg-yellow-600 transition text-white font-bold py-3 rounded-lg w-full'
           >
             تسجيل الدخول

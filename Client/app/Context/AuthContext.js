@@ -14,8 +14,8 @@ const AuthContextProvider = (props) => {
     const [users, setUsers] = useState([])
     const [isVerify, setIsVerify] = useState(false)
     // Login Function
-    const Login = (Email, Password, e) => {
-        e.preventDefault()
+    const Login = (Email, Password) => {
+        // e.preventDefault()
         axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/login` , {Email  , Password})
             .then(res => {
                 setUser(res.data)
@@ -51,8 +51,8 @@ const AuthContextProvider = (props) => {
             .catch(err => toast.error("Logout Failed"))
     }
     // Create New User Function
-    const registerNewUser = (Name, Email, Password, e) => {
-        e.preventDefault()
+    const registerNewUser = (Name, Email, Password) => {
+        // e.preventDefault()
         axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/register` , {Name , Email , Password})
             .then(res => {
                 swal("Good job!", res.data.message, "success");
