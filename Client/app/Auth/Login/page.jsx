@@ -23,7 +23,7 @@ const Login = () => {
           <h1 className='text-2xl font-bold text-green-700 tracking-wider'>تسجيل الدخول</h1>
         </div>
 
-        <form
+        <div
           
           className='w-full flex flex-col gap-4'
         >
@@ -51,7 +51,7 @@ const Login = () => {
           >
             تسجيل الدخول
           </button>
-        </form>
+        </div>
 
         <p className='text-sm text-gray-600 dark:text-gray-300'>
           ليس لديك حساب؟{' '}

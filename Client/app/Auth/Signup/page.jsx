@@ -24,8 +24,7 @@ const SignUp = () => {
           <h1 className='text-2xl font-bold text-green-700 tracking-wider'>إنشاء حساب جديد</h1>
         </div>
 
-        <form
-          
+        <div
           className='w-full flex flex-col gap-4'
         >
           <input
@@ -61,7 +60,7 @@ const SignUp = () => {
           >
             تسجيل
           </button>
-        </form>
+        </div>
 
         <p className='text-sm text-gray-600 dark:text-gray-300'>
           لديك حساب بالفعل؟{' '}
