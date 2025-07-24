@@ -14,7 +14,7 @@ ConnectDb()
 // middleware
 
 app.use(cors({
-    origin: process.env.DOMAIN_NAME,
+    origin: "https://playtactic.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 app.use(express.json()) 
