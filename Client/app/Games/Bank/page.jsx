@@ -78,7 +78,7 @@ const Bank = () => {
 
   const handleCorrect = () => {
     setScore((prev) => prev + increment);
-    setIncrement((prev) => prev * 2);
+    setIncrement((prev) => prev + prev);
     handleNext();
   };
 
