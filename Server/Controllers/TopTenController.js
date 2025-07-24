@@ -2,11 +2,13 @@ const asyncHandler = require('express-async-handler');
 const { TopTen, validateTopTen } = require('../Modules/TopTen');
 
 // @desc    إنشاء أسئلة جديدة كاملة (13 سؤال مرة واحدة)
+
 const createQuestion = asyncHandler(async (req, res) => {
   const { error } = validateTopTen(req.body);
   if (error) return res.status(400).json({ message: error.details[0].message });
 
     const newQuestionSet = new TopTen({
+    title: req.body.title,
     question1: req.body.question1,
     question2: req.body.question2,
     question3: req.body.question3,

@@ -12,6 +12,8 @@ import BankContextProvider from "../Context/Games/BankContext";
 import OffsideContextProvider from "../Context/Games/OffsideContext";
 import RoundContextProvider from "../Context/Games/RoundContext";
 import AuctionContextProvider from "../Context/Games/AuctionContext";
+import { TopTenContextProvider } from "../Context/Games/TopTenContext";
+import { SquadContextProvider } from "../Context/Games/SquadContext";
 const LayoutComponent = ({ children }) => {
     const [showProfile,setShowProfile] = useState(false)
     return (
@@ -24,16 +26,20 @@ const LayoutComponent = ({ children }) => {
                     <BankContextProvider>
                       <OffsideContextProvider>
                         <RoundContextProvider>
-                        <AuctionContextProvider>
-                          <div className="flex items-center flex-col gap-2">
-                              <Nav setShowProfile={setShowProfile} />
-                              {children}
-                              <div className={`${showProfile ? "Result" : ""} w-full`}>
-                                  <div className={`${showProfile ? "flex" : "hidden"} absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-[999]`}>
-                                    <Profile setShowProfile={setShowProfile} />
-                                  </div>
-                              </div>
-                          </div>
+                          <AuctionContextProvider>
+                            <TopTenContextProvider>
+                              <SquadContextProvider>
+                                <div className="flex items-center flex-col gap-2">
+                                    <Nav setShowProfile={setShowProfile} />
+                                    {children}
+                                    <div className={`${showProfile ? "Result" : ""} w-full`}>
+                                        <div className={`${showProfile ? "flex" : "hidden"} absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-[999]`}>
+                                          <Profile setShowProfile={setShowProfile} />
+                                        </div>
+                                    </div>
+                                </div>
+                              </SquadContextProvider>
+                            </TopTenContextProvider>
                           </AuctionContextProvider>
                         </RoundContextProvider>
                       </OffsideContextProvider>

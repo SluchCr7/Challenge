@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 const joi = require('joi')
 
-const Top10Schema = new mongoose.Schema({
+const TopTenSchema = new mongoose.Schema({
+    title : {
+        type: String,
+        required: true
+    },
     QuestionOne: [
         {
         name: { type: String, required: true },   // اسم الفريق أو اللاعب
@@ -87,6 +91,7 @@ const TopTen = mongoose.model('TopTen', TopTenSchema)
 
 const validateTopTen = (TopTen) => {
     const schema = {
+        title: joi.string().required(),
         QuestionOne: joi.array().required(),
         QuestionTwo: joi.array().required(),
         QuestionThree: joi.array().required(),

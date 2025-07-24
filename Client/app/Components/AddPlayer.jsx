@@ -11,7 +11,8 @@ import { AuctionContext } from '../Context/Games/AuctionContext'
 import { RoundContext } from '../Context/Games/RoundContext'
 import { OffsideContext } from '../Context/Games/OffsideContext'
 import { PictureContext } from '../Context/Games/PictureContext'
-
+import { SquadContext } from '../Context/SquadContext'
+import { TopTenContext } from '../Context/TopTenContext'
 const AddPlayer = ({ setShow, show }) => {
   const [formData, setFormData] = useState({
     image: null,
@@ -31,7 +32,16 @@ const AddPlayer = ({ setShow, show }) => {
     imageTeam: null,
     teamName: '',
     team: [],
-    teamMember: ''
+    teamMember: '',
+    squadTitle : '',
+    squadTeamOneName: '',
+    squadTeamOneMembers: [],
+    squadTeamOneMember: '',
+    squadTeamTwoName: '',
+    squadTeamTwoMembers: [],
+    squadTeamTwoMember: '',
+    topTenQuestion: '',
+    topTenData: {}
   });
 
   const pathName = usePathname();
@@ -43,6 +53,8 @@ const AddPlayer = ({ setShow, show }) => {
   const { addRound } = useContext(RoundContext);
   const { addOffside } = useContext(OffsideContext);
   const { addTeam } = useContext(PictureContext);
+  const { addSquad } = useContext(SquadContext);
+  const { addTopTen } = useContext(TopTenContext);
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -57,6 +69,15 @@ const AddPlayer = ({ setShow, show }) => {
     if (pathName === '/Admin/Auction') return addAuction(e, formData.auction);
     if (pathName === '/Admin/Round') return addRound(e, formData.roundQuestion, formData.roundExamples);
     if (pathName === '/Admin/Team') return addTeam(formData.imageTeam, formData.teamName, formData.team);
+    if (pathName === '/Admin/Squad') {
+      return addSquad(e, 
+        formData.squadTitle,
+        { name: formData.squadTeamOneName, members: formData.squadTeamOneMembers }, 
+        { name: formData.squadTeamTwoName, members: formData.squadTeamTwoMembers });
+    }
+    if (pathName === '/Admin/TopTen') {
+      return addTopTen(e, formData.topTenQuestion, formData.topTenData);
+    }
   };
 
   return (
@@ -149,7 +170,56 @@ const AddPlayer = ({ setShow, show }) => {
               </div>
             </>
           )}
-
+          {pathName === '/Admin/Squad' && (
+            <>
+              <label className='text-yellow-600'>Title Question</label>
+              <input type='text' className='input' value={formData.squadTitle} onChange={(e) => handleChange('squadTitle', e.target.value)} />
+              <div className='flex flex-col gap-4'>
+                <h2 className='text-yellow-600 font-bold'>الفريق الأول</h2>
+                <input type='text' placeholder='اسم الفريق' className='input' value={formData.squadTeamOneName} onChange={(e) => handleChange('squadTeamOneName', e.target.value)} />
+                <div className='flex gap-2'>
+                  <input type='text' className='input flex-1' value={formData.squadTeamOneMember} onChange={(e) => handleChange('squadTeamOneMember', e.target.value)} />
+                  <button onClick={() => handleChange('squadTeamOneMembers', [...formData.squadTeamOneMembers, formData.squadTeamOneMember]) || handleChange('squadTeamOneMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                </div>
+              </div>
+              <div className='flex flex-col gap-4'>
+                <h2 className='text-yellow-600 font-bold mt-4'>الفريق الثاني</h2>
+                <input type='text' placeholder='اسم الفريق' className='input' value={formData.squadTeamTwoName} onChange={(e) => handleChange('squadTeamTwoName', e.target.value)} />
+                <div className='flex gap-2'>
+                  <input type='text' className='input flex-1' value={formData.squadTeamTwoMember} onChange={(e) => handleChange('squadTeamTwoMember', e.target.value)} />
+                  <button onClick={() => handleChange('squadTeamTwoMembers', [...formData.squadTeamTwoMembers, formData.squadTeamTwoMember]) || handleChange('squadTeamTwoMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                </div>
+              </div>
+            </>
+          )}
+          {pathName === '/Admin/TopTen' && (
+            <>
+              <label className='text-yellow-600'>Question</label>
+              <input type='text' className='input' value={formData.topTenQuestion} onChange={(e) => handleChange('topTenQuestion', e.target.value)} />
+              {[...Array(13)].map((_, i) => {
+                const questionKey = `Question${i + 1 === 13 ? 'Therteen' : (i + 1 === 11 ? 'Eleven' : i + 1 === 12 ? 'Twelve' : `${i + 1}`)}`;
+                return (
+                  <div key={i} className='mb-3'>
+                    <label className='text-yellow-600'>{`السؤال ${i + 1}`}</label>
+                    <input
+                      type='text'
+                      className='input'
+                      placeholder='اسم الفريق أو اللاعب'
+                      onChange={(e) => {
+                        setFormData((prev) => ({
+                          ...prev,
+                          topTenData: {
+                            ...prev.topTenData,
+                            [questionKey]: [{ name: e.target.value, value: i + 1 <= 10 ? i + 1 : -(i - 9) }]
+                          }
+                        }));
+                      }}
+                    />
+                  </div>
+                );
+              })}
+            </>
+          )}
           <button onClick={handleAdd} className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition'>حفظ</button>
         </div>
       </div>
