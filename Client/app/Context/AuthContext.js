@@ -8,6 +8,8 @@ export const AuthContext = createContext()
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 import swal from "sweetalert"
+import Swal from 'sweetalert2'
+
 const AuthContextProvider = (props) => {
     const [loginState, setLoginState] = useState(false)
     const [user, setUser] = useState({})
@@ -51,19 +53,19 @@ const AuthContextProvider = (props) => {
             .catch(err => toast.error("Logout Failed"))
     }
     // Create New User Function
-    const registerNewUser = (Name, Email, Password) => {
-        // e.preventDefault()
-        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/register` , {Name , Email , Password})
-            .then(res => {
-                swal("Good job!", res.data.message, "success");
-                setTimeout(() => {
-                    window.location.href = "/Auth/Login"
-                },2000)
-            })
-            .catch((err) => {
-                swal("Oops!", err.response.data.message, "error");
-            })
-    }
+const registerNewUser = (Name, Email, Password) => {
+    axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/register`, { Name, Email, Password })
+        .then(res => {
+            Swal.fire("Good job!", res.data.message, "success");
+            setTimeout(() => {
+                window.location.href = "/Auth/Login";
+            }, 2000);
+        })
+        .catch((err) => {
+            Swal.fire("Oops!", err.response?.data?.message || "Something went wrong", "error");
+        });
+};
+
     // Verify Account
     const verifyAccount = (id , token)=>{
         axios.get(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/${id}/verify/${token}`)
