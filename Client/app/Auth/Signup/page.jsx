@@ -44,12 +44,12 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center px-4">
+    <div className="min-h-screen flex items-center justify-center px-4">
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
+        className="w-full max-w-md border border-[#1f2937] bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-green-400">Join Challenge Football</h2>
         <p className="text-sm text-center text-gray-400 mb-8">
