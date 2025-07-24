@@ -65,7 +65,7 @@ const HomePage = () => {
             قم بتسجيل الدخول لتجربة التحديات الكروية!
           </p>
           <Link
-            href="/login"
+            href="/Auth/Login"
             className="inline-block mt-6 px-6 py-3 bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl transition"
           >
             تسجيل الدخول

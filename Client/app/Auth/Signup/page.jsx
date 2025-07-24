@@ -49,7 +49,7 @@ const SignUp = () => {
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-[80%] md:w-[400px] border border-[#1f2937] bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
+        className="w-[80%] md:w-[500px] border border-[#1f2937] bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
       >
         <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-green-400">Join Challenge Football</h2>
         <p className="text-sm text-center text-gray-400 mb-8">
