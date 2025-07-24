@@ -78,8 +78,14 @@ const Bank = () => {
 
   const handleCorrect = () => {
     setScore((prev) => prev + increment);
-    setIncrement((prev) => prev + prev);
-    handleNext();
+
+    setIncrement((prev) => {
+      if (questionNumber === 1) return prev * 4; // السؤال الثاني
+      return prev * 2; // الثالث فما بعد
+    });
+
+    setQuestionNumber((prev) => prev + 1);
+    handleNext(); // السؤال التالي
   };
 
   const handleWrong = () => {
