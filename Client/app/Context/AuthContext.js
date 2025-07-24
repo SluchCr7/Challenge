@@ -54,18 +54,20 @@ const AuthContextProvider = (props) => {
     }
     // Create New User Function
 const registerNewUser = (Name, Email, Password) => {
-    axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/register`, { Name, Email, Password })
-        .then(res => {
-            Swal.fire("Good job!", res.data.message, "success");
-            setTimeout(() => {
-                window.location.href = "/Auth/Login";
-            }, 2000);
-        })
-        .catch((err) => {
-            Swal.fire("Oops!", err.response?.data?.message || "Something went wrong", "error");
-        });
+  axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/register`, {
+    Name, Email, Password
+  })
+    .then(res => {
+      Swal.fire("Good job!", res.data.message, "success");
+      setTimeout(() => {
+        window.location.href = "/Auth/Login";
+      }, 2000);
+    })
+    .catch((err) => {
+      console.error("Registration Error:", err);
+      Swal.fire("Oops!", err.response?.data?.message || "Something went wrong", "error");
+    });
 };
-
     // Verify Account
     const verifyAccount = (id , token)=>{
         axios.get(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/${id}/verify/${token}`)
