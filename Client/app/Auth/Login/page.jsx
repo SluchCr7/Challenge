@@ -3,8 +3,8 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '@/app/Context/AuthContext'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { MdLockOutline } from 'react-icons/md'
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiEye, FiEyeOff } from 'react-icons/fi'
+
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
@@ -20,14 +20,13 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-    setTimeout(() => {
+
+    if (formData.email && formData.password) {
+      Login(formData.email, formData.password);
+    } else {
       setLoading(false);
-      if (formData.email && formData.password) {
-        Login(formData.email, formData.password);
-      } else {
-        setError('Invalid email or password');
-      }
-    }, 1500);
+      setError('Please enter both email and password.');
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -35,21 +34,20 @@ const Login = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center px-4 w-[80%] md:w-[500px] bg-gray-100 dark:bg-gray-900'>
+    <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center px-4">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className='bg-white dark:bg-gray-800 w-full max-w-md p-8 rounded-2xl shadow-xl flex flex-col items-center gap-6'
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
       >
-        <h2 className="text-4xl font-bold text-center mb-8 text-lightMode-text dark:text-darkMode-text">
-          Welcome Back
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-green-400">Welcome Back</h2>
+        <p className="text-sm text-center text-gray-400 mb-8">Login to continue your football challenge ⚽</p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm mb-1 text-lightMode-text2 dark:text-darkMode-text2">
-              Email Address
-            </label>
+            <label htmlFor="email" className="text-sm mb-1 block text-gray-300">Email Address</label>
             <input
               type="email"
               name="email"
@@ -58,14 +56,13 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/80 dark:bg-white/10 text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
+          {/* Password */}
           <div className="relative">
-            <label htmlFor="password" className="block text-sm mb-1 text-lightMode-text2 dark:text-darkMode-text2">
-              Password
-            </label>
+            <label htmlFor="password" className="text-sm mb-1 block text-gray-300">Password</label>
             <input
               type={showPassword ? 'text' : 'password'}
               name="password"
@@ -74,35 +71,39 @@ const Login = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 pr-12 rounded-lg bg-white/80 dark:bg-white/10 text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 pr-12 rounded-xl bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             <div
               onClick={togglePasswordVisibility}
-              className="absolute right-3 top-10 cursor-pointer text-gray-500 dark:text-gray-300"
+              className="absolute right-3 top-10 cursor-pointer text-gray-400"
             >
               {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </div>
           </div>
 
-          
-          <p className="text-sm text-right text-blue-500 hover:underline cursor-pointer mt-2">
-            <a href="/Pages/Forgot">Forgot your password?</a>
-          </p>
+          {/* Forgot Password */}
+          <div className="text-right text-sm">
+            <Link href="/Pages/Forgot" className="text-green-400 hover:underline">
+              Forgot your password?
+            </Link>
+          </div>
 
-
+          {/* Error */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
-          
+
+          {/* Button */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
+            className="w-full bg-green-500 hover:bg-green-600 transition text-white font-semibold py-3 rounded-xl shadow-lg disabled:opacity-50"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
 
-          <p className="text-sm text-center text-lightMode-text2 dark:text-darkMode-text2">
-            Do not have an account?{' '}
-            <a href="/Auth/Signup" className="text-blue-500 hover:underline">Sign up</a>
+          {/* Sign Up Link */}
+          <p className="text-sm text-center text-gray-400">
+            Don’t have an account?{' '}
+            <Link href="/Auth/Signup" className="text-green-400 hover:underline">Sign up</Link>
           </p>
         </form>
       </motion.div>

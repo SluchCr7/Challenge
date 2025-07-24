@@ -3,8 +3,7 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '@/app/Context/AuthContext'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { MdPersonAddAlt1 } from 'react-icons/md'
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { FiEye, FiEyeOff } from 'react-icons/fi'
 
 const SignUp = () => {
   const [formData, setFormData] = useState({ email: '', password: '', username: '' });
@@ -13,7 +12,6 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { registerNewUser } = useContext(AuthContext)
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,21 +23,20 @@ const SignUp = () => {
     setLoading(true);
     setError('');
 
-    setTimeout(() => {
+    const { email, password, username } = formData;
+
+    if (!agreeTerms) {
       setLoading(false);
-      const { email, password, username } = formData;
+      setError('You must agree to the Terms and Conditions to register.');
+      return;
+    }
 
-      if (!agreeTerms) {
-        setError('You must agree to the Terms and Conditions to register.');
-        return;
-      }
-
-      if (email && password && username) {
-        registerNewUser(username, email, password);
-      } else {
-        setError('Invalid email or password or username');
-      }
-    }, 1500);
+    if (email && password && username) {
+      registerNewUser(username, email, password);
+    } else {
+      setLoading(false);
+      setError('Please fill in all fields correctly.');
+    }
   };
 
   const togglePasswordVisibility = () => {
@@ -47,21 +44,22 @@ const SignUp = () => {
   };
 
   return (
-    <div className='min-h-screen flex items-center justify-center px-4 bg-gray-100 dark:bg-gray-900'>
+    <div className="min-h-screen bg-[#0a0f1a] flex items-center justify-center px-4">
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
+        initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className='bg-white dark:bg-gray-800 w-full max-w-md p-8 rounded-2xl shadow-xl flex flex-col items-center gap-6'
+        transition={{ duration: 0.6 }}
+        className="w-full max-w-md bg-[#101827] text-white p-8 rounded-3xl shadow-2xl"
       >
-        <h2 className="text-4xl font-bold text-center mb-8 text-lightMode-text dark:text-darkMode-text">
-          Hello In Challenge 👋
-        </h2>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <h2 className="text-3xl md:text-4xl font-bold text-center mb-6 text-green-400">Join Challenge Football</h2>
+        <p className="text-sm text-center text-gray-400 mb-8">
+          Compete with your football knowledge and earn rewards 🏆
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Email */}
           <div>
-            <label htmlFor="email" className="block text-sm mb-1 text-lightMode-text2 dark:text-darkMode-text2">
-              Email Address
-            </label>
+            <label htmlFor="email" className="text-sm mb-1 block text-gray-300">Email Address</label>
             <input
               type="email"
               name="email"
@@ -70,30 +68,28 @@ const SignUp = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/80 dark:bg-white/10 text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
+          {/* Username */}
           <div>
-            <label htmlFor="username" className="block text-sm mb-1 text-lightMode-text2 dark:text-darkMode-text2">
-              Username
-            </label>
+            <label htmlFor="username" className="text-sm mb-1 block text-gray-300">Username</label>
             <input
               type="text"
               name="username"
               id="username"
-              placeholder="John Doe"
+              placeholder="Your gamer tag"
               value={formData.username}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 rounded-lg bg-white/80 dark:bg-white/10 text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
           </div>
 
+          {/* Password */}
           <div className="relative">
-            <label htmlFor="password" className="block text-sm mb-1 text-lightMode-text2 dark:text-darkMode-text2">
-              Password
-            </label>
+            <label htmlFor="password" className="text-sm mb-1 block text-gray-300">Password</label>
             <input
               type={showPassword ? 'text' : 'password'}
               name="password"
@@ -102,45 +98,46 @@ const SignUp = () => {
               value={formData.password}
               onChange={handleChange}
               required
-              className="w-full px-4 py-3 pr-12 rounded-lg bg-white/80 dark:bg-white/10 text-black dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 pr-12 rounded-xl bg-[#1f2937] text-white focus:outline-none focus:ring-2 focus:ring-green-500"
             />
             <div
               onClick={togglePasswordVisibility}
-              className="absolute right-3 top-10 cursor-pointer text-gray-500 dark:text-gray-300"
+              className="absolute right-3 top-10 cursor-pointer text-gray-400"
             >
               {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </div>
           </div>
 
-          <div className="flex items-center space-x-2">
+          {/* Terms */}
+          <div className="flex items-center space-x-2 text-sm text-gray-400">
             <input
               type="checkbox"
               id="terms"
               checked={agreeTerms}
               onChange={() => setAgreeTerms(!agreeTerms)}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+              className="h-4 w-4 text-green-500 focus:ring-green-500 border-gray-300 rounded"
             />
-            <label htmlFor="terms" className="text-sm text-lightMode-text2 dark:text-darkMode-text2">
-              I agree to the{' '}
-              <a href="/Pages/Terms" className="text-blue-500 hover:underline" target="_blank" rel="noopener noreferrer">
-                Terms and Conditions
-              </a>
+            <label htmlFor="terms">
+              I agree to the <a href="/Pages/Terms" target="_blank" className="text-green-400 hover:underline">Terms & Conditions</a>
             </label>
           </div>
 
+          {/* Error */}
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
+          {/* Submit */}
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition duration-200 disabled:opacity-50"
+            className="w-full bg-green-500 hover:bg-green-600 transition text-white font-semibold py-3 rounded-xl shadow-lg disabled:opacity-50"
           >
-            {loading ? 'Creating Account...' : 'Register'}
+            {loading ? 'Creating Account...' : 'Register Now'}
           </button>
 
-          <p className="text-sm text-center text-lightMode-text2 dark:text-darkMode-text2">
-            Have an account?{' '}
-            <a href="/Auth/Login" className="text-blue-500 hover:underline">Login</a>
+          {/* Login */}
+          <p className="text-sm text-center text-gray-400">
+            Already have an account?{' '}
+            <Link href="/Auth/Login" className="text-green-400 hover:underline">Login</Link>
           </p>
         </form>
       </motion.div>
@@ -148,4 +145,4 @@ const SignUp = () => {
   )
 }
 
-export default SignUp
+export default SignUp;
