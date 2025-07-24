@@ -1,6 +1,6 @@
 const {addSquad,getAllSquads,getSquadById,deleteSquad} = require('../Controllers/SquadController')
-const route = require('express').Router()
-
+const express = require('express')
+const route = express.Router()
 
 route.route('/')
     .post(addSquad)
