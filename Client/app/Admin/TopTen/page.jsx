@@ -1,6 +1,6 @@
 'use client';
 import React, { useContext, useState } from 'react';
-import { TopTenContext } from '@/app/Context/TopTenContext';
+import { TopTenContext } from '@/app/Context/Games/TopTenContext';
 import AddPlayer from '@/app/Components/AddPlayer';
 import { deleteItem } from '@/utils/DeleteItem';
 import { MdDeleteOutline } from 'react-icons/md';

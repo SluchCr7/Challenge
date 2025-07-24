@@ -11,8 +11,8 @@ import { AuctionContext } from '../Context/Games/AuctionContext'
 import { RoundContext } from '../Context/Games/RoundContext'
 import { OffsideContext } from '../Context/Games/OffsideContext'
 import { PictureContext } from '../Context/Games/PictureContext'
-import { SquadContext } from '../Context/SquadContext'
-import { TopTenContext } from '../Context/TopTenContext'
+import { SquadContext } from '../Context/Games/SquadContext'
+import { TopTenContext } from '../Context/Games/TopTenContext'
 const AddPlayer = ({ setShow, show }) => {
   const [formData, setFormData] = useState({
     image: null,

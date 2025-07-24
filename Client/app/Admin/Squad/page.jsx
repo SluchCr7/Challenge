@@ -1,6 +1,6 @@
 'use client';
 import React, { useContext, useState } from 'react';
-import { SquadContext } from '@/app/Context/SquadContext';
+import { SquadContext } from '@/app/Context/Games/SquadContext';
 import AddPlayer from '@/app/Components/AddPlayer';
 import { deleteItem } from '@/utils/DeleteItem';
 import { MdDeleteOutline } from 'react-icons/md';
@@ -42,7 +42,7 @@ const SquadPage = () => {
                 className="flex items-center border-[1px] border-yellow-600 p-5 flex-col gap-5 mx-auto w-[85%]"
               >
                 <span className="text-yellow-600 font-bold text-xl">#{index + 1}</span>
-                <span className="text-white font-bold text-xl">{item.title}</span>
+                <span className='text-white text-2xl'>{item.title}</span>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                   <div>
                     <h3 className="text-white text-lg text-center mb-1">Team One: {item.TeamOne.name}</h3>
