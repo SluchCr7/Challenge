@@ -4,16 +4,31 @@ const { TopTen, validateTopTen } = require('../Modules/TopTen');
 // @desc    إنشاء أسئلة جديدة (13 سؤال)
 const createQuestion = asyncHandler(async (req, res) => {
   const { error } = validateTopTen(req.body);
-  if (error) return res.status(400).json({ message: error.details[0].message });
+  if (error) {
+    return res.status(400).json({ message: error.details[0].message });
+  }
 
   const newQuestionSet = new TopTen({
     title: req.body.title,
-    questions: req.body.questions
+    questionOne: req.body.questionOne,
+    questionTwo: req.body.questionTwo,
+    questionThree: req.body.questionThree,
+    questionFour: req.body.questionFour,
+    questionFive: req.body.questionFive,
+    questionSix: req.body.questionSix,
+    questionSeven: req.body.questionSeven,
+    questionEight: req.body.questionEight,
+    questionNine: req.body.questionNine,
+    questionTen: req.body.questionTen,
+    questionEleven: req.body.questionEleven,
+    questionTwelve: req.body.questionTwelve,
+    questionThirteen: req.body.questionThirteen,
   });
 
   await newQuestionSet.save();
-  res.status(201).json({ message: 'Top10 Questions Created Successfully', data: newQuestionSet });
+  res.status(201).json(newQuestionSet);
 });
+
 
 // @desc    جلب كل الأسئلة
 const getAllQuestions = asyncHandler(async (req, res) => {

@@ -5,7 +5,6 @@ import { TopTenContext } from '@/app/Context/Games/TopTenContext'
 import selectRandomObject from '@/utils/getUniqueObject'
 import { IoMdRefresh } from 'react-icons/io'
 
-const Numbers = [1, 2, 3, 4, 5]
 
 const Page = () => {
   const { topTenData } = useContext(TopTenContext)
@@ -36,21 +35,36 @@ const Page = () => {
           <p className='text-center uppercase text-2xl text-yellow-400 tracking-wide'>{lastSelected?.title}</p>
 
           {/* عرض الأسئلة */}
-          {Array.isArray(lastSelected.questions) && lastSelected.questions.length > 0 ? (
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full'>
-              {lastSelected.questions.map((q, index) => (
-                <div
-                  key={index}
-                  className='bg-[#262626] hover:bg-green-700 text-white p-4 rounded-xl flex flex-col items-center justify-center text-center text-lg font-medium shadow border border-gray-600'
-                >
-                  <span>{index + 1}. {q.name}</span>
-                  <span className='text-sm text-yellow-400'>Value: {q.value}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <p className='text-red-400 text-center mt-4'>لا توجد بيانات لهذا السؤال</p>
-          )}
+          <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full'>
+            {[
+              'questionOne',
+              'questionTwo',
+              'questionThree',
+              'questionFour',
+              'questionFive',
+              'questionSix',
+              'questionSeven',
+              'questionEight',
+              'questionNine',
+              'questionTen',
+              'questionEleven',
+              'questionTwelve',
+              'questionThirteen'
+            ].map((key, index) => {
+              const question = lastSelected[key];
+              return (
+                question && (
+                  <div
+                    key={index}
+                    className='bg-[#262626] hover:bg-green-700 text-white p-4 rounded-xl flex flex-col items-center justify-center text-center text-lg font-medium shadow border border-gray-600'
+                  >
+                    <span>{index + 1}. {question.name}</span>
+                    <span className='text-sm text-yellow-400'>Value: {question.value}</span>
+                  </div>
+                )
+              );
+            })}
+          </div>
 
           {/* زر التحديث */}
           <button
@@ -61,17 +75,18 @@ const Page = () => {
             <span>تحديث السؤال</span>
           </button>
         </div>
-      ) : (
-        <GameIntro
-          name={'TopTen'}
-          team={topTenData}
-          selectRandomObject={selectRandomObject}
-          remainingObjects={remainingObjects}
-          setLastSelected={setLastSelected}
-          setRemainingObjects={setRemainingObjects}
-          text='يظهر سؤال ويكون مطلوب أن تجد أكثر 10 لاعبين فعلوا هذا الإنجاز أو هدافين أو فرق، ومن 11 إلى 13 يكونوا سالب.'
-        />
-      )}
+        ) : (
+          <GameIntro
+            name={'TopTen'}
+            team={topTenData}
+            selectRandomObject={selectRandomObject}
+            remainingObjects={remainingObjects}
+            setLastSelected={setLastSelected}
+            setRemainingObjects={setRemainingObjects}
+            text='يظهر سؤال ويكون مطلوب أن تجد أكثر 10 لاعبين فعلوا هذا الإنجاز أو هدافين أو فرق، ومن 11 إلى 13 يكونوا سالب.'
+          />
+        )
+      }
     </div>
   )
 }
