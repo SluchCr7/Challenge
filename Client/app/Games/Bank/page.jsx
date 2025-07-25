@@ -80,11 +80,11 @@ const Bank = () => {
     setScore((prev) => prev + increment);
 
     setIncrement((prev) => {
-      if (questionNumber === 1) return prev * 4; // السؤال الثاني
+      if (Question === 1) return prev * 4; // السؤال الثاني
       return prev * 2; // الثالث فما بعد
     });
 
-    setQuestionNumber((prev) => prev + 1);
+    setQuestion((prev) => prev + 1);
     handleNext(); // السؤال التالي
   };
 
