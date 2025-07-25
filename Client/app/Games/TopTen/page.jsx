@@ -46,9 +46,10 @@ const Page = () => {
               {lastSelected.questions.map((q, index) => (
                 <div
                   key={index}
-                  className="bg-[#262626] hover:bg-green-700 text-white p-4 rounded-xl flex items-center justify-center text-center text-lg font-medium shadow border border-gray-600"
+                  className="bg-[#262626] hover:bg-green-700 text-white p-4 rounded-xl flex flex-col items-center justify-center text-center text-lg font-medium shadow border border-gray-600"
                 >
-                  {index + 1}. {q}
+                  <span>{index + 1}. {q.name}</span>
+                  <span className="text-sm text-yellow-400">Value: {q.value}</span>
                 </div>
               ))}
             </div>
