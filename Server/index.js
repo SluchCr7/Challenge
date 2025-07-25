@@ -48,7 +48,7 @@ app.use("/api/bank" , require("./routes/BankRoute"))
 app.use("/api/offside", require("./routes/OffsideRoute"))
 app.use("/api/round", require("./routes/RoundRoute"))
 app.use("/api/auction", require("./routes/AuctionRoute"))
-app.use("/api/top10", require("./routes/TopTenRoute"))
+app.use("/api/topten", require("./routes/TopTenRoute"))
 app.use("/api/squad", require("./routes/SquadRoute"))
 app.use(errorhandler)
 
