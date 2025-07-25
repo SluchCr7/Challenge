@@ -4,7 +4,7 @@ import GameIntro from '@/app/Components/GameIntro'
 import { TopTenContext } from '@/app/Context/Games/TopTenContext'
 import selectRandomObject from '@/utils/getUniqueObject';
 import { IoMdRefresh } from "react-icons/io";
-const page = () => {
+const Page = () => {
   const { topTenData } = useContext(TopTenContext)
   const [valueTeamOne , setValueTeamOne] = useState(0) 
   const [valueTeamTwo , setValueTeamTwo] = useState(0) 
@@ -77,4 +77,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
