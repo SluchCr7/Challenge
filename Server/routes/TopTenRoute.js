@@ -1,11 +1,7 @@
+const {createQuestion,getAllQuestions,deleteQuestion} = require('../Controllers/TopTenController');
 const express = require('express');
 const route = express.Router();
 
-const {
-  createQuestion,
-  getAllQuestions,
-  deleteQuestion
-} = require('../Controllers/TopTenController');
 
 route.route('/')
     .post(createQuestion)

@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { TopTen, validateTopTen } = require('../modules/TopTen');
+const { TopTen, validateTopTen } = require('../Modules/TopTen');
 
 // @desc    إنشاء أسئلة جديدة (13 سؤال)
 const createQuestion = asyncHandler(async (req, res) => {
@@ -32,7 +32,5 @@ const deleteQuestion = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
-  createQuestion,
-  getAllQuestions,
-  deleteQuestion
+  createQuestion,getAllQuestions,deleteQuestion
 };
