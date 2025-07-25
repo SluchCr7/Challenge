@@ -1,5 +1,5 @@
 const asyncHandler = require('express-async-handler');
-const { TopTen, validateTopTen } = require('../models/TopTen');
+const { TopTen, validateTopTen } = require('../modules/TopTen');
 
 // @desc    إنشاء أسئلة جديدة (13 سؤال)
 const createQuestion = asyncHandler(async (req, res) => {
