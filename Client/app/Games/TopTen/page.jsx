@@ -1,7 +1,7 @@
 'use client'
+import React, { useContext, useState , useEffect } from 'react'
 import GameIntro from '@/app/Components/GameIntro'
 import { TopTenContext } from '@/app/Context/Games/TopTenContext'
-import React, { useContext, useState } from 'react'
 import selectRandomObject from '@/utils/getUniqueObject';
 import { IoMdRefresh } from "react-icons/io";
 const page = () => {
