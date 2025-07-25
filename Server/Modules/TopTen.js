@@ -1,112 +1,32 @@
-const mongoose = require('mongoose')
-const joi = require('joi')
+const mongoose = require('mongoose');
+const joi = require('joi');
+
+const questionSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  value: { type: Number, required: true },
+});
 
 const TopTenSchema = new mongoose.Schema({
-    title : {
-        type: String,
-        required: true
-    },
-    QuestionOne: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 1  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionTwo: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 2  } // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionThree: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 3  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionFour: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 4  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionFive: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 5  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionSix: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 6  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionSeven: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 7  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionEight: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 8  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionNine: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 9  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionTen: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: 10  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionEleven: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: -1  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionTwelve: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: -2  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
-    QuestionTherteen: [
-        {
-        name: { type: String, required: true },   // اسم الفريق أو اللاعب
-        value: { type: Number , default: -3  }  // النقاط الحقيقية لهذا الاسم
-        }
-    ],
+  title: { type: String, required: true },
+  questions: {
+    type: [questionSchema],
+    validate: [arr => arr.length === 13, 'يجب أن يحتوي على 13 سؤال بالضبط']
+  },
+}, { timestamps: true });
 
-}, { timestamps: true })
-
-const TopTen = mongoose.model('TopTen', TopTenSchema)
+const TopTen = mongoose.model('TopTen', TopTenSchema);
 
 const validateTopTen = (obj) => {
-    const schema = joi.object({
-        title: joi.string().required(),
-        QuestionOne: joi.array().required(),
-        QuestionTwo: joi.array().required(),
-        QuestionThree: joi.array().required(),
-        QuestionFour: joi.array().required(),
-        QuestionFive: joi.array().required(),
-        QuestionSix: joi.array().required(),
-        QuestionSeven: joi.array().required(),
-        QuestionEight: joi.array().required(),
-        QuestionNine: joi.array().required(),
-        QuestionTen: joi.array().required(),
-        QuestionEleven: joi.array().required(),
-        QuestionTwelve: joi.array().required(),
-        QuestionTherteen: joi.array().required(),
-    })
-    return schema.validate(obj)
-}
+  const schema = joi.object({
+    title: joi.string().required(),
+    questions: joi.array().length(13).items(
+      joi.object({
+        name: joi.string().required(),
+        value: joi.number().required()
+      })
+    )
+  });
+  return schema.validate(obj);
+};
 
-module.exports = { TopTen, validateTopTen }
+module.exports = { TopTen, validateTopTen };

@@ -24,7 +24,7 @@ const AdminPage = () => {
   ];
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white py-12 px-6">
+    <main className="min-h-screen w-full md:w-[80%] bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a] text-white py-12 px-6">
       <section className="w-full mx-auto">
         <header className="mb-12 text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-yellow-500 tracking-tight drop-shadow-md">لوحة التحكم</h1>

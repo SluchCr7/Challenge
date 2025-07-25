@@ -40,9 +40,10 @@ const AddPlayer = ({ setShow, show }) => {
     squadTeamTwoName: '',
     squadTeamTwoMembers: [],
     squadTeamTwoMember: '',
-    topTenQuestion: '',
-    topTenData: {}
+    title: '',            // ✅ العنوان لمجموعة TopTen
+    questions: []         // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
   });
+
 
   const pathName = usePathname();
   const { addPlayer } = useContext(PassContext);
@@ -76,7 +77,7 @@ const AddPlayer = ({ setShow, show }) => {
         { name: formData.squadTeamTwoName, members: formData.squadTeamTwoMembers });
     }
     if (pathName === '/Admin/TopTen') {
-      return addTopTen(e, formData.topTenQuestion, formData.topTenData);
+      return addTopTen(e, formData.title, formData.questions);
     }
   };
 
@@ -194,32 +195,38 @@ const AddPlayer = ({ setShow, show }) => {
           )}
           {pathName === '/Admin/TopTen' && (
             <>
-              <label className='text-yellow-600'>Question</label>
-              <input type='text' className='input' value={formData.topTenQuestion} onChange={(e) => handleChange('topTenQuestion', e.target.value)} />
-              {[...Array(13)].map((_, i) => {
-                const questionKey = `Question${i + 1 === 13 ? 'Therteen' : (i + 1 === 11 ? 'Eleven' : i + 1 === 12 ? 'Twelve' : `${i + 1}`)}`;
-                return (
-                  <div key={i} className='mb-3'>
-                    <label className='text-yellow-600'>{`السؤال ${i + 1}`}</label>
+              <label className='text-yellow-600'>عنوان المجموعة</label>
+              <input
+                type='text'
+                className='input'
+                value={formData.title}
+                onChange={(e) => handleChange('title', e.target.value)}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {[...Array(13)].map((_, i) => (
+                  <div key={i} className="flex flex-col gap-1">
+                    <label className="text-yellow-600">{`السؤال ${i + 1}`}</label>
                     <input
-                      type='text'
-                      className='input'
-                      placeholder='اسم الفريق أو اللاعب'
+                      type="text"
+                      className="input"
+                      placeholder="اسم الفريق أو اللاعب"
+                      value={formData.questions?.[i]?.name || ''}
                       onChange={(e) => {
-                        setFormData((prev) => ({
-                          ...prev,
-                          topTenData: {
-                            ...prev.topTenData,
-                            [questionKey]: [{ name: e.target.value, value: i + 1 <= 10 ? i + 1 : -(i - 9) }]
-                          }
-                        }));
+                        const updated = [...(formData.questions || [])];
+                        updated[i] = {
+                          name: e.target.value,
+                          value: i < 10 ? i + 1 : -(i - 9), // 1 إلى 10 ثم -1 -2 -3
+                        };
+                        handleChange('questions', updated);
                       }}
                     />
                   </div>
-                );
-              })}
+                ))}
+              </div>
             </>
           )}
+
           <button onClick={handleAdd} className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition'>حفظ</button>
         </div>
       </div>
