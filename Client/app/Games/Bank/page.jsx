@@ -77,19 +77,11 @@ const Bank = () => {
   };
 
   const handleCorrect = () => {
-    setScore((prev) => prev + increment);
-    setIncrement((prev) => {
-      if (score = 1) {
-        return prev
-      } 
-      else{
-        return prev + prev
-      } 
-    })
-
-    setQuestion((prev) => prev + 1);
-    handleNext(); // السؤال التالي
+    setScore((prev) => prev + (prev === 0 ? 1 : prev)); // أول إجابة تعطي 1، بعدها يتضاعف
+    setIncrement((prev) => prev === 1 ? 2 : prev * 2);  // الزيادة تتضاعف بعد كل إجابة صحيحة
+    handleNext(); // للانتقال للسؤال التالي
   };
+
 
   const handleWrong = () => {
     setScore(0);
