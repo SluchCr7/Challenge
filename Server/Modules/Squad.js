@@ -34,7 +34,7 @@ const SquadSchema = new mongoose.Schema({
 
 const Squad = mongoose.model('Squad' , SquadSchema)
 
-const validateSquad = (squad) => {
+const validateSquad = (obj) => {
     const schema = joi.object({
         title: joi.string().required(),
         TeamOne: joi.object({
@@ -46,7 +46,7 @@ const validateSquad = (squad) => {
             members: joi.array().items(joi.string().required()).required()
         }).required()
     })
-    return schema.validate(squad)
+    return schema.validate(obj)
 }
 
 module.exports = { Squad , validateSquad }

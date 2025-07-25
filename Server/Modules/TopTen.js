@@ -89,8 +89,8 @@ const TopTenSchema = new mongoose.Schema({
 
 const TopTen = mongoose.model('TopTen', TopTenSchema)
 
-const validateTopTen = (TopTen) => {
-    const schema = {
+const validateTopTen = (obj) => {
+    const schema = joi.object({
         title: joi.string().required(),
         QuestionOne: joi.array().required(),
         QuestionTwo: joi.array().required(),
@@ -105,8 +105,8 @@ const validateTopTen = (TopTen) => {
         QuestionEleven: joi.array().required(),
         QuestionTwelve: joi.array().required(),
         QuestionTherteen: joi.array().required(),
-    }
-    return joi.validate(TopTen, schema)
+    })
+    return schema.validate(obj)
 }
 
 module.exports = { TopTen, validateTopTen }
