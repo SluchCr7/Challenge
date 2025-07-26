@@ -21,7 +21,7 @@ const Page = () => {
   }, [squads])
 
   const handleRefresh = () => {
-    selectRandomObject(squads, remainingObjects, setLastSelected, setRemainingObjects, 'Squad')
+    selectRandomObject(squads, remainingObjects, setLastSelected, setRemainingObjects, 'squad')
     setValueTeamOne(0)
     setValueTeamTwo(0)
   }
@@ -30,7 +30,7 @@ const Page = () => {
   const addPointToTeamTwo = () => setValueTeamTwo(prev => prev + 1)
 
   return (
-    <div className="p-6 bg-gradient-to-b from-gray-100 to-white min-h-screen flex flex-col items-center">
+    <div className="min-h-screen py-10 px-4 bg-[#121212] text-white flex items-center justify-center">
       {lastSelected ? (
         <>
           {/* العنوان الرئيسي */}
@@ -95,7 +95,7 @@ const Page = () => {
         </>
       ) : (
         <GameIntro
-          name={'Squad'}
+          name={'squad'}
           team={squads}
           selectRandomObject={selectRandomObject}
           remainingObjects={remainingObjects}
