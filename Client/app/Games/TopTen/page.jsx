@@ -12,7 +12,7 @@ const Page = () => {
   const [remainingObjects, setRemainingObjects] = useState([])
   const [lastSelected, setLastSelected] = useState(null)
   const [answeredCards, setAnsweredCards] = useState([])
-  const [round , setRound] = useState(1)
+  const [round , setRound] = useState("First")
   useEffect(() => {
     if (topTenData && topTenData.length) {
       const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsTopTen') : null
@@ -28,12 +28,18 @@ const Page = () => {
 
   const handleCardClick = (index, value) => {
     if (answeredCards.includes(index)) return
-    // setRound(round = 1 ?  2 : 1)
-    // // if (round = 1) setValueTeamOne(prev => prev + value)
-    // // else setValueTeamTwo(prev => prev + value)
 
-    // // setAnsweredCards(prev => [...prev, index])
+    if (round === 'First') {
+      setValueTeamOne(prev => prev + value)
+      setRound('Second')
+    } else {
+      setValueTeamTwo(prev => prev + value)
+      setRound('First')
+    }
+
+    setAnsweredCards(prev => [...prev, index])
   }
+
 
   const questionKeys = [
     'questionOne', 'questionTwo', 'questionThree', 'questionFour', 'questionFive',
@@ -45,6 +51,9 @@ const Page = () => {
     <div className='min-h-screen py-10 px-4  text-white flex items-center justify-center'>
       {lastSelected ? (
         <div className='flex flex-col items-center w-full max-w-6xl gap-6'>
+          <p className="text-lg font-semibold text-center text-gray-300">
+            Round : <span className="text-yellow-400">{round === 'First' ? 'First Team' : 'Second Team'}</span>
+          </p>
 
           {/* نقاط الفرق */}
           <div className='flex flex-wrap items-center justify-center gap-6 w-full'>
