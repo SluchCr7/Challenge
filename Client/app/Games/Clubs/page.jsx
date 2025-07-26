@@ -4,7 +4,6 @@ import GameIntro from '@/app/Components/GameIntro'
 import { ClubsContext } from '@/app/Context/Games/ClubsContext'
 import React, { useContext, useEffect, useState } from 'react'
 import selectRandomObject from '@/utils/getUniqueObject'
-import { Button } from '@/components/ui/button'
 import { motion } from 'framer-motion'
 
 const Page = () => {
