@@ -30,7 +30,13 @@ export const TopTenContextProvider = ({ children }) => {
 
   const addTopTen = (e, title, questions) => {
     e.preventDefault();
-    axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/topten`, { title, questions })
+
+    const payload = {
+      title,
+      ...questions // ← فك الكائن وإرسال كل سؤال على مستوى البدي
+    };
+
+    axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/topten`, payload)
       .then((res) => {
         console.log(res);
         window.location.reload();
