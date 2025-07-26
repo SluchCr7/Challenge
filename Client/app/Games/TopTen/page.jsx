@@ -28,11 +28,11 @@ const Page = () => {
 
   const handleCardClick = (index, value) => {
     if (answeredCards.includes(index)) return
-    setRound(round = 1 ?  2 : 1)
-    if (round = 1) setValueTeamOne(prev => prev + value)
-    else setValueTeamTwo(prev => prev + value)
+    // setRound(round = 1 ?  2 : 1)
+    // // if (round = 1) setValueTeamOne(prev => prev + value)
+    // // else setValueTeamTwo(prev => prev + value)
 
-    setAnsweredCards(prev => [...prev, index])
+    // // setAnsweredCards(prev => [...prev, index])
   }
 
   const questionKeys = [
