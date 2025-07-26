@@ -50,9 +50,9 @@ const Page = () => {
           </div>
 
           {!showAnswer ? (
-            <Button onClick={() => setShowAnswer(true)} className="mt-6 bg-green-700 hover:bg-green-800">
+            <button onClick={() => setShowAnswer(true)} className="mt-6 bg-green-700 hover:bg-green-800">
               رؤية اللاعب
-            </Button>
+            </button>
           ) : (
             <motion.div
               initial={{ opacity: 0 }}
