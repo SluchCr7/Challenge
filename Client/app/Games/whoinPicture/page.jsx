@@ -37,7 +37,7 @@ const Page = () => {
               alt="team"
               width={1000}
               height={1000}
-              className="w-full md:w-[600px] h-[320px] rounded-2xl object-cover shadow-lg"
+              className="w-full md:w-[600px] h-[400px] rounded-2xl object-cover shadow-lg"
             />
             <button onClick={() => setShowPlayers(!showPlayers)}>
               <FaArrowCircleDown className="text-3xl text-yellow-500 hover:text-yellow-600 transition cursor-pointer" />

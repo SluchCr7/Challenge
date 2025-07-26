@@ -11,7 +11,7 @@ const Page = () => {
   const [valueTeamTwo, setValueTeamTwo] = useState(0)
   const [remainingObjects, setRemainingObjects] = useState([])
   const [lastSelected, setLastSelected] = useState(null)
-
+  const [selectedPlayers , setSelectedPlayers] = useState([])
   useEffect(() => {
     if (squads && squads.length) {
       const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectssquad') : null
@@ -56,7 +56,11 @@ const Page = () => {
               </h2>
               <ul className="space-y-2 text-center text-gray-800 font-medium">
                 {lastSelected?.TeamOne?.members.map((player, idx) => (
-                  <li key={idx}>{player}</li>
+                  <li
+                    key={idx}
+                  >
+                    {player}
+                  </li>
                 ))}
               </ul>
             </div>
