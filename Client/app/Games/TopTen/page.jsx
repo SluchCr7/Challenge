@@ -23,6 +23,8 @@ const Page = () => {
 
   const handleRefresh = () => {
     setAnsweredCards([]) // تصفير الكروت المجابة عند اختيار سؤال جديد
+    setValueTeamOne(0)
+    setValueTeamTwo(0)
     selectRandomObject(topTenData, remainingObjects, setLastSelected, setRemainingObjects, 'TopTen')
   }
 
@@ -95,6 +97,9 @@ const Page = () => {
                 </div>
               ) : null
             })}
+            <div onClick={() => setRound(prev => prev === 'First' ? 'Second' : 'First')} className='col-span-2 sm:col-span-3 md:col-span-4 lg:col-span-5 cursor-pointer p-4 rounded-2xl shadow-md text-center font-semibold text-white transition duration-200 border bg-[#1f1f1f] hover:bg-green-800 border-gray-600'>
+              Turn Round
+            </div>
           </div>
 
           {/* زر التحديث */}
