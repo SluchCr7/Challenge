@@ -96,8 +96,7 @@ const AddPlayer = ({ setShow, show }) => {
         questionNine, questionTen, questionEleven, questionTwelve, questionThirteen
       } = formData;
 
-      return addTopTen(e, {
-        title,
+      return addTopTen(e, title ,{
         questionOne, questionTwo, questionThree, questionFour,
         questionFive, questionSix, questionSeven, questionEight,
         questionNine, questionTen, questionEleven, questionTwelve, questionThirteen
