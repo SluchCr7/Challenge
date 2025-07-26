@@ -14,6 +14,7 @@ import RoundContextProvider from "../Context/Games/RoundContext";
 import AuctionContextProvider from "../Context/Games/AuctionContext";
 import { TopTenContextProvider } from "../Context/Games/TopTenContext";
 import { SquadContextProvider } from "../Context/Games/SquadContext";
+import { ClubsContextProvider } from "../Context/Games/ClubsContext";
 const LayoutComponent = ({ children }) => {
     const [showProfile,setShowProfile] = useState(false)
     return (
@@ -28,7 +29,8 @@ const LayoutComponent = ({ children }) => {
                         <RoundContextProvider>
                           <AuctionContextProvider>
                             <TopTenContextProvider>
-                              <SquadContextProvider>
+                            <SquadContextProvider>
+                              <ClubsContextProvider>
                                 <div className="flex items-center flex-col gap-2">
                                     <Nav setShowProfile={setShowProfile} />
                                     {children}
@@ -38,6 +40,7 @@ const LayoutComponent = ({ children }) => {
                                         </div>
                                     </div>
                                 </div>
+                                </ClubsContextProvider>
                               </SquadContextProvider>
                             </TopTenContextProvider>
                           </AuctionContextProvider>
