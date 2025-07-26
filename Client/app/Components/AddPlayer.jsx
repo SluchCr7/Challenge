@@ -13,6 +13,7 @@ import { OffsideContext } from '../Context/Games/OffsideContext'
 import { PictureContext } from '../Context/Games/PictureContext'
 import { SquadContext } from '../Context/Games/SquadContext'
 import { TopTenContext } from '../Context/Games/TopTenContext'
+import { ClubsContext } from '../Context/Games/ClubsContext'
 const AddPlayer = ({ setShow, show }) => {
   const [formData, setFormData] = useState({
     image: null,
@@ -54,6 +55,9 @@ const AddPlayer = ({ setShow, show }) => {
     questionEleven : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
     questionTwelve : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
     questionThirteen : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    namePlayerCarrer: "",
+    clubsPlayer: [],
+    clubPlayer : ""
   });
 
 
@@ -68,7 +72,7 @@ const AddPlayer = ({ setShow, show }) => {
   const { addTeam } = useContext(PictureContext);
   const { addSquad } = useContext(SquadContext);
   const { addTopTen } = useContext(TopTenContext);
-
+  const {addNewPlayerClubs} = useContext(ClubsContext)
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
@@ -102,7 +106,9 @@ const AddPlayer = ({ setShow, show }) => {
         questionNine, questionTen, questionEleven, questionTwelve, questionThirteen
       });
     }
-
+    if (pathName === "/Admin/Clubs") {
+      return addNewPlayerClubs(e , formData.namePlayerCarrer , formData.clubsPlayer)
+    }
   };
 
   return (
@@ -249,7 +255,21 @@ const AddPlayer = ({ setShow, show }) => {
               </div>
             </>
           )}
-
+          {
+            pathName === "/Admin/Clubs" && (
+              <>
+              <label className='text-yellow-600'>Player Name</label>
+              <input type='text' className='input' value={formData.namePlayerCarrer} onChange={(e) => handleChange('namePlayerCarrer', e.target.value)} />
+              <div className='flex flex-col gap-4'>
+                <h2 className='text-yellow-600 font-bold'>Teams</h2>
+                <div className='flex gap-2'>
+                  <input type='text' className='input flex-1' value={formData.clubPlayer} onChange={(e) => handleChange('clubPlayer', e.target.value)} />
+                  <button onClick={() => handleChange('clubsPlayer', [...formData.clubsPlayer, formData.clubPlayer]) || handleChange('clubPlayer', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                </div>
+              </div>
+              </>
+            )
+          }
 
           <button onClick={handleAdd} className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition'>حفظ</button>
         </div>
