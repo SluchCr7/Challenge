@@ -41,7 +41,19 @@ const AddPlayer = ({ setShow, show }) => {
     squadTeamTwoMembers: [],
     squadTeamTwoMember: '',
     title: '',            // ✅ العنوان لمجموعة TopTen
-    questions: []         // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionOne : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionTwo : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionThree : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionFour : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionFive : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionSix : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionSeven : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionEight : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionNine : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionTen : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionEleven : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionTwelve : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
+    questionThirteen : "",      // ✅ الأسئلة بصيغة [{ name: '', value: 1 }]
   });
 
 
@@ -77,8 +89,21 @@ const AddPlayer = ({ setShow, show }) => {
         { name: formData.squadTeamTwoName, members: formData.squadTeamTwoMembers });
     }
     if (pathName === '/Admin/TopTen') {
-      return addTopTen(e, formData.title, formData.questions);
+      const {
+        title,
+        questionOne, questionTwo, questionThree, questionFour,
+        questionFive, questionSix, questionSeven, questionEight,
+        questionNine, questionTen, questionEleven, questionTwelve, questionThirteen
+      } = formData;
+
+      return addTopTen(e, {
+        title,
+        questionOne, questionTwo, questionThree, questionFour,
+        questionFive, questionSix, questionSeven, questionEight,
+        questionNine, questionTen, questionEleven, questionTwelve, questionThirteen
+      });
     }
+
   };
 
   return (
@@ -204,28 +229,28 @@ const AddPlayer = ({ setShow, show }) => {
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                {[...Array(13)].map((_, i) => (
-                  <div key={i} className="flex flex-col gap-1">
+                {[
+                  'questionOne', 'questionTwo', 'questionThree', 'questionFour',
+                  'questionFive', 'questionSix', 'questionSeven', 'questionEight',
+                  'questionNine', 'questionTen', 'questionEleven', 'questionTwelve', 'questionThirteen'
+                ].map((key, i) => (
+                  <div key={key} className="flex flex-col gap-1">
                     <label className="text-yellow-600">{`السؤال ${i + 1}`}</label>
                     <input
                       type="text"
                       className="input"
-                      placeholder="اسم الفريق أو اللاعب"
-                      value={formData.questions?.[i]?.name || ''}
-                      onChange={(e) => {
-                        const updated = [...(formData.questions || [])];
-                        updated[i] = {
-                          name: e.target.value,
-                          value: i < 10 ? i + 1 : -(i - 9), // 1 إلى 10 ثم -1 -2 -3
-                        };
-                        handleChange('questions', updated);
-                      }}
+                      placeholder="اسم اللاعب أو الفريق"
+                      value={formData[key]?.name || ''}
+                      onChange={(e) =>
+                        handleChange(key, { name: e.target.value }) // ❌ بدون value
+                      }
                     />
                   </div>
                 ))}
               </div>
             </>
           )}
+
 
           <button onClick={handleAdd} className='w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3 rounded-lg transition'>حفظ</button>
         </div>

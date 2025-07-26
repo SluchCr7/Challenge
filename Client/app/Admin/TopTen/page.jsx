@@ -45,7 +45,7 @@ const TopTenPage = () => {
               <span className="text-yellow-600 font-bold text-xl">#{index + 1}</span>
               <span className="text-white font-bold text-xl">{item.title}</span>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
+              {/* <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                 {item.questions.map((q, i) => (
                   <div key={i} className="flex flex-col items-center border p-3 rounded-md">
                     <span className="text-yellow-500 font-semibold">السؤال {i + 1}</span>
@@ -53,7 +53,7 @@ const TopTenPage = () => {
                     <span className="text-gray-300 text-xs">النقاط: {q.value}</span>
                   </div>
                 ))}
-              </div>
+              </div> */}
 
               <button
                 onClick={() => deleteItem('topten', item._id)}
