@@ -12,7 +12,7 @@ const Page = () => {
   const [remainingObjects, setRemainingObjects] = useState([])
   const [lastSelected, setLastSelected] = useState(null)
   const [answeredCards, setAnsweredCards] = useState([])
-
+  const [round , setRound] = useState(1)
   useEffect(() => {
     if (topTenData && topTenData.length) {
       const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsTopTen') : null
@@ -28,9 +28,9 @@ const Page = () => {
 
   const handleCardClick = (index, value) => {
     if (answeredCards.includes(index)) return
-
-    if (value > 0) setValueTeamOne(prev => prev + value)
-    else setValueTeamTwo(prev => prev + Math.abs(value))
+    setRound(round = 1 ?  2 : 1)
+    if (round = 1) setValueTeamOne(prev => prev + value)
+    else setValueTeamTwo(prev => prev + value)
 
     setAnsweredCards(prev => [...prev, index])
   }
