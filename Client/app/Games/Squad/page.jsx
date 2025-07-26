@@ -30,7 +30,7 @@ const Page = () => {
   const addPointToTeamTwo = () => setValueTeamTwo(prev => prev + 1)
 
   return (
-    <div className="min-h-screen py-10 px-4 bg-[#121212] text-white flex items-center justify-center">
+    <div className="min-h-screen py-10 px-4 text-white flex flex-col items-center justify-center">
       {lastSelected ? (
         <>
           {/* العنوان الرئيسي */}

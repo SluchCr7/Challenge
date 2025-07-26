@@ -42,7 +42,7 @@ const Page = () => {
   ]
 
   return (
-    <div className='min-h-screen py-10 px-4 bg-[#121212] text-white flex items-center justify-center'>
+    <div className='min-h-screen py-10 px-4  text-white flex items-center justify-center'>
       {lastSelected ? (
         <div className='flex flex-col items-center w-full max-w-6xl gap-6'>
 
