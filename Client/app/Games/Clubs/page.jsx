@@ -62,12 +62,12 @@ const Page = () => {
             </motion.div>
           )}
 
-          <Button
+          <button
             onClick={handleRefresh}
             className="mt-10 bg-yellow-500 hover:bg-yellow-600 text-black font-bold"
           >
             لاعب جديد
-          </Button>
+          </button>
         </div>
       ) : (
         <GameIntro
