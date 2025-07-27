@@ -21,7 +21,7 @@ const Page = () => {
   }, [data])
 
   const handleRefresh = () => {
-      setShowAnswer(false)
+    setShowAnswer(false)
     selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, 'clubs')
   }
 

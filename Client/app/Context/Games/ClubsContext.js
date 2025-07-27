@@ -13,7 +13,7 @@ export const ClubsContextProvider = ({children}) => {
     }, [])
     const addNewPlayerClubs = (e,name, clubs) => {
         e.preventDefault()
-        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/clubs`, name, clubs)
+        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/clubs`, { name, clubs })
             .then((res) => {
                 console.log(res);
                 window.location.reload();
