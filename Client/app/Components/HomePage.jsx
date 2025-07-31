@@ -17,9 +17,9 @@ const HomePage = () => {
     { id: 7, title: 'اوف سايد', link: '/Games/Offside', state: 'متاحة الان', description: 'اكتب اسم لاعب مختلف عن الآخرين في نفس اللحظة' },
     { id: 8, title: 'اسكور شيت', link: '/Games/Squad', state: 'متاحة الان', description: 'يتم عرض فريقين وكل فريق ياخ فريق من الاثنين ويكون مطالبا بتخميين اللاعبين في تشكيلة ذلك الفريق' },
     { id: 9, title: 'توب 10', link: '/Games/TopTen', state: 'متاحة الان', description: 'قريباً: يكون عليك تخمين من هم اكثر 10 لاعبين قاموا شئ معين مثل مشاركه او اهداف' },
-    { id: 10, title: 'المسار', link: '/Games/Clubs', state: 'متاحة قريبا', description: 'قريباً: يتم عرض مسار لاعب في مسيرته .. الاندية التي لعب لها ومهمتك هي ان تعرف اللاعب' },
-    { id: 11, title: 'الدور', link: '/Games/Round', state: 'متاحة قريبا', description: 'قريباً: جولات متتابعة في تحدٍ سريع' },
-    { id: 12, title: 'المزايدة', link: '/Games/Auction', state: 'متاحة قريبا', description: 'قريباً: راوغ وراهن في لعبة المزايدة الذكية' },
+    { id: 10, title: 'المسار', link: '/Games/Clubs', state: 'متاحة الان', description: 'قريباً: يتم عرض مسار لاعب في مسيرته .. الاندية التي لعب لها ومهمتك هي ان تعرف اللاعب' },
+    { id: 11, title: 'الدور', link: '/Games/Round', state: 'متاحة الان', description: 'قريباً: جولات متتابعة في تحدٍ سريع' },
+    { id: 12, title: 'المزايدة', link: '/Games/Auction', state: 'متاحة الان', description: 'قريباً: راوغ وراهن في لعبة المزايدة الذكية' },
   ]
 
   const { isLogin , isAuthChecked } = useContext(AuthContext)
