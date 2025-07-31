@@ -28,7 +28,8 @@ const AddResk = ({ setShow, show }) => {
           {[{ label: 'Easy', state: easy, setState: setEasy }, { label: 'Medium', state: medium, setState: setMedium }, { label: 'Hard', state: hard, setState: setHard }, { label: 'Expert', state: expert, setState: setExpert }].map(({ label, state, setState }) => (
             <div key={label} className='flex flex-col gap-4 w-full'>
               <label className='text-sm text-green-700 dark:text-yellow-400 tracking-widest'>{label}</label>
-              <input
+              <textarea
+                cols={14}
                 placeholder={`${label} Question`}
                 className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
                 type="text"

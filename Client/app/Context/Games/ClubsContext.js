@@ -11,9 +11,9 @@ export const ClubsContextProvider = ({children}) => {
     useEffect(() => {
         getAllData({ link: "clubs", setter: setData })
     }, [])
-    const addNewPlayerClubs = (e,name, clubs) => {
+    const addNewPlayerClubs = (e,name, teams) => {
         e.preventDefault()
-        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/clubs`, { name, clubs })
+        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/clubs`, { name, teams })
             .then((res) => {
                 console.log(res);
                 window.location.reload();

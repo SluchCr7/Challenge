@@ -149,13 +149,24 @@ const AddPlayer = ({ setShow, show }) => {
               <input type='text' className='input' value={formData.playerName} onChange={(e) => handleChange('playerName', e.target.value)} />
               <label className='text-yellow-600'>الإشارات</label>
               <div className='flex gap-2'>
-                <input type='text' className='input flex-1' value={formData.playerClo} onChange={(e) => handleChange('playerClo', e.target.value)} />
+                <textarea
+                  cols={14}
+                  type='text'
+                  className='input flex-1'
+                  value={formData.playerClo}
+                  onChange={(e) => handleChange('playerClo', e.target.value)}
+                />
                 <button
-                  onClick={() => handleChange('playerClos', [...formData.playerClos, formData.playerClo]) || handleChange('playerClo', '')}
+                  onClick={() => {
+                    if (formData.playerClo.trim() === '') return;
+                    handleChange('playerClos', [...formData.playerClos, formData.playerClo.trim()]);
+                    handleChange('playerClo', '');
+                  }}
                   className='btn border-yellow-600 text-yellow-600'>
                   إضافة
                 </button>
               </div>
+
             </>
           )}
 
@@ -182,7 +193,16 @@ const AddPlayer = ({ setShow, show }) => {
               <label className='text-yellow-600'>مثال</label>
               <div className='flex gap-2'>
                 <input type='text' className='input flex-1' value={formData.example} onChange={(e) => handleChange('example', e.target.value)} />
-                <button onClick={() => handleChange('roundExamples', [...formData.roundExamples, formData.example]) || handleChange('example', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                <button
+                  onClick={() => {
+                    if (formData.example.trim() === '') return;
+                    handleChange('roundExamples', [...formData.roundExamples, formData.example.trim()]);
+                    handleChange('example', '');
+                  }}
+                  className='btn border-yellow-600 text-yellow-600'
+                >
+                  إضافة
+                </button>
               </div>
             </>
           )}
@@ -197,7 +217,17 @@ const AddPlayer = ({ setShow, show }) => {
               <label className='text-yellow-600'>أعضاء الفريق</label>
               <div className='flex gap-2'>
                 <input type='text' className='input flex-1' value={formData.teamMember} onChange={(e) => handleChange('teamMember', e.target.value)} />
-                <button onClick={() => handleChange('team', [...formData.team, formData.teamMember]) || handleChange('teamMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                <button
+                  onClick={() => {
+                    if (formData.teamMember.trim() === '') return;
+                    handleChange('team', [...formData.team, formData.teamMember.trim()]);
+                    handleChange('teamMember', '');
+                  }}
+                  className='btn border-yellow-600 text-yellow-600'
+                >
+                  إضافة
+                </button>
+
               </div>
             </>
           )}
@@ -210,7 +240,16 @@ const AddPlayer = ({ setShow, show }) => {
                 <input type='text' placeholder='اسم الفريق' className='input' value={formData.squadTeamOneName} onChange={(e) => handleChange('squadTeamOneName', e.target.value)} />
                 <div className='flex gap-2'>
                   <input type='text' className='input flex-1' value={formData.squadTeamOneMember} onChange={(e) => handleChange('squadTeamOneMember', e.target.value)} />
-                  <button onClick={() => handleChange('squadTeamOneMembers', [...formData.squadTeamOneMembers, formData.squadTeamOneMember]) || handleChange('squadTeamOneMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                  <button
+                    onClick={() => {
+                      if (formData.squadTeamOneMember.trim() === '') return;
+                      handleChange('squadTeamOneMembers', [...formData.squadTeamOneMembers, formData.squadTeamOneMember.trim()]);
+                      handleChange('squadTeamOneMember', '');
+                    }}
+                    className='btn border-yellow-600 text-yellow-600'
+                  >
+                    إضافة
+                  </button>
                 </div>
               </div>
               <div className='flex flex-col gap-4'>
@@ -218,7 +257,17 @@ const AddPlayer = ({ setShow, show }) => {
                 <input type='text' placeholder='اسم الفريق' className='input' value={formData.squadTeamTwoName} onChange={(e) => handleChange('squadTeamTwoName', e.target.value)} />
                 <div className='flex gap-2'>
                   <input type='text' className='input flex-1' value={formData.squadTeamTwoMember} onChange={(e) => handleChange('squadTeamTwoMember', e.target.value)} />
-                  <button onClick={() => handleChange('squadTeamTwoMembers', [...formData.squadTeamTwoMembers, formData.squadTeamTwoMember]) || handleChange('squadTeamTwoMember', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                  <button
+                    onClick={() => {
+                      if (formData.squadTeamTwoMembers.trim() === '') return;
+                      handleChange('squadTeamTwoMembers', [...formData.squadTeamOneMembers, formData.squadTeamTwoMember.trim()]);
+                      handleChange('squadTeamTwoMembers', '');
+                    }}
+                    className='btn border-yellow-600 text-yellow-600'
+                  >
+                    إضافة
+                  </button>
+
                 </div>
               </div>
             </>
@@ -264,7 +313,16 @@ const AddPlayer = ({ setShow, show }) => {
                 <h2 className='text-yellow-600 font-bold'>Teams</h2>
                 <div className='flex gap-2'>
                   <input type='text' className='input flex-1' value={formData.clubPlayer} onChange={(e) => handleChange('clubPlayer', e.target.value)} />
-                  <button onClick={() => handleChange('clubsPlayer', [...formData.clubsPlayer, formData.clubPlayer]) || handleChange('clubPlayer', '')} className='btn border-yellow-600 text-yellow-600'>إضافة</button>
+                  <button
+                    onClick={() => {
+                      if (formData.clubPlayer.trim() === '') return;
+                      handleChange('clubsPlayer', [...formData.clubsPlayer, formData.clubPlayer.trim()]);
+                      handleChange('clubPlayer', '');
+                    }}
+                    className='btn border-yellow-600 text-yellow-600'
+                  >
+                    إضافة
+                  </button>
                 </div>
               </div>
               </>
