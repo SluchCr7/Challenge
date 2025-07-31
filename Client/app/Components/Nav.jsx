@@ -8,7 +8,7 @@ import { IoIosLogOut, IoIosCall } from 'react-icons/io'
 import { FaChevronDown } from 'react-icons/fa'
 
 const Nav = ({ setShowProfile }) => {
-  const { loginState, user, Logout } = useContext(AuthContext)
+  const { isLogin , isAuthChecked , user, Logout } = useContext(AuthContext)
   const [show, setShow] = useState(false)
 
   return (
@@ -22,7 +22,7 @@ const Nav = ({ setShowProfile }) => {
         </Link>
 
         <div className="relative">
-          {loginState ? (
+          {isAuthChecked ? (
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => setShow(!show)}>
               <Image
                 src={user?.profilePhoto?.url}
