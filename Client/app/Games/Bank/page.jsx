@@ -24,6 +24,7 @@ const Bank = () => {
   const [lastSelected, setLastSelected] = useState(null);
   const [showInstructions, setShowInstructions] = useState(false);
   const [showRoundAlert, setShowRoundAlert] = useState(false);
+  const [showFinalResult, setShowFinalResult] = useState(false);
 
   useEffect(() => {
     // Access localStorage only on the client side
@@ -65,16 +66,24 @@ const Bank = () => {
     selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Bank");
   };
 
-  const proceedToNextRound = () => {
-    setShowRoundAlert(false);
-    setTurn((prev) => (prev === "First" ? "Second" : "First"));
-    setScore(0);
-    setIncrement(1);
-    setTime(120);
-    setQuestion(1);
-    setRoundNum((prev) => prev + 1);
-    selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Bank");
-  };
+const proceedToNextRound = () => {
+  setShowRoundAlert(false);
+
+  if (roundNum === 6) {
+    // عرض الفائز بعد الجولة الأخيرة
+    stopTimer(); // نوقف المؤقت إن كان يعمل
+    setShowFinalResult(true);
+    return;
+  }
+
+  setTurn((prev) => (prev === "First" ? "Second" : "First"));
+  setScore(0);
+  setIncrement(1);
+  setTime(120);
+  setQuestion(1);
+  setRoundNum((prev) => prev + 1);
+  selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Bank");
+};
 
   const handleCorrect = () => {
     setScore((prev) => prev + (prev === 0 ? 1 : prev)); // أول إجابة تعطي 1، بعدها يتضاعف
@@ -172,9 +181,11 @@ const Bank = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+
       {lastSelected ? (
         <>
- <div className="w-full max-w-5xl space-y-8">
+        <div className="w-full max-w-5xl space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
             <div className="border border-green-600 rounded-lg p-4">
               <p className="text-sm text-green-700">الفريق الأول</p>
@@ -229,7 +240,59 @@ const Bank = () => {
               <button onClick={handleBank} className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700">Bank</button>
             </div>
           </div>
-        </div>  
+          </div>  
+          <AnimatePresence>
+            {showFinalResult && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-70 z-50 flex items-center justify-center"
+              >
+                <motion.div
+                  initial={{ scale: 0.8, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.8, opacity: 0 }}
+                  className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-md text-center shadow-xl relative"
+                >
+                  <h2 className="text-2xl font-bold text-yellow-600 mb-4">🏆 النتيجة النهائية</h2>
+                  <p className="text-lg mb-2">
+                    الفريق الأول: <span className="font-bold text-green-600">{ScoreTeamOne}</span>
+                  </p>
+                  <p className="text-lg mb-4">
+                    الفريق الثاني: <span className="font-bold text-green-600">{ScoreTeamTwo}</span>
+                  </p>
+
+                  <p className="text-xl font-semibold text-green-700 mb-6">
+                    {ScoreTeamOne > ScoreTeamTwo
+                      ? "🎉 الفريق الأول هو الفائز!"
+                      : ScoreTeamTwo > ScoreTeamOne
+                      ? "🎉 الفريق الثاني هو الفائز!"
+                      : "🤝 تعادل بين الفريقين!"}
+                  </p>
+
+                  {/* زر العب مجددًا */}
+                  <button
+                    onClick={() => {
+                      setShowFinalResult(false);
+                      setScoreTeamOne(0);
+                      setScoreTeamTwo(0);
+                      setRoundNum(1);
+                      setTurn("First");
+                      setScore(0);
+                      setIncrement(1);
+                      setTime(120);
+                      setQuestion(1);
+                      selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Bank");
+                    }}
+                    className="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-md text-lg font-semibold transition-all"
+                  >
+                    🔁 العب مجددًا
+                  </button>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       ) : (
         <GameIntro name={"Bank"} team={data} selectRandomObject={selectRandomObject} remainingObjects={remainingObjects} setLastSelected={setLastSelected} setRemainingObjects={setRemainingObjects} text={"ابدأ التحدي بالضغط على الزر واكتشف أسئلتك!"}
