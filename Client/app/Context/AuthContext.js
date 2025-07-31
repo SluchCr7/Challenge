@@ -11,18 +11,21 @@ import swal from "sweetalert"
 import Swal from 'sweetalert2'
 
 const AuthContextProvider = (props) => {
-    const [loginState, setLoginState] = useState(false)
     const [user, setUser] = useState({})
     const [users, setUsers] = useState([])
     const [isVerify, setIsVerify] = useState(false)
+    const [isAuthChecked, setIsAuthChecked] = useState(false)
+    const [isLogin , setIsLogin] = useState(false)
     // Login Function
     const Login = (Email, Password) => {
         // e.preventDefault()
         axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/auth/login` , {Email  , Password})
             .then(res => {
                 setUser(res.data)
-                setLoginState(true)
+                setIsLogin(true)
+                setIsAuthChecked(true)
                 localStorage.setItem('userData', JSON.stringify(res.data))
+                localStorage.setItem('loginChallengeState', "true")
                 toast.success("Login Successfully")
                 setTimeout(() => {
                     window.location.href = "/"
@@ -44,9 +47,11 @@ const AuthContextProvider = (props) => {
         })
             .then(willLogout => {    
                 if (willLogout) {
-                    setLoginState(false)
+                    setIsLogin(false)
+                    setIsAuthChecked(false)
                     setUser({})
                     localStorage.removeItem('userData')
+                    localStorage.removeItem('loginChallengeState')
                     window.location.href = "/Auth/Login"
                 }
             })
@@ -97,14 +102,20 @@ const registerNewUser = (Name, Email, Password) => {
             toast.error("Uploading Image Failed")
         })
     }
+  useEffect(() => {
+    const storedUser = localStorage.getItem('userData')
+    const loginState = localStorage.getItem('loginChallengeState');
 
-    useEffect(() => {
-        const user = localStorage.getItem('userData')
-        if(user){
-            setUser(JSON.parse(user))
-            setLoginState(true)
-        }
-    }, [])
+    if (storedUser && loginState === 'true') {
+      const parsedUser = JSON.parse(storedUser);
+      setUser(parsedUser);
+      setIsLogin(true);
+    } else {
+      setIsLogin(false);
+    }
+
+    setIsAuthChecked(true);
+  }, []);
     useEffect(() => {
         getAllData({ link: 'auth', setter: setUsers })
     }, [])
@@ -122,7 +133,7 @@ const registerNewUser = (Name, Email, Password) => {
             pauseOnHover
         />
         <AuthContext.Provider
-            value={{ loginState, user, Login, Logout, registerNewUser , users ,  verifyAccount , isVerify , UpdatePhoto}}>
+            value={{ isLogin , isAuthChecked, user, Login, Logout, registerNewUser , users ,  verifyAccount , isVerify , UpdatePhoto}}>
             {props.children}
         </AuthContext.Provider>
     </>

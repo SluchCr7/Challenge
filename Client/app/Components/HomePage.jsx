@@ -15,22 +15,22 @@ const HomePage = () => {
     { id: 5, title: 'اهبد صح', link: '/Games/Guss', state: 'متاحة الان', description: 'اعرض معلومة عن اللاعب وزميلك يخمّن' },
     { id: 6, title: 'مين في الصورة', link: '/Games/whoinPicture', state: 'متاحة الان', description: 'تعرف على اللاعبين في الصورة' },
     { id: 7, title: 'اوف سايد', link: '/Games/Offside', state: 'متاحة الان', description: 'اكتب اسم لاعب مختلف عن الآخرين في نفس اللحظة' },
-    { id: 8, title: 'اسكور شيت', link: '/Games/Squad', state: 'متاحة قريبا', description: 'يتم عرض فريقين وكل فريق ياخ فريق من الاثنين ويكون مطالبا بتخميين اللاعبين في تشكيلة ذلك الفريق' },
-    { id: 9, title: 'توب 10', link: '/Games/TopTen', state: 'متاحة قريبا', description: 'قريباً: يكون عليك تخمين من هم اكثر 10 لاعبين قاموا شئ معين مثل مشاركه او اهداف' },
+    { id: 8, title: 'اسكور شيت', link: '/Games/Squad', state: 'متاحة الان', description: 'يتم عرض فريقين وكل فريق ياخ فريق من الاثنين ويكون مطالبا بتخميين اللاعبين في تشكيلة ذلك الفريق' },
+    { id: 9, title: 'توب 10', link: '/Games/TopTen', state: 'متاحة الان', description: 'قريباً: يكون عليك تخمين من هم اكثر 10 لاعبين قاموا شئ معين مثل مشاركه او اهداف' },
     { id: 10, title: 'المسار', link: '/Games/Clubs', state: 'متاحة قريبا', description: 'قريباً: يتم عرض مسار لاعب في مسيرته .. الاندية التي لعب لها ومهمتك هي ان تعرف اللاعب' },
     { id: 11, title: 'الدور', link: '/Games/Round', state: 'متاحة قريبا', description: 'قريباً: جولات متتابعة في تحدٍ سريع' },
     { id: 12, title: 'المزايدة', link: '/Games/Auction', state: 'متاحة قريبا', description: 'قريباً: راوغ وراهن في لعبة المزايدة الذكية' },
   ]
 
-  const { loginState } = useContext(AuthContext)
-
+  const { isLogin , isAuthChecked } = useContext(AuthContext)
+  if (!isAuthChecked) return null
   return (
     <div className="bg-gray-100 dark:bg-gray-900 min-h-screen py-8 px-4 w-full">
       <h1 className="text-3xl md:text-5xl font-bold text-center text-green-700 mb-10 tracking-wide">
         {process.env.NEXT_PUBLIC_TITLE || 'تحديات كرة القدم'}
       </h1>
 
-      {loginState ? (
+      {isLogin ? (
         <div className="grid grid-cols-1 textAra sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {games.map((game) => (
             <motion.div

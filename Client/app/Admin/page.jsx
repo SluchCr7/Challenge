@@ -21,6 +21,7 @@ const AdminPage = () => {
     { name: 'Team', link: '/Admin/Team' },
     { name: 'TopTen', link: '/Admin/TopTen' },
     { name: 'Squad', link: '/Admin/Squad' },
+    { name: 'Player Carrer', link: '/Admin/Clubs' },
   ];
 
   return (
