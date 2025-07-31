@@ -34,7 +34,7 @@ const Page = () => {
           </h1>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 w-full">
-            {lastSelected.clubs.map((club, index) => (
+            {lastSelected.teams.map((club, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
