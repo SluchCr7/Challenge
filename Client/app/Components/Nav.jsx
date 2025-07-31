@@ -22,7 +22,7 @@ const Nav = ({ setShowProfile }) => {
         </Link>
 
         <div className="relative">
-          {isAuthChecked ? (
+          {isLogin ? (
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => setShow(!show)}>
               <Image
                 src={user?.profilePhoto?.url}
