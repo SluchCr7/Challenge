@@ -11,7 +11,8 @@ const Page = () => {
   const [valueTeamTwo, setValueTeamTwo] = useState(0)
   const [remainingObjects, setRemainingObjects] = useState([])
   const [lastSelected, setLastSelected] = useState(null)
-  const [selectedPlayers , setSelectedPlayers] = useState([])
+  const [selectedPlayersTeamOne , setSelectedPlayersTeamOne] = useState([])
+  const [selectedPlayersTeamTwo , setSelectedPlayersTeamTwo] = useState([])
   useEffect(() => {
     if (squads && squads.length) {
       const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectssquad') : null
@@ -58,6 +59,11 @@ const Page = () => {
                 {lastSelected?.TeamOne?.members.map((player, idx) => (
                   <li
                     key={idx}
+                    onClick={() => {
+                      setSelectedPlayersTeamOne([...selectedPlayersTeamOne, player]);
+                      setValueTeamOne((prev)=> prev + 1)
+                    }}
+                    className={`${selectedPlayersTeamOne.includes(player) ? "line-through text-gray-600 pointer-events-none" : "text-black"}`}
                   >
                     {player}
                   </li>
@@ -82,7 +88,16 @@ const Page = () => {
               </h2>
               <ul className="space-y-2 text-center text-gray-800 font-medium">
                 {lastSelected?.TeamTwo?.members.map((player, idx) => (
-                  <li key={idx}>{player}</li>
+                  <li
+                    key={idx}
+                    onClick={() => {
+                      setSelectedPlayersTeamTwo([...selectedPlayersTeamTwo, player]);
+                      setValueTeamTwo((prev) => prev + 1)
+                    }}
+                    className={`${selectedPlayersTeamTwo.includes(player) ? "line-through text-gray-600 pointer-events-none" : "text-black"}`}
+                  >
+                    {player}
+                  </li>
                 ))}
               </ul>
             </div>
