@@ -12,7 +12,7 @@ import {
   RiCompass3Line,
   RiBarChartGroupedLine
 } from 'react-icons/ri'
-import { Timer } from 'lucide-react';
+import { Timer, Gavel, Users, Gamepad2, Flag, RotateCcw, LayoutGrid, ListOrdered } from 'lucide-react';
 const HomePage = () => {
   const { isLogin, isAuthChecked } = useContext(AuthContext)
   const [activeFans, setActiveFans] = useState(12840)
@@ -31,6 +31,14 @@ const HomePage = () => {
     { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer />, color: 'from-emerald-600/20 to-emerald-600/5' },
     { id: 5, title: 'True Guess', link: '/Games/Guss', state: 'AVAILABLE', description: 'Challenge friends with obscure football facts.', icon: <RiCompass3Line />, color: 'from-purple-600/20 to-purple-600/5' },
     { id: 6, title: 'Visual Identity', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-primary/20 to-primary/5' },
+    { id: 7, title: 'Elite Auction', link: '/Games/Auction', state: 'AVAILABLE', description: 'Bid against rivals and prove your depth of knowledge.', icon: <Gavel />, color: 'from-orange-600/20 to-orange-600/5' },
+    { id: 8, title: 'Club Legends', link: '/Games/Clubs', state: 'AVAILABLE', description: 'Identify global clubs from their history, crests, and stars.', icon: <Users />, color: 'from-cyan-600/20 to-cyan-600/5' },
+    { id: 9, title: 'Offside Rule', link: '/Games/Offside', state: 'AVAILABLE', description: 'Test your knowledge on tactical rules and referee decisions.', icon: <Flag />, color: 'from-yellow-600/20 to-yellow-600/5' },
+    { id: 10, title: 'Infinity Round', link: '/Games/Round', state: 'AVAILABLE', description: 'Continuous rounds of increasing difficulty to test stamina.', icon: <RotateCcw />, color: 'from-indigo-600/20 to-indigo-600/5' },
+    { id: 11, title: 'Squad Builder', link: '/Games/Squad', state: 'AVAILABLE', description: 'Construct the perfect team and solve formation puzzles.', icon: <LayoutGrid />, color: 'from-lime-600/20 to-lime-600/5' },
+    { id: 12, title: 'The Top Ten', link: '/Games/TopTen', state: 'AVAILABLE', description: 'Rank and list the greatest players in specific categories.', icon: <ListOrdered />, color: 'from-teal-600/20 to-teal-600/5' },
+    { id: 13, title: 'Multi-Challenge', link: '/Games/MultiGame', state: 'AVAILABLE', description: 'A diverse gauntlet of various football mini-games.', icon: <Gamepad2 />, color: 'from-rose-600/20 to-rose-600/5' },
+    { id: 14, title: 'Hall of Fame', link: '/Games/Leaderboard', state: 'AVAILABLE', description: 'View the global rankings and elite football legends.', icon: <RiTrophyLine />, color: 'from-slate-600/20 to-slate-600/5' },
   ]
 
   if (!isAuthChecked) return null
