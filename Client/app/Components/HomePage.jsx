@@ -8,12 +8,11 @@ import {
   RiGroupLine,
   RiFlashlightLine,
   RiPlayFill,
-  RiTimerScaleLine,
   RiFocus2Line,
   RiCompass3Line,
   RiBarChartGroupedLine
 } from 'react-icons/ri'
-
+import { Timer } from 'lucide-react';
 const HomePage = () => {
   const { isLogin, isAuthChecked } = useContext(AuthContext)
   const [activeFans, setActiveFans] = useState(12840)
@@ -29,7 +28,7 @@ const HomePage = () => {
     { id: 1, title: 'Who is the Player?', link: '/Games/Whoplayer', state: 'AVAILABLE', description: 'Guess the legend based on career clues and stats.', icon: <RiFocus2Line />, color: 'from-red-600/20 to-red-600/5' },
     { id: 2, title: 'Secret Password', link: '/Games/Password', state: 'AVAILABLE', description: 'Unlock the hidden player identity with minimal hints.', icon: <RiFlashlightLine />, color: 'from-blue-600/20 to-blue-600/5' },
     { id: 3, title: 'Risk Arena', link: '/Games/Resk', state: 'AVAILABLE', description: 'High-stakes football trivia across multiple difficulty tiers.', icon: <RiTrophyLine />, color: 'from-amber-600/20 to-amber-600/5' },
-    { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <RiTimerScaleLine />, color: 'from-emerald-600/20 to-emerald-600/5' },
+    { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer />, color: 'from-emerald-600/20 to-emerald-600/5' },
     { id: 5, title: 'True Guess', link: '/Games/Guss', state: 'AVAILABLE', description: 'Challenge friends with obscure football facts.', icon: <RiCompass3Line />, color: 'from-purple-600/20 to-purple-600/5' },
     { id: 6, title: 'Visual Identity', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-primary/20 to-primary/5' },
   ]
@@ -130,7 +129,7 @@ const HomePage = () => {
           { label: 'Total Challenges', value: '450+', icon: <RiTrophyLine /> },
           { label: 'Expert Fans', value: '1.2M', icon: <RiGroupLine /> },
           { label: 'Real-time Stats', value: 'Live', icon: <RiFlashlightLine /> },
-          { label: 'Upcoming Events', value: '12', icon: <RiTimerScaleLine /> },
+          { label: 'Upcoming Events', value: '12', icon: <Timer /> },
         ].map((stat, i) => (
           <div key={i} className="glass border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center gap-4 hover:border-primary/30 transition-all group">
             <span className="text-3xl text-primary transform group-hover:scale-110 transition-transform">{stat.icon}</span>
@@ -223,7 +222,7 @@ const HomePage = () => {
             <div className="flex items-center justify-between px-2">
               <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Premier League</span>
               <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> Live 74'
+                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> Live 74
               </span>
             </div>
 

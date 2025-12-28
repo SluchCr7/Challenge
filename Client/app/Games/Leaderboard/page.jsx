@@ -195,7 +195,7 @@ const Leaderboard = () => {
                     </div>
                     <div className="space-y-2">
                         <h4 className="text-2xl font-black italic text-white uppercase tracking-tighter leading-none">Weekly Scorcher</h4>
-                        <p className="text-white/40 text-sm font-medium">Achieve 90% accuracy in "Risk" mode for 3 consecutive games.</p>
+                        <p className="text-white/40 text-sm font-medium">Achieve 90% accuracy in Risk mode for 3 consecutive games.</p>
                         <span className="inline-block mt-2 text-[9px] font-black text-amber-500 uppercase tracking-widest">+2.5K BONUS XP</span>
                     </div>
                     <div className="absolute -right-8 -bottom-8 text-white/[0.02] text-9xl font-black italic select-none">HOT</div>
@@ -207,7 +207,7 @@ const Leaderboard = () => {
                     </div>
                     <div className="space-y-2">
                         <h4 className="text-2xl font-black italic text-white uppercase tracking-tighter leading-none">Invincible Guard</h4>
-                        <p className="text-white/40 text-sm font-medium">Clear the "Who Player" arena without using any hints.</p>
+                        <p className="text-white/40 text-sm font-medium">Clear the Who Player arena without using any hints.</p>
                         <span className="inline-block mt-2 text-[9px] font-black text-blue-500 uppercase tracking-widest">ELITE BADGE EARNED</span>
                     </div>
                     <div className="absolute -right-8 -bottom-8 text-white/[0.02] text-9xl font-black italic select-none">SHIELD</div>

@@ -1,10 +1,11 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import selectRandomObject from "@/utils/getUniqueObject";
-import { RiRefreshLine, RiTimerLine, RiGavelLine, RiAddLine, RiSubtractLine, RiFlashlightLine, RiFocus2Line, RiTrophyLine } from "react-icons/ri";
+import { RiRefreshLine, RiAddLine, RiSubtractLine, RiFlashlightLine, RiFocus2Line, RiTrophyLine } from "react-icons/ri";
 import { AuctionContext } from "@/app/Context/Games/AuctionContext";
 import GameIntro from "@/app/Components/GameIntro";
 import { motion, AnimatePresence } from "framer-motion";
+import {Gavel} from 'lucide-react';
 
 const Auction = () => {
   const [numAuction, setNumAuction] = useState(0);
@@ -103,7 +104,7 @@ const Auction = () => {
             <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
               <div className="text-center lg:text-right space-y-4">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.3em] text-primary uppercase">
-                  <RiGavelLine /> سوق المزايدات النشط
+                  <Gavel /> سوق المزايدات النشط
                 </div>
                 <h1 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">تحدي <span className="text-primary">المزايدة</span></h1>
               </div>

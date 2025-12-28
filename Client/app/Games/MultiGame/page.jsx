@@ -1,8 +1,9 @@
 'use client'
 import React, { useState, useContext, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { RiShieldKeyholeLine, RiQuestionLine, RiFocusFilterLine, RiCameraLensLine, RiBankLine, RiTrophyLine, RiArrowRightUpLine, RiFlashlightLine, RiShieldUserLine, RiRefreshLine, RiCheckLine, RiCloseLine, RiTimerLine } from 'react-icons/ri'
+import { RiShieldKeyholeLine, RiQuestionLine, RiCameraLensLine, RiBankLine, RiTrophyLine, RiArrowRightUpLine, RiFlashlightLine, RiShieldUserLine, RiRefreshLine, RiCheckLine, RiCloseLine, RiTimerLine } from 'react-icons/ri'
 import Image from 'next/image'
+import {Target } from 'lucide-react';
 
 // Contexts
 import { PassContext } from '@/app/Context/Games/PassContext'
@@ -49,7 +50,7 @@ const MultiGame = () => {
   const gamesConfig = [
     { name: 'Password', label: 'Decryption', icon: <RiShieldKeyholeLine />, context: pass, storageKey: 'MG_Pass' },
     { name: 'Guss', label: 'Enigma', icon: <RiQuestionLine />, context: gussData, storageKey: 'MG_Guss' },
-    { name: 'Offside', label: 'VAR Analysis', icon: <RiFocusFilterLine />, context: offsideData, storageKey: 'MG_Off' },
+    { name: 'Offside', label: 'VAR Analysis', icon: <Target />, context: offsideData, storageKey: 'MG_Off' },
     { name: 'Picture', label: 'Capture', icon: <RiCameraLensLine />, context: pictureData, storageKey: 'MG_Pic' },
     { name: 'Bank', label: 'Final Tactical', icon: <RiBankLine />, context: bankData, storageKey: 'MG_Bank' },
   ]
@@ -342,7 +343,7 @@ const MultiGame = () => {
                   </div>
                   <div className="md:col-span-8">
                     <div className="glass-dark border border-white/10 rounded-[4rem] p-16 h-full flex flex-col justify-center text-center relative overflow-hidden">
-                      <div className="absolute -left-10 -bottom-10 opacity-5 -rotate-12"><RiFocusFilterLine size={200} /></div>
+                      <div className="absolute -left-10 -bottom-10 opacity-5 -rotate-12"><Target size={200} /></div>
                       <span className="text-[10px] font-black text-primary uppercase tracking-[0.4em] mb-4 block">Target Intel</span>
                       <h2 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-tight relative z-10">{lastSelected?.Clo}</h2>
                     </div>

@@ -272,7 +272,7 @@ const Bank = () => {
                 <p>12 High-Speed questions per squad.</p>
                 <p>Score doubles with every verified entry.</p>
                 <p>Any corruption (Wrong Answer) resets total to zero.</p>
-                <p>A squad can "BANK" the current floating total at any moment.</p>
+                <p>A squad can BANK the current floating total at any moment.</p>
               </div>
               <button onClick={() => setShowInstructions(false)} className="mt-8 px-12 py-4 bg-primary text-white font-black text-[10px] uppercase tracking-[0.3em] rounded-2xl hover:bg-primary-hover transition-all">Understood</button>
             </motion.div>

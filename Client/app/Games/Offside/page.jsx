@@ -2,9 +2,10 @@
 import { OffsideContext } from '@/app/Context/Games/OffsideContext';
 import React, { useContext, useEffect, useState } from 'react';
 import selectRandomObject from '@/utils/getUniqueObject';
-import { RiRefreshLine, RiFocusFilterLine, RiTimerLine, RiSkullLine, RiShieldLine } from "react-icons/ri";
+import { RiRefreshLine, RiTimerLine, RiSkullLine, RiShieldLine } from "react-icons/ri";
 import GameIntro from '@/app/Components/GameIntro';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Target } from 'lucide-react';
 
 const Page = () => {
   const { data } = useContext(OffsideContext);
@@ -56,7 +57,7 @@ const Page = () => {
             {/* Header Status */}
             <div className="flex flex-col items-center gap-4">
               <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center text-primary text-4xl shadow-2xl shadow-primary/10 border border-primary/20">
-                <RiFocusFilterLine />
+                <Target />
               </div>
               <div className="text-center">
                 <h1 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase leading-none">تحدي <span className="text-primary">التسلل</span></h1>

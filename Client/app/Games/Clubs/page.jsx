@@ -3,8 +3,9 @@ import React, { useContext, useEffect, useState } from 'react'
 import { ClubsContext } from '@/app/Context/Games/ClubsContext'
 import selectRandomObject from '@/utils/getUniqueObject'
 import { motion, AnimatePresence } from 'framer-motion'
-import { RiShieldFlashLine, RiUserFoldLine, RiRefreshLine, RiEyeLine, RiEarthLine, RiTimeLine } from 'react-icons/ri'
+import { RiShieldFlashLine, RiRefreshLine, RiEyeLine, RiEarthLine, RiTimeLine } from 'react-icons/ri'
 import GameIntro from '@/app/Components/GameIntro'
+import {UserX } from 'lucide-react';
 
 const Page = () => {
   const { data } = useContext(ClubsContext)
@@ -97,7 +98,7 @@ const Page = () => {
                   className="glass-dark border border-primary/40 rounded-[3rem] p-10 md:p-14 text-center space-y-6 relative overflow-hidden"
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
-                  <RiUserFoldLine className="text-primary text-6xl mx-auto mb-4" />
+                  <UserX className="text-primary text-6xl mx-auto mb-4" />
                   <div className="space-y-2">
                     <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.4em]">تم تحديد الهوية</span>
                     <h2 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">{lastSelected.name}</h2>
