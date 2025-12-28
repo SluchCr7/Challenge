@@ -15,44 +15,69 @@ import AuctionContextProvider from "../Context/Games/AuctionContext";
 import { TopTenContextProvider } from "../Context/Games/TopTenContext";
 import { SquadContextProvider } from "../Context/Games/SquadContext";
 import { ClubsContextProvider } from "../Context/Games/ClubsContext";
+import { AnimatePresence, motion } from "framer-motion";
+
 const LayoutComponent = ({ children }) => {
-    const [showProfile,setShowProfile] = useState(false)
-    return (
-        <AuthContextProvider >
-          <ReskContextProvider>
-            <PassContextProvider>
-              <PlayerContextProvider>
-                <PictureContextProvider>
-                  <GussContextProvider>
-                    <BankContextProvider>
-                      <OffsideContextProvider>
-                        <RoundContextProvider>
-                          <AuctionContextProvider>
-                            <TopTenContextProvider>
-                            <SquadContextProvider>
-                              <ClubsContextProvider>
-                                <div className="flex items-center flex-col gap-2">
-                                    <Nav setShowProfile={setShowProfile} />
-                                    {children}
-                                    <div className={`${showProfile ? "Result" : ""} w-full`}>
-                                        <div className={`${showProfile ? "flex" : "hidden"} absolute top-0 left-0 w-full h-full items-center justify-center bg-black bg-opacity-50 z-[999]`}>
-                                          <Profile setShowProfile={setShowProfile} />
-                                        </div>
-                                    </div>
-                                </div>
-                                </ClubsContextProvider>
-                              </SquadContextProvider>
-                            </TopTenContextProvider>
-                          </AuctionContextProvider>
-                        </RoundContextProvider>
-                      </OffsideContextProvider>
-                    </BankContextProvider>
-                  </GussContextProvider>
-                </PictureContextProvider>
-              </PlayerContextProvider>
-            </PassContextProvider>
-          </ReskContextProvider>
-        </AuthContextProvider>
-    )
+  const [showProfile, setShowProfile] = useState(false)
+
+  return (
+    <AuthContextProvider >
+      <ReskContextProvider>
+        <PassContextProvider>
+          <PlayerContextProvider>
+            <PictureContextProvider>
+              <GussContextProvider>
+                <BankContextProvider>
+                  <OffsideContextProvider>
+                    <RoundContextProvider>
+                      <AuctionContextProvider>
+                        <TopTenContextProvider>
+                          <SquadContextProvider>
+                            <ClubsContextProvider>
+                              <div className="min-h-screen bg-background selection:bg-primary selection:text-white">
+                                <Nav setShowProfile={setShowProfile} />
+
+                                <main className="w-full pt-32 pb-20 px-4">
+                                  {children}
+                                </main>
+
+                                {/* Modal Container */}
+                                <AnimatePresence>
+                                  {showProfile && (
+                                    <motion.div
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      exit={{ opacity: 0 }}
+                                      className="fixed inset-0 w-full h-full flex items-center justify-center z-[1000] p-4"
+                                    >
+                                      {/* Backdrop */}
+                                      <motion.div
+                                        initial={{ opacity: 0 }}
+                                        animate={{ opacity: 1 }}
+                                        exit={{ opacity: 0 }}
+                                        onClick={() => setShowProfile(false)}
+                                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                                      />
+
+                                      {/* Modal Content */}
+                                      <Profile setShowProfile={setShowProfile} />
+                                    </motion.div>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            </ClubsContextProvider>
+                          </SquadContextProvider>
+                        </TopTenContextProvider>
+                      </AuctionContextProvider>
+                    </RoundContextProvider>
+                  </OffsideContextProvider>
+                </BankContextProvider>
+              </GussContextProvider>
+            </PictureContextProvider>
+          </PlayerContextProvider>
+        </PassContextProvider>
+      </ReskContextProvider>
+    </AuthContextProvider>
+  )
 }
 export default LayoutComponent

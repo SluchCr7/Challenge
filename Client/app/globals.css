@@ -2,111 +2,120 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100;300;400;500;600;700;800;900&display=swap');
 
-.Result{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 100;
+:root {
+  --background: #0A0A0A;
+  --foreground: #FFFFFF;
+  --primary: #E10600;
+  --carbon: #121212;
 }
 
-.textAra {
-  direction: rtl; 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.paragraph{
-  line-height: 1.5;
-  -webkit-text-stroke: 1px #fff;
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Outfit', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Text Effects */
+.text-stroke {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2);
   -webkit-text-fill-color: transparent;
 }
 
-/* Base menu styling */
-.menu {
-  border: 1px solid #ca8a04 ;
-  padding: 1.25rem;
-  width: 60%;
-  border-radius: 10px;
-  transition: opacity 0.3s ease;
+.text-gradient {
+  background: linear-gradient(to bottom, #FFFFFF 0%, #A0A0A0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* Show menu (visible state) */
-.menu.visible {
-  display: block;
-  opacity: 1;
+/* Animations */
+.hover-lift {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* Hide menu (invisible state) */
-.menu_hidden {
-  display: none;
-  opacity: 0;
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.02);
 }
 
-
-/* scrollbar  hidden */
-
-::-webkit-scrollbar{
-  display: none;
+.neumorphic-button {
+  background: #121212;
+  box-shadow: 6px 6px 12px #080808,
+             -6px -6px 12px #1c1c1c;
+  transition: all 0.2s ease;
 }
 
-.linkeffect::after{
-  content: '';
-  position: absolute;
-  width: 0%;
-  height: 2px;
-  bottom: -5px;
-  left: 0;
-  background-color: #ca8a04;
-  transition: width 0.25s ease-out;
+.neumorphic-button:active {
+  box-shadow: inset 4px 4px 8px #080808,
+              inset -4px -4px 8px #1c1c1c;
 }
 
-.linkeffect:hover::after{
-  width: 100%;
+.vibrant-red-glow {
+  box-shadow: 0 0 20px rgba(225, 6, 0, 0.3);
 }
 
-.textYellow {
-  color: #ca8a04;
-}
-.effect{
-  animation: animatCircle 4s infinite ease;
-  border-right-color: beige;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  gap: 10px;
+/* Mobile optimizations */
+.mobile-modal-scroll {
+  max-height: 90vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
 }
 
-@keyframes animatCircle {
-  100%{
-    transform: rotate(360deg);
-  }
-}
-.main_heading{
-  font-family:Verdana, Geneva, Tahoma, sans-serif;
+.sticky-close {
+  position: sticky;
+  top: 1rem;
+  right: 1rem;
+  z-index: 50;
 }
 
-.input {
-  width: 100%;
-  padding: 1rem; /* = 16px */
-  border: 1px solid #facc15; /* أصفر Tailwind = yellow-400 */
-  border-radius: 0.5rem; /* = rounded-lg */
-  background-color: transparent;
-  color: #facc15; /* لون النص */
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
+/* Arabic Support */
+.rtl {
+  direction: rtl;
 }
 
-.input::placeholder {
-  color: #fef9c3; /* أصفر فاتح للـ placeholder */
-  opacity: 0.7;
+/* Heavy Headers */
+h1, h2, h3, .font-heavy {
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
-
-.input:focus {
-  border-color: #fbbf24; /* yellow-500 */
-  box-shadow: 0 0 0 3px rgba(234, 179, 8, 0.3); /* ظل تركيزي ناعم */
-  background-color: rgba(253, 224, 71, 0.05); /* لون خلفية خفيف عند التركيز */
-}
-

@@ -1,7 +1,8 @@
 'use client'
 import React, { useContext, useState } from 'react'
-import { IoIosClose } from "react-icons/io";
+import { RiCloseLine, RiAddLine, RiFlashlightLine, RiFocus2Line, RiFireLine, RiTrophyLine } from 'react-icons/ri';
 import { ReskContext } from '../Context/Games/ReskContext';
+import { motion, AnimatePresence } from 'framer-motion'
 
 const AddResk = ({ setShow, show }) => {
   const [name, setName] = useState("");
@@ -11,54 +12,129 @@ const AddResk = ({ setShow, show }) => {
   const [hard, setHard] = useState({ question: "", answer: "" });
   const [expert, setExpert] = useState({ question: "", answer: "" });
 
-  return (
-    <div className={`${show ? "fixed inset-0 z-50 bg-black bg-opacity-50 overflow-y-auto" : "hidden"}`}>
-      <div className="flex items-center justify-center min-h-screen py-10 px-4">
-        <div className="flex flex-col gap-6 p-8 w-[90%] md:w-[60%] bg-gray-100 dark:bg-gray-900 border-2 border-yellow-500 rounded-2xl shadow-xl relative">
-          <div className='flex flex-col gap-2 w-full'>
-            <label className='text-sm text-green-700 dark:text-yellow-400 tracking-widest'>اسم التحدي</label>
-            <input
-              className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+  const tiers = [
+    { label: 'Easy', state: easy, setState: setEasy, icon: <RiFocus2Line />, color: 'text-green-500' },
+    { label: 'Medium', state: medium, setState: setMedium, icon: <RiFlashlightLine />, color: 'text-blue-500' },
+    { label: 'Hard', state: hard, setState: setHard, icon: <RiFireLine />, color: 'text-amber-500' },
+    { label: 'Expert', state: expert, setState: setExpert, icon: <RiTrophyLine />, color: 'text-primary' }
+  ];
 
-          {[{ label: 'Easy', state: easy, setState: setEasy }, { label: 'Medium', state: medium, setState: setMedium }, { label: 'Hard', state: hard, setState: setHard }, { label: 'Expert', state: expert, setState: setExpert }].map(({ label, state, setState }) => (
-            <div key={label} className='flex flex-col gap-4 w-full'>
-              <label className='text-sm text-green-700 dark:text-yellow-400 tracking-widest'>{label}</label>
-              <textarea
-                cols={14}
-                placeholder={`${label} Question`}
-                className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
-                type="text"
-                value={state.question}
-                onChange={(e) => setState({ ...state, question: e.target.value })}
-              />
-              <input
-                placeholder={`${label} Answer`}
-                className='w-full p-3 border border-yellow-500 bg-transparent text-yellow-600 rounded-lg'
-                type="text"
-                value={state.answer}
-                onChange={(e) => setState({ ...state, answer: e.target.value })}
-              />
-            </div>
-          ))}
-
-          <button
-            onClick={(e) => addResk(e, name, easy, medium, hard, expert)}
-            className='w-full p-3 bg-yellow-500 hover:bg-yellow-600 text-white font-bold rounded-lg transition duration-300'
-          >
-            إضافة السؤال
-          </button>
-
-          <span onClick={() => setShow(false)} className='absolute top-3 right-4 text-2xl text-yellow-500 cursor-pointer hover:text-yellow-600 transition'>
-            <IoIosClose />
-          </span>
-        </div>
-      </div>
+  const CustomInput = ({ label, ...props }) => (
+    <div className="space-y-1.5 flex-1 w-full">
+      {label && <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-2">{label}</label>}
+      <input
+        {...props}
+        className="w-full px-5 py-3 rounded-xl glass border border-white/5 text-white placeholder:text-white/10 focus:ring-2 focus:ring-primary/50 transition-all font-semibold text-sm"
+      />
     </div>
+  )
+
+  const CustomTextArea = ({ label, ...props }) => (
+    <div className="space-y-1.5 flex-1 w-full">
+      {label && <label className="text-[10px] font-black text-white/40 uppercase tracking-[0.2em] ml-2">{label}</label>}
+      <textarea
+        {...props}
+        className="w-full px-5 py-3 rounded-xl glass border border-white/5 text-white placeholder:text-white/10 focus:ring-2 focus:ring-primary/50 transition-all font-semibold text-sm min-h-[80px]"
+      />
+    </div>
+  )
+
+  return (
+    <AnimatePresence>
+      {show && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setShow(false)}
+            className="absolute inset-0 bg-black/80 backdrop-blur-md"
+          />
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 30 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.9, y: 30 }}
+            className="relative w-full max-w-3xl glass-dark border border-white/10 rounded-[3rem] shadow-2xl flex flex-col max-h-[95vh] overflow-hidden"
+          >
+            {/* Header */}
+            <div className="p-8 border-b border-white/5 flex items-center justify-between bg-carbon-dark/50 backdrop-blur-xl shrink-0">
+              <div>
+                <h2 className="text-2xl font-black italic text-white uppercase tracking-tighter">Initialize Risk Matrix</h2>
+                <p className="text-[10px] font-bold text-primary uppercase tracking-[0.3em]">Tiered Quiz Serialization</p>
+              </div>
+              <button
+                onClick={() => setShow(false)}
+                className="w-12 h-12 rounded-full glass border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+              >
+                <RiCloseLine size={24} />
+              </button>
+            </div>
+
+            {/* Content Swiper */}
+            <div className="flex-1 overflow-y-auto p-10 space-y-12 custom-scrollbar">
+              {/* Arena Name */}
+              <div className="p-8 glass bg-primary/5 rounded-[2rem] border border-primary/20 space-y-4">
+                <div className="flex items-center gap-3">
+                  <RiFocus2Line className="text-primary text-xl" />
+                  <h3 className="text-sm font-black italic text-white uppercase tracking-tighter">Arena Designation</h3>
+                </div>
+                <CustomInput
+                  placeholder="Enter challenge group name (e.g. European Legends 2024)..."
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+
+              {/* Quiz Tiers */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {tiers.map(({ label, state, setState, icon, color }) => (
+                  <div key={label} className="relative group">
+                    <div className={`absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-[2.5rem] border border-white/10 group-hover:border-primary/30 transition-all duration-500`} />
+                    <div className="relative p-8 space-y-5">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className={`w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl ${color}`}>
+                            {icon}
+                          </div>
+                          <span className="text-lg font-black italic text-white uppercase tracking-tighter">{label}</span>
+                        </div>
+                        <div className="text-[10px] font-bold text-white/20 uppercase tracking-widest">Protocol {label.charAt(0)}</div>
+                      </div>
+
+                      <div className="space-y-4">
+                        <CustomTextArea
+                          label="Question Parameters"
+                          placeholder={`Input ${label} level query...`}
+                          value={state.question}
+                          onChange={(e) => setState({ ...state, question: e.target.value })}
+                        />
+                        <CustomInput
+                          label="Verification Key"
+                          placeholder="Expected response..."
+                          value={state.answer}
+                          onChange={(e) => setState({ ...state, answer: e.target.value })}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="p-8 bg-carbon-dark/80 backdrop-blur-xl border-t border-white/5 shrink-0">
+              <button
+                onClick={(e) => addResk(e, name, easy, medium, hard, expert)}
+                className="w-full h-18 bg-primary hover:bg-primary-hover text-white font-black text-sm uppercase tracking-[0.3em] rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-3"
+              >
+                <RiAddLine size={24} /> Register Arena Data
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 };
 

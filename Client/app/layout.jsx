@@ -1,28 +1,29 @@
 import "./globals.css";
-import Nav from "./Components/Nav";
-
-import {Mada } from '@next/font/google';
+import { Outfit } from 'next/font/google';
 import LayoutComponent from "./Components/LayoutComponent";
 
-
-const MadaFont = Mada({
+const outfit = Outfit({
   subsets: ['latin'],
+  weight: ['100', '300', '400', '500', '600', '700', '800', '900'],
+  variable: '--font-outfit',
 })
 
 export const metadata = {
-  title: "Challenge Football",
-  description: "عايز تلعب تحديات صباحو كوورة وعمرونصوحي .. هنا هتقدر تلاقي كل العاب صباحو",
+  title: "SHALAN CHALLENGE | Elite Football Quizzes",
+  description: "Experience the most immersive football quiz platform. Join the elite rank of football experts.",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark">
       <body
-        className={`bg-gray-100 dark:bg-gray-900 ${MadaFont.className}`}      >
-          <LayoutComponent>
-            {children}
-          </LayoutComponent>
+        className={`${outfit.variable} font-sans bg-background text-foreground antialiased selection:bg-primary selection:text-white`}
+      >
+        <LayoutComponent>
+          {children}
+        </LayoutComponent>
       </body>
     </html>
   );
 }
+

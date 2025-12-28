@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { GoBlocked } from 'react-icons/go';
-import { IoClose } from 'react-icons/io5';
+import { RiProhibitedLine, RiCloseLine, RiFlashlightLine, RiFocus2Line } from 'react-icons/ri';
+import { motion } from 'framer-motion';
 
 const TeamPoints = ({ team, circles, setCircles, pass, setPass }) => {
   const fillNextCircle = () => {
@@ -14,42 +14,54 @@ const TeamPoints = ({ team, circles, setCircles, pass, setPass }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4 p-4 bg-[#1e293b] rounded-2xl shadow-lg w-full max-w-sm">
-      {/* الدوائر */}
-      <div className="flex items-center justify-center gap-3">
+    <div className="flex flex-col items-center gap-6 p-8 glass-dark border border-white/10 rounded-[2.5rem] shadow-2xl w-full max-w-sm relative overflow-hidden group">
+      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+
+      {/* Team Signature */}
+      <div className="text-center space-y-1">
+        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 leading-none">Status Monitor</span>
+        <h4 className="text-2xl font-black italic text-white tracking-tighter uppercase">{team.name}</h4>
+      </div>
+
+      {/* Strike Indicators */}
+      <div className="flex items-center justify-center gap-4">
         {circles.map((isFilled, index) => (
-          <span
+          <motion.div
             key={index}
-            className={`w-6 h-6 md:w-8 md:h-8 rounded-full transition-all duration-300 ${
-              isFilled ? 'bg-red-600 shadow-md' : 'bg-gray-600'
-            }`}
-          ></span>
+            animate={{
+              scale: isFilled ? [1, 1.2, 1] : 1,
+              backgroundColor: isFilled ? '#E10600' : 'rgba(255,255,255,0.05)'
+            }}
+            className={`w-10 h-10 rounded-2xl border border-white/5 flex items-center justify-center transition-all duration-500 shadow-2xl ${isFilled ? 'shadow-primary/30 border-primary/50' : ''
+              }`}
+          >
+            {isFilled && <RiCloseLine className="text-white text-2xl" />}
+          </motion.div>
         ))}
       </div>
 
-      {/* الأزرار */}
-      <div className="flex items-center justify-between w-full mt-4 px-6">
-        {/* زر الباس */}
+      {/* Operational Controls */}
+      <div className="grid grid-cols-2 gap-4 w-full mt-4">
+        {/* Pass Button */}
         <button
           onClick={() => setPass(!pass)}
           disabled={pass}
-          className={`flex flex-col items-center gap-1 transition-all ${
-            pass
-              ? 'text-gray-500 cursor-not-allowed'
-              : 'text-green-500 hover:text-green-400'
-          }`}
+          className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all ${pass
+              ? 'bg-white/5 border-white/5 text-white/10 cursor-not-allowed opacity-20'
+              : 'glass border-white/10 text-white/40 hover:text-primary hover:border-primary'
+            }`}
         >
-          <GoBlocked className="text-3xl" />
-          <span className="text-sm font-medium uppercase">Pass</span>
+          <RiProhibitedLine className="text-2xl" />
+          <span className="text-[9px] font-black uppercase tracking-widest">Pass Protocol</span>
         </button>
 
-        {/* زر السترايك */}
+        {/* Strike Button */}
         <button
           onClick={fillNextCircle}
-          className="flex flex-col items-center gap-1 text-red-500 hover:text-red-400 transition-all"
+          className="flex flex-col items-center justify-center gap-2 py-4 bg-primary/10 border border-primary/20 rounded-2xl text-primary hover:bg-primary hover:text-white transition-all shadow-xl shadow-primary/10 active:scale-95"
         >
-          <IoClose className="text-3xl" />
-          <span className="text-sm font-medium uppercase">Strike</span>
+          <RiFocus2Line className="text-2xl" />
+          <span className="text-[9px] font-black uppercase tracking-widest">Execute Strike</span>
         </button>
       </div>
     </div>
