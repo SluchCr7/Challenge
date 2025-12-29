@@ -44,225 +44,294 @@ const HomePage = () => {
   if (!isAuthChecked) return null
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-24">
-      {/* Hero Section */}
-      <section className="relative min-h-[70vh] flex flex-col items-center justify-center overflow-hidden rounded-[4rem] border border-white/5 bg-carbon-dark">
-        {/* Background Visuals */}
+    <div className="w-full max-w-7xl mx-auto space-y-32 pb-24">
+      {/* Hero Section - Redesigned for Maximum Impact */}
+      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden rounded-[5rem] border border-white/5 bg-[#050505] perspective-1000">
+        {/* Advanced Background System */}
         <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] animate-pulse-slow" />
-          <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-red-900/10 rounded-full blur-[100px]" />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20" />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              opacity: [0.3, 0.5, 0.3],
+              rotate: [0, 90, 0]
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-[-20%] left-[-10%] w-[1000px] h-[1000px] bg-primary/20 rounded-full blur-[150px]"
+          />
+          <motion.div
+            animate={{
+              scale: [1.2, 1, 1.2],
+              opacity: [0.2, 0.4, 0.2],
+              rotate: [0, -90, 0]
+            }}
+            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[130px]"
+          />
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505]" />
         </div>
 
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl space-y-8">
+        {/* Floating Interactive Icons Background */}
+        <div className="absolute inset-0 pointer-events-none opacity-20">
+          {[RiTrophyLine, Timer, RiFlashlightLine, RiFocus2Line].map((Icon, i) => (
+            <motion.div
+              key={i}
+              className="absolute text-6xl text-white/10"
+              initial={{ x: Math.random() * 1000, y: Math.random() * 600 }}
+              animate={{
+                y: [0, -40, 0],
+                rotate: [0, 20, 0]
+              }}
+              transition={{ duration: 5 + i, repeat: Infinity, ease: "easeInOut" }}
+              style={{ left: `${20 * i}%`, top: `${15 * i}%` }}
+            >
+              <Icon />
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Content Container */}
+        <div className="relative z-10 text-center px-6 max-w-5xl space-y-12">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="space-y-4"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full glass border border-white/10 text-[11px] font-black tracking-[0.4em] text-primary uppercase shadow-2xl shadow-primary/20"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.3em] text-primary uppercase">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-              </span>
-              Next Match: Egypt vs Senegal - Live Quizzes Now
-            </div>
-
-            <h1 className="text-6xl md:text-8xl font-black italic text-white tracking-tighter leading-[0.9] uppercase">
-              Master the <br />
-              <span className="text-stroke text-white">Ultimate</span> <span className="text-primary underline decoration-white/10">Challenge</span>
-            </h1>
-
-            <p className="text-white/50 font-medium text-lg md:text-xl max-w-2xl mx-auto">
-              Join {activeFans.toLocaleString()} active football fanatics. Prove your knowledge, climb the ranks, and earn your place among the legends.
-            </p>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+            </span>
+            Season 04: The Rise of Legends
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-wrap items-center justify-center gap-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className="text-7xl md:text-[9rem] font-black italic text-white tracking-tighter leading-[0.85] uppercase">
+              ULTIMATE <br />
+              <span className="text-stroke-2 text-transparent">CHALLENGE</span>
+            </h1>
+          </motion.div>
+
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5 }}
+            className="text-white/40 font-medium text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed"
+          >
+            The definitive football knowledge arena. Join <span className="text-white font-bold">{activeFans.toLocaleString()}</span> fanatics and dominate the global leaderboard.
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="flex flex-col md:flex-row items-center justify-center gap-8"
           >
             {isLogin ? (
               <button
-                onClick={() => document.getElementById('categories').scrollIntoView({ behavior: 'smooth' })}
-                className="px-10 py-5 bg-primary hover:bg-primary-hover text-white font-heavy text-sm rounded-full shadow-2xl shadow-primary/40 transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase tracking-widest"
+                onClick={() => document.getElementById('hub').scrollIntoView({ behavior: 'smooth' })}
+                className="group relative px-12 py-6 bg-primary text-white font-black text-xs rounded-2xl shadow-2xl shadow-primary/50 transition-all hover:scale-105 active:scale-95 flex items-center gap-4 uppercase tracking-[0.3em]"
               >
-                <RiPlayFill size={20} /> Start Game Session
+                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl" />
+                <RiPlayFill size={24} className="group-hover:rotate-12 transition-transform" />
+                Enter The Arena
               </button>
             ) : (
               <Link
                 href="/Auth/Login"
-                className="px-10 py-5 bg-white text-carbon-dark font-heavy text-sm rounded-full shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-3 uppercase tracking-widest"
+                className="px-12 py-6 bg-white text-carbon-dark font-black text-xs rounded-2xl shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-4 uppercase tracking-[0.3em]"
               >
-                Unlock Full Experience
+                Unlock Elite Access
               </Link>
             )}
 
-            <div className="flex -space-x-4">
-              {[1, 2, 3, 4].map(i => (
-                <div key={i} className="w-12 h-12 rounded-full border-4 border-carbon-dark bg-carbon-light flex items-center justify-center overflow-hidden">
-                  <img src={`https://i.pravatar.cc/100?img=${i + 10}`} alt="fan" />
-                </div>
-              ))}
-              <div className="w-12 h-12 rounded-full border-4 border-carbon-dark bg-primary flex items-center justify-center text-[10px] font-black text-white italic">
-                {Math.floor(activeFans / 1000)}K+
+            <div className="flex items-center gap-4 p-3 glass rounded-2xl border border-white/5">
+              <div className="flex -space-x-3">
+                {[1, 2, 3].map(i => (
+                  <div key={i} className="w-10 h-10 rounded-xl border-2 border-carbon-dark overflow-hidden transform hover:-translate-y-1 transition-transform cursor-pointer">
+                    <img src={`https://i.pravatar.cc/100?img=${i + 20}`} alt="user" />
+                  </div>
+                ))}
               </div>
+              <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Active Players</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Hero Bottom Bar */}
-        <div className="absolute bottom-0 left-0 w-full p-8 flex items-center justify-between border-t border-white/5 glass">
-          <div className="flex items-center gap-8">
-            <div className="flex flex-col">
-              <span className="text-white font-black text-xl italic leading-none">WEEKLY PRIZE</span>
-              <span className="text-primary font-bold text-[10px] tracking-widest uppercase">$2,500 TOTAL POOL</span>
-            </div>
-            <div className="h-8 w-px bg-white/10" />
-            <div className="flex flex-col">
-              <span className="text-white font-black text-xl italic leading-none">ELITE RANK</span>
-              <span className="text-primary font-bold text-[10px] tracking-widest uppercase">TOP 100 PLAYERS</span>
-            </div>
-          </div>
-          <RiTrophyLine className="text-white/10 text-6xl rotate-12" />
-        </div>
+        {/* Decorative elements */}
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -rotate-12 pointer-events-none" />
+        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-12 pointer-events-none" />
       </section>
 
-      {/* Stats Counter Section */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      {/* Stats Board - Premium Glass Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 px-4">
         {[
-          { label: 'Total Challenges', value: '450+', icon: <RiTrophyLine /> },
-          { label: 'Expert Fans', value: '1.2M', icon: <RiGroupLine /> },
-          { label: 'Real-time Stats', value: 'Live', icon: <RiFlashlightLine /> },
-          { label: 'Upcoming Events', value: '12', icon: <Timer /> },
+          { label: 'Live Arenas', value: '14 ACTIVE', icon: <RiFlashlightLine />, trend: '+3 New' },
+          { label: 'Global Ranking', value: '#12,840', icon: <RiTrophyLine />, trend: 'Top 5%' },
+          { label: 'Points Pool', value: '1.2M+', icon: <Users />, trend: 'Weekly' },
+          { label: 'Daily XP', value: '2.5X BOOST', icon: <Timer />, trend: 'Active' },
         ].map((stat, i) => (
-          <div key={i} className="glass border border-white/5 p-8 rounded-[2.5rem] flex flex-col items-center gap-4 hover:border-primary/30 transition-all group">
-            <span className="text-3xl text-primary transform group-hover:scale-110 transition-transform">{stat.icon}</span>
-            <div className="text-center">
-              <h3 className="text-3xl font-black text-white italic tracking-tighter uppercase">{stat.value}</h3>
-              <p className="text-[10px] font-bold text-white/40 uppercase tracking-[0.2em]">{stat.label}</p>
+          <motion.div
+            whileHover={{ y: -5 }}
+            key={i}
+            className="group relative glass-dark border border-white/5 p-8 rounded-[3rem] overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 p-6 text-primary group-hover:scale-110 transition-transform opacity-20 group-hover:opacity-100">
+              {stat.icon}
             </div>
-          </div>
+            <div className="space-y-1">
+              <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">{stat.label}</span>
+              <h3 className="text-3xl font-black text-white italic tracking-tighter uppercase">{stat.value}</h3>
+              <p className="text-[9px] font-bold text-primary uppercase tracking-widest mt-2">{stat.trend}</p>
+            </div>
+          </motion.div>
         ))}
-      </section>
+      </div>
 
-      {/* Categories Grid */}
-      <section id="categories" className="space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="space-y-2 text-center md:text-left">
-            <h2 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase">
-              Featured <span className="text-primary">Arenas</span>
+      {/* The Games Hub - Bento Style Premium Grid */}
+      <section id="hub" className="space-y-16 px-4">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
+          <div className="space-y-2">
+            <span className="text-[11px] font-black text-primary uppercase tracking-[0.5em]">Game Universe</span>
+            <h2 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">
+              Explore <span className="text-stroke-1 text-white opacity-40">The</span> Hub
             </h2>
-            <p className="text-white/40 font-bold uppercase tracking-widest text-xs">Choose your discipline and dominate the field</p>
           </div>
-          <div className="flex items-center justify-center gap-4">
-            <button className="px-6 py-3 glass rounded-full text-xs font-black uppercase tracking-widest text-white/60 hover:text-white transition-colors">Season 1</button>
-            <button className="px-6 py-3 bg-primary rounded-full text-xs font-black uppercase tracking-widest text-white">Live Now</button>
+          <div className="flex bg-white/5 p-2 rounded-2xl border border-white/5">
+            <button className="px-6 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-primary/20">All Challenges</button>
+            <button className="px-6 py-3 text-white/40 hover:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all">New Releases</button>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[280px]">
           {games.map((game, i) => (
             <motion.div
               key={game.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className={`group relative overflow-hidden rounded-[3rem] border border-white/5 bg-gradient-to-br ${game.color} p-1`}
+              transition={{ delay: i * 0.05 }}
+              className={`group relative overflow-hidden rounded-[2.5rem] border border-white/10 ${i === 0 || i === 7 ? 'md:col-span-2' : '' // Highlighting some games by expanding them
+                } ${i === 3 ? 'lg:row-span-2 h-full' : ''}`}
             >
-              <Link href={game.link} className="block h-full glass-dark p-8 space-y-6">
-                <div className="flex items-center justify-between">
-                  <div className="w-16 h-16 rounded-[1.5rem] bg-white/5 flex items-center justify-center text-3xl text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500">
+              {/* Card Background Visual */}
+              <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-40 group-hover:opacity-60 transition-opacity duration-700`} />
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
+
+              <Link href={game.link} className="absolute inset-0 p-8 flex flex-col justify-between z-10">
+                <div className="flex items-start justify-between">
+                  <div className="w-14 h-14 rounded-2xl glass-dark border border-white/10 flex items-center justify-center text-2xl text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500 group-hover:rotate-12">
                     {game.icon}
                   </div>
-                  <span className="text-[10px] font-black text-primary px-3 py-1 rounded-full border border-primary/20 bg-primary/5 uppercase tracking-widest">
+                  <div className="px-3 py-1 bg-white/10 border border-white/10 rounded-full text-[8px] font-black text-white/50 uppercase tracking-widest group-hover:text-white group-hover:bg-primary/20 transition-all">
                     {game.state}
-                  </span>
+                  </div>
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-white italic tracking-tighter uppercase group-hover:text-primary transition-colors">
+                  <h3 className="text-2xl font-black text-white italic leading-tight uppercase tracking-tighter group-hover:text-primary transition-colors">
                     {game.title}
                   </h3>
-                  <p className="text-white/50 text-sm font-medium leading-relaxed">
+                  <p className="text-white/40 text-[11px] font-medium leading-relaxed line-clamp-2 group-hover:text-white/70 transition-colors">
                     {game.description}
                   </p>
-                </div>
-
-                <div className="pt-4 flex items-center justify-between border-t border-white/5">
-                  <div className="flex items-center gap-2">
-                    <RiGroupLine className="text-white/30" />
-                    <span className="text-[10px] font-bold text-white/30 uppercase tracking-widest">2.4k playing</span>
-                  </div>
-                  <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transform translate-x-4 group-hover:translate-x-0 transition-all duration-500">
-                    <RiPlayFill />
+                  <div className="pt-4 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em]">
+                    Play Now <RiPlayFill />
                   </div>
                 </div>
               </Link>
+
+              {/* Shine effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Match Widget Section (Upcoming Matches) */}
-      <section className="glass-dark border border-white/10 rounded-[4rem] p-12 overflow-hidden relative">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] -mr-64 -mt-64" />
+      {/* Interactive Match Hub - Compact Premium Design */}
+      <section className="mx-4">
+        <div className="glass-dark border border-white/10 rounded-[4rem] p-12 lg:p-20 overflow-hidden relative group">
+          <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] -mr-64 -mt-64 group-hover:scale-110 transition-transform duration-1000" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
-          <div className="space-y-6 text-center lg:text-left max-w-lg">
-            <h2 className="text-4xl md:text-5xl font-black italic text-white tracking-tighter uppercase leading-none">
-              Live Match <br /><span className="text-primary">Interactive</span> Hub
-            </h2>
-            <p className="text-white/50 text-lg">
-              Play along with live matches. Guess the next scorer, predict substitutions, and earn 2x XP during game time.
-            </p>
-            <button className="px-8 py-4 bg-white text-carbon-dark font-heavy text-xs rounded-full uppercase tracking-[0.2em] shadow-2xl transition hover:scale-105">
-              View Schedule
-            </button>
-          </div>
-
-          {/* Mock Match Widget */}
-          <div className="w-full max-w-md glass border border-white/10 rounded-[3rem] p-8 space-y-8 shadow-2xl">
-            <div className="flex items-center justify-between px-2">
-              <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em]">Premier League</span>
-              <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em] flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" /> Live 74
-              </span>
+          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16">
+            <div className="space-y-8 text-center lg:text-left max-w-xl">
+              <div className="inline-flex items-center gap-2 text-primary text-[11px] font-black uppercase tracking-[0.5em]">Live Integration</div>
+              <h2 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-[0.9]">
+                STADIUM <br /><span className="text-primary underline decoration-white/10">PROTOCOL</span>
+              </h2>
+              <p className="text-white/40 text-lg md:text-xl font-medium leading-relaxed">
+                Experience real-time football synchronization. Predict events as they happen on the pitch and multiply your rewards.
+              </p>
+              <button className="px-10 py-5 bg-white text-black font-black text-xs rounded-2xl uppercase tracking-[0.3em] shadow-2xl hover:bg-primary hover:text-white transition-all transform hover:-translate-y-1">
+                View Live Sync Schedule
+              </button>
             </div>
 
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-20 h-20 rounded-3xl bg-white/5 p-4 flex items-center justify-center border border-white/5">
-                  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/5/53/Arsenal_FC.svg/1200px-Arsenal_FC.svg.png" className="w-full grayscale brightness-200" alt="team1" />
+            {/* Premium Match Widget Card */}
+            <div className="w-full max-w-lg glass-dark border border-white/20 rounded-[4rem] p-10 space-y-10 shadow-3xl relative overflow-hidden backdrop-blur-3xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent pointer-events-none" />
+
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Champions League • Final</span>
                 </div>
-                <span className="text-sm font-black text-white italic uppercase tracking-tighter">ARS</span>
+                <span className="text-[10px] font-black text-primary px-3 py-1 bg-primary/10 rounded-full italic tracking-widest leading-none">
+                  LIVE 82'
+                </span>
               </div>
 
-              <div className="flex flex-col items-center">
-                <span className="text-5xl font-black text-white italic tracking-tighter leading-none">2 : 1</span>
-                <span className="text-[10px] font-bold text-white/20 uppercase tracking-[0.4em] mt-2">Score</span>
-              </div>
-
-              <div className="flex flex-col items-center gap-3">
-                <div className="w-20 h-20 rounded-3xl bg-white/5 p-4 flex items-center justify-center border border-white/5">
-                  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/e/eb/Manchester_City_FC_badge.svg/1200px-Manchester_City_FC_badge.svg.png" className="w-full grayscale brightness-200" alt="team2" />
+              <div className="flex items-center justify-between gap-6 relative">
+                <div className="flex flex-col items-center gap-4 group/team">
+                  <div className="w-24 h-24 rounded-3xl glass border border-white/10 p-5 flex items-center justify-center transform group-hover/team:scale-110 transition-transform shadow-2xl">
+                    <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/7/70/Al_Ahly_SC_logo.svg/1200px-Al_Ahly_SC_logo.svg.png" className="w-full object-contain filter drop-shadow-2xl" alt="team1" />
+                  </div>
+                  <span className="text-sm font-black text-white italic uppercase tracking-tighter">AHL</span>
                 </div>
-                <span className="text-sm font-black text-white italic uppercase tracking-tighter">MCI</span>
-              </div>
-            </div>
 
-            <div className="pt-6 border-t border-white/5">
-              <div className="bg-primary/10 border border-primary/20 rounded-2xl p-4 flex items-center justify-between">
-                <span className="text-[10px] font-bold text-white uppercase tracking-widest line-clamp-1">Guess who scores next?</span>
-                <span className="text-xs font-black text-primary italic">+500 XP</span>
+                <div className="flex flex-col items-center">
+                  <div className="text-6xl font-black text-white italic tracking-tighter leading-none flex gap-2">
+                    <span>3</span><span className="text-primary">:</span><span>1</span>
+                  </div>
+                  <div className="mt-4 px-4 py-1.5 glass rounded-full text-[9px] font-black text-white/30 uppercase tracking-[0.4em] border border-white/5">FULL THROTTLE</div>
+                </div>
+
+                <div className="flex flex-col items-center gap-4 group/team">
+                  <div className="w-24 h-24 rounded-3xl glass border border-white/10 p-5 flex items-center justify-center transform group-hover/team:scale-110 transition-transform shadow-2xl">
+                    <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/a/a1/ZamalekSC.png/800px-ZamalekSC.png" className="w-full object-contain filter drop-shadow-2xl" alt="team2" />
+                  </div>
+                  <span className="text-sm font-black text-white italic uppercase tracking-tighter">ZAM</span>
+                </div>
+              </div>
+
+              <div className="bg-primary/5 p-6 rounded-[2.5rem] border border-primary/20 space-y-4">
+                <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/50">
+                  <span>Active Prediction Pool</span>
+                  <span className="text-primary italic">50,000 XP AT STAKE</span>
+                </div>
+                <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: "65%" }}
+                    className="h-full bg-primary"
+                  />
+                </div>
+                <p className="text-[10px] font-bold text-white/40 text-center uppercase tracking-widest italic">Most players predict a 4th goal</p>
               </div>
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Footer Branding Area */}
+      <section className="text-center py-10 space-y-4">
+        <div className="text-5xl md:text-7xl font-black italic text-white/5 uppercase tracking-tighter select-none">
+          CHALLENGE UNMATCHED
+        </div>
+        <p className="text-white/10 text-[10px] font-black uppercase tracking-[0.8em]">Designed for the 1% of Football Experts</p>
       </section>
     </div>
   )
