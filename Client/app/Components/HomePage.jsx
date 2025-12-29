@@ -280,7 +280,7 @@ const HomePage = () => {
                   <span className="text-[10px] font-black text-white uppercase tracking-[0.3em]">Champions League • Final</span>
                 </div>
                 <span className="text-[10px] font-black text-primary px-3 py-1 bg-primary/10 rounded-full italic tracking-widest leading-none">
-                  LIVE 82'
+                  LIVE 82
                 </span>
               </div>
 
