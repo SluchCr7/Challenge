@@ -1,15 +1,15 @@
 'use client'
 import React, { useContext, useState } from 'react'
-import { ReskContext } from '@/app/Context/Games/ReskContext'
-import AddResk from '@/app/Components/AddResk'
+import { RiskContext } from '@/app/Context/Games/RiskContext'
+import AddRisk from '@/app/Components/AddRisk'
 import { deleteItem } from '@/utils/DeleteItem'
 import { RiDeleteBin7Line, RiFlashlightLine, RiSearchLine, RiAddLine, RiArrowLeftLine, RiFocus2Line, RiFireLine, RiTrophyLine } from 'react-icons/ri'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 
-const ReskPage = () => {
+const RiskPage = () => {
   const [show, setShow] = useState(false);
-  const { resk } = useContext(ReskContext);
+  const { risk } = useContext(RiskContext);
   const [searchTerm, setSearchTerm] = useState('');
 
   const TierLabel = ({ level, icon, color }) => (
@@ -67,7 +67,7 @@ const ReskPage = () => {
       {/* Matrix List */}
       <div className="grid grid-cols-1 gap-12 px-6">
         <AnimatePresence>
-          {resk
+          {risk
             .filter((item) => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
             .map((item, index) => (
               <motion.div
@@ -149,9 +149,9 @@ const ReskPage = () => {
         </AnimatePresence>
       </div>
 
-      <AddResk show={show} setShow={setShow} />
+      <AddRisk show={show} setShow={setShow} />
     </div>
   )
 }
 
-export default ReskPage
+export default RiskPage

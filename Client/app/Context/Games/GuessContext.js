@@ -3,17 +3,17 @@ import { getAllData } from "@/utils/getAllData";
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-export const GussContext = createContext()
+export const GuessContext = createContext()
 
 
-const GussContextProvider = ({ children }) => {
-    const [data , setData] = useState([])
+const GuessContextProvider = ({ children }) => {
+    const [data, setData] = useState([])
     useEffect(() => {
         getAllData({ link: "guss", setter: setData })
     }, [])
-    const addGuss = (e , question , Answer) => { 
+    const addGuess = (e, question, Answer) => {
         e.preventDefault()
-        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/guss` , {question , Answer})
+        axios.post(`${process.env.NEXT_PUBLIC_BACK_URL}/api/guss`, { question, Answer })
             .then(res => {
                 console.log(res.data)
                 window.location.reload()
@@ -23,10 +23,10 @@ const GussContextProvider = ({ children }) => {
             })
     }
     return (
-        <GussContext.Provider value={{data , addGuss}}>
+        <GuessContext.Provider value={{ data, addGuess }}>
             {children}
-        </GussContext.Provider>
+        </GuessContext.Provider>
     )
 }
 
-export default GussContextProvider
+export default GuessContextProvider

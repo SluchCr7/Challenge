@@ -3,11 +3,11 @@ import { useState } from "react"
 import Nav from "./Nav"
 import Profile from "./Profile"
 import AuthContextProvider from "../Context/AuthContext";
-import ReskContextProvider from "../Context/Games/ReskContext";
+import ReskContextProvider from "../Context/Games/RiskContext";
 import PassContextProvider from "../Context/Games/PassContext";
 import PlayerContextProvider from "../Context/Games/PlayersContext";
 import PictureContextProvider from "../Context/Games/PictureContext";
-import GussContextProvider from "../Context/Games/GussContext";
+import GussContextProvider from "../Context/Games/GuessContext";
 import BankContextProvider from "../Context/Games/BankContext";
 import OffsideContextProvider from "../Context/Games/OffsideContext";
 import RoundContextProvider from "../Context/Games/RoundContext";

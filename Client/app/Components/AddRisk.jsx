@@ -1,12 +1,12 @@
 'use client'
 import React, { useContext, useState } from 'react'
 import { RiCloseLine, RiAddLine, RiFlashlightLine, RiFocus2Line, RiFireLine, RiTrophyLine } from 'react-icons/ri';
-import { ReskContext } from '../Context/Games/ReskContext';
+import { RiskContext } from '../Context/Games/RiskContext';
 import { motion, AnimatePresence } from 'framer-motion'
 
-const AddResk = ({ setShow, show }) => {
+const AddRisk = ({ setShow, show }) => {
   const [name, setName] = useState("");
-  const { addResk } = useContext(ReskContext);
+  const { addRisk } = useContext(RiskContext);
   const [easy, setEasy] = useState({ question: "", answer: "" });
   const [medium, setMedium] = useState({ question: "", answer: "" });
   const [hard, setHard] = useState({ question: "", answer: "" });
@@ -125,7 +125,7 @@ const AddResk = ({ setShow, show }) => {
             {/* Footer */}
             <div className="p-8 bg-carbon-dark/80 backdrop-blur-xl border-t border-white/5 shrink-0">
               <button
-                onClick={(e) => addResk(e, name, easy, medium, hard, expert)}
+                onClick={(e) => addRisk(e, name, easy, medium, hard, expert)}
                 className="w-full h-18 bg-primary hover:bg-primary-hover text-white font-black text-sm uppercase tracking-[0.3em] rounded-[2rem] shadow-2xl shadow-primary/20 transition-all hover:scale-[1.01] active:scale-95 flex items-center justify-center gap-3"
               >
                 <RiAddLine size={24} /> Register Arena Data
@@ -138,4 +138,4 @@ const AddResk = ({ setShow, show }) => {
   );
 };
 
-export default AddResk;
+export default AddRisk;

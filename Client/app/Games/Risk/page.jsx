@@ -12,22 +12,22 @@ import {
   RiTeamLine,
   RiFlashlightLine
 } from "react-icons/ri";
-import { ReskContext } from "@/app/Context/Games/ReskContext";
+import { RiskContext } from "@/app/Context/Games/RiskContext";
 import getRandomObjects from "@/utils/getRandomObjects";
-import { CategoriesGrid } from "@/app/Components/ReskQategories";
+import { CategoriesGrid } from "@/app/Components/RiskCategories";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Resk = () => {
+const Risk = () => {
   const [show, setShow] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const [qategory, setQategory] = useState({ question: null, answer: null, value: 0 });
-  const [randomReskCategories, setRandomReskCategories] = useState([]);
+  const [randomRiskCategories, setRandomRiskCategories] = useState([]);
   const [valueTeamOne, setValueTeamOne] = useState(0);
   const [valueTeamTwo, setValueTeamTwo] = useState(0);
   const [turn, setTurn] = useState("First");
   const [values, setValues] = useState([]);
   const [randomDouble, setRandomDouble] = useState(0);
-  const { resk } = useContext(ReskContext);
+  const { risk } = useContext(RiskContext);
   const Numbers = [5, 10, 20, 40];
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -50,8 +50,8 @@ const Resk = () => {
   }, [isRunning]);
 
   const randomData = () => {
-    const random = getRandomObjects(resk);
-    setRandomReskCategories(random);
+    const random = getRandomObjects(risk);
+    setRandomRiskCategories(random);
     randomNumber();
     setValues([]);
     setValueTeamOne(0);
@@ -209,8 +209,8 @@ const Resk = () => {
               {/* Team Scores */}
               {["Team Alpha", "Team Bravo"].map((label, i) => (
                 <div key={i} className={`glass-dark border rounded-[3rem] p-8 space-y-6 relative overflow-hidden transition-all duration-500 ${(turn === "First" && i === 0) || (turn === "Second" && i === 1)
-                    ? "border-primary shadow-[0_0_30px_rgba(225,6,0,0.15)] bg-primary/5"
-                    : "border-white/5"
+                  ? "border-primary shadow-[0_0_30px_rgba(225,6,0,0.15)] bg-primary/5"
+                  : "border-white/5"
                   }`}>
                   {(turn === "First" && i === 0) || (turn === "Second" && i === 1) ? (
                     <div className="absolute top-4 right-6 text-[10px] font-black text-primary uppercase tracking-widest flex items-center gap-2">
@@ -253,7 +253,7 @@ const Resk = () => {
 
             {/* Questions Grid */}
             <CategoriesGrid
-              randomReskCategories={randomReskCategories}
+              randomReskCategories={randomRiskCategories}
               setQategory={setQategory}
               values={values}
               randomDouble={randomDouble}
@@ -311,4 +311,4 @@ const Resk = () => {
   );
 };
 
-export default Resk;
+export default Risk;

@@ -94,10 +94,10 @@ const CategoryCard = ({ category, index, setQategory, values, randomDouble, setV
   );
 };
 
-export const CategoriesGrid = ({ randomReskCategories, setQategory, values, randomDouble, setValues }) => {
+export const CategoriesGrid = ({ randomRiskCategories, setQategory, values, randomDouble, setValues }) => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-16 w-full max-w-6xl mx-auto py-12">
-      {randomReskCategories.map((category, index) => (
+      {randomRiskCategories.map((category, index) => (
         <CategoryCard
           key={index}
           category={category}

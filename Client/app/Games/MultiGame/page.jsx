@@ -3,11 +3,11 @@ import React, { useState, useContext, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { RiShieldKeyholeLine, RiQuestionLine, RiCameraLensLine, RiBankLine, RiTrophyLine, RiArrowRightUpLine, RiFlashlightLine, RiShieldUserLine, RiRefreshLine, RiCheckLine, RiCloseLine, RiTimerLine } from 'react-icons/ri'
 import Image from 'next/image'
-import {Target } from 'lucide-react';
+import { Target } from 'lucide-react';
 
 // Contexts
 import { PassContext } from '@/app/Context/Games/PassContext'
-import { GussContext } from '@/app/Context/Games/GussContext'
+import { GuessContext } from '@/app/Context/Games/GuessContext'
 import { OffsideContext } from '@/app/Context/Games/OffsideContext'
 import { PictureContext } from '@/app/Context/Games/PictureContext'
 import { BankContext } from '@/app/Context/Games/BankContext'
@@ -31,7 +31,7 @@ const MultiGame = () => {
 
   // Context Data
   const { pass } = useContext(PassContext)
-  const { data: gussData } = useContext(GussContext)
+  const { data: gussData } = useContext(GuessContext)
   const { data: offsideData } = useContext(OffsideContext)
   const { team: pictureData } = useContext(PictureContext)
   const { data: bankData } = useContext(BankContext)
@@ -49,7 +49,7 @@ const MultiGame = () => {
 
   const gamesConfig = [
     { name: 'Password', label: 'Decryption', icon: <RiShieldKeyholeLine />, context: pass, storageKey: 'MG_Pass' },
-    { name: 'Guss', label: 'Enigma', icon: <RiQuestionLine />, context: gussData, storageKey: 'MG_Guss' },
+    { name: 'Guess', label: 'Enigma', icon: <RiQuestionLine />, context: gussData, storageKey: 'MG_Guess' },
     { name: 'Offside', label: 'VAR Analysis', icon: <Target />, context: offsideData, storageKey: 'MG_Off' },
     { name: 'Picture', label: 'Capture', icon: <RiCameraLensLine />, context: pictureData, storageKey: 'MG_Pic' },
     { name: 'Bank', label: 'Final Tactical', icon: <RiBankLine />, context: bankData, storageKey: 'MG_Bank' },

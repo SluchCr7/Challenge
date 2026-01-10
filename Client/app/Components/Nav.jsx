@@ -30,7 +30,6 @@ const Nav = ({ setShowProfile }) => {
 
   const menuItems = [
     { name: 'Leaderboard', icon: <RiTrophyLine />, href: '/Games/Leaderboard' },
-    { name: 'Categories', icon: <RiDashboardLine />, href: '#categories' },
     { name: 'Contact', icon: <RiMessage3Line />, href: '/Contact' },
   ]
 

@@ -1,25 +1,25 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react';
 import { RiRefreshLine, RiFlashlightLine, RiQuestionLine, RiLightbulbLine, RiEyeLine } from "react-icons/ri";
-import { GussContext } from '@/app/Context/Games/GussContext';
+import { GuessContext } from '@/app/Context/Games/GuessContext';
 import selectRandomObject from '@/utils/getUniqueObject';
 import GameIntro from '@/app/Components/GameIntro';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Guss = () => {
-  const { data } = useContext(GussContext);
+const Guess = () => {
+  const { data } = useContext(GuessContext);
   const [remainingObjects, setRemainingObjects] = useState([]);
   const [lastSelected, setLastSelected] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
-    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsGuss') : null;
+    const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsGuess') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...data]);
   }, [data]);
 
   const handleRefresh = () => {
     setShowAnswer(false);
-    selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Guss");
+    selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Guess");
   }
 
   return (
@@ -111,4 +111,4 @@ const Guss = () => {
   );
 };
 
-export default Guss;
+export default Guess;
