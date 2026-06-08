@@ -2,17 +2,20 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { AuthContext } from '../Context/AuthContext'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   RiTrophyLine,
-  RiGroupLine,
   RiFlashlightLine,
   RiPlayFill,
   RiFocus2Line,
   RiCompass3Line,
-  RiBarChartGroupedLine
+  RiBarChartGroupedLine,
+  RiTeamLine,
+  RiLineChartLine
 } from 'react-icons/ri'
-import { Timer, Gavel, Users, Gamepad2, Flag, RotateCcw, LayoutGrid, ListOrdered } from 'lucide-react';
+import { Timer, Gavel, Users, Gamepad2, Flag, RotateCcw, LayoutGrid, ListOrdered } from 'lucide-react'
+import Loader from './Loader'
+
 const HomePage = () => {
   const { isLogin, isAuthChecked } = useContext(AuthContext)
   const [activeFans, setActiveFans] = useState(12840)
@@ -25,239 +28,198 @@ const HomePage = () => {
   }, [])
 
   const games = [
-    { id: 1, title: 'Who is the Player?', link: '/Games/Whoplayer', state: 'AVAILABLE', description: 'Guess the legend based on career clues and stats.', icon: <RiFocus2Line />, color: 'from-red-600/20 to-red-600/5' },
-    { id: 2, title: 'Secret Password', link: '/Games/Password', state: 'AVAILABLE', description: 'Unlock the hidden player identity with minimal hints.', icon: <RiFlashlightLine />, color: 'from-blue-600/20 to-blue-600/5' },
-    { id: 3, title: 'Risk Arena', link: '/Games/Risk', state: 'AVAILABLE', description: 'High-stakes football trivia across multiple difficulty tiers.', icon: <RiTrophyLine />, color: 'from-amber-600/20 to-amber-600/5' },
-    { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer />, color: 'from-emerald-600/20 to-emerald-600/5' },
-    { id: 5, title: 'True Guess', link: '/Games/Guess', state: 'AVAILABLE', description: 'Challenge friends with obscure football facts.', icon: <RiCompass3Line />, color: 'from-purple-600/20 to-purple-600/5' },
-    { id: 6, title: 'Visual Identity', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-primary/20 to-primary/5' },
-    { id: 7, title: 'Elite Auction', link: '/Games/Auction', state: 'AVAILABLE', description: 'Bid against rivals and prove your depth of knowledge.', icon: <Gavel />, color: 'from-orange-600/20 to-orange-600/5' },
-    { id: 8, title: 'Club Legends', link: '/Games/Clubs', state: 'AVAILABLE', description: 'Identify global clubs from their history, crests, and stars.', icon: <Users />, color: 'from-cyan-600/20 to-cyan-600/5' },
-    { id: 9, title: 'Offside Rule', link: '/Games/Offside', state: 'AVAILABLE', description: 'Test your knowledge on tactical rules and referee decisions.', icon: <Flag />, color: 'from-yellow-600/20 to-yellow-600/5' },
-    { id: 10, title: 'Infinity Round', link: '/Games/Round', state: 'AVAILABLE', description: 'Continuous rounds of increasing difficulty to test stamina.', icon: <RotateCcw />, color: 'from-indigo-600/20 to-indigo-600/5' },
-    { id: 11, title: 'Squad Builder', link: '/Games/Squad', state: 'AVAILABLE', description: 'Construct the perfect team and solve formation puzzles.', icon: <LayoutGrid />, color: 'from-lime-600/20 to-lime-600/5' },
-    { id: 12, title: 'The Top Ten', link: '/Games/TopTen', state: 'AVAILABLE', description: 'Rank and list the greatest players in specific categories.', icon: <ListOrdered />, color: 'from-teal-600/20 to-teal-600/5' },
-    { id: 13, title: 'Hall of Fame', link: '/Games/Leaderboard', state: 'AVAILABLE', description: 'View the global rankings and elite football legends.', icon: <RiTrophyLine />, color: 'from-slate-600/20 to-slate-600/5' },
-    { id: 14, title: 'Multi-Challenge', link: '/Games/MultiGame', state: 'AVAILABLE', description: 'A diverse gauntlet of various football mini-games.', icon: <Gamepad2 />, color: 'from-rose-600/20 to-rose-600/5' },
+    { id: 1, title: 'Who is the Player?', link: '/Games/Whoplayer', state: 'AVAILABLE', description: 'Guess the legend based on career clues and stats.', icon: <RiFocus2Line />, color: 'from-red-600/20 to-red-950/10' },
+    { id: 2, title: 'Secret Password', link: '/Games/Password', state: 'AVAILABLE', description: 'Unlock the hidden player identity with minimal hints.', icon: <RiFlashlightLine />, color: 'from-blue-600/20 to-blue-950/10' },
+    { id: 3, title: 'Risk Arena', link: '/Games/Risk', state: 'AVAILABLE', description: 'High-stakes football trivia across multiple difficulty tiers.', icon: <RiTrophyLine />, color: 'from-amber-600/20 to-amber-950/10' },
+    { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer className="w-6 h-6" />, color: 'from-emerald-600/20 to-emerald-950/10' },
+    { id: 5, title: 'True Guess', link: '/Games/Guess', state: 'AVAILABLE', description: 'Challenge friends with obscure football facts.', icon: <RiCompass3Line />, color: 'from-purple-600/20 to-purple-950/10' },
+    { id: 6, title: 'Visual Identity', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-rose-600/20 to-rose-950/10' },
+    { id: 7, title: 'Elite Auction', link: '/Games/Auction', state: 'AVAILABLE', description: 'Bid against rivals and prove your depth of knowledge.', icon: <Gavel className="w-6 h-6" />, color: 'from-orange-600/20 to-orange-950/10' },
+    { id: 8, title: 'Club Legends', link: '/Games/Clubs', state: 'AVAILABLE', description: 'Identify global clubs from their history, crests, and stars.', icon: <Users className="w-6 h-6" />, color: 'from-cyan-600/20 to-cyan-950/10' },
+    { id: 9, title: 'Offside Rule', link: '/Games/Offside', state: 'AVAILABLE', description: 'Test your knowledge on tactical rules and referee decisions.', icon: <Flag className="w-6 h-6" />, color: 'from-yellow-600/20 to-yellow-950/10' },
+    { id: 10, title: 'Infinity Round', link: '/Games/Round', state: 'AVAILABLE', description: 'Continuous rounds of increasing difficulty to test stamina.', icon: <RotateCcw className="w-6 h-6" />, color: 'from-indigo-600/20 to-indigo-950/10' },
+    { id: 11, title: 'Squad Builder', link: '/Games/Squad', state: 'AVAILABLE', description: 'Construct the perfect team and solve formation puzzles.', icon: <LayoutGrid className="w-6 h-6" />, color: 'from-lime-600/20 to-lime-950/10' },
+    { id: 12, title: 'The Top Ten', link: '/Games/TopTen', state: 'AVAILABLE', description: 'Rank and list the greatest players in specific categories.', icon: <ListOrdered className="w-6 h-6" />, color: 'from-teal-600/20 to-teal-950/10' },
+    { id: 13, title: 'Hall of Fame', link: '/Games/Leaderboard', state: 'AVAILABLE', description: 'View the global rankings and elite football legends.', icon: <RiTrophyLine />, color: 'from-slate-600/20 to-slate-950/10' },
+    { id: 14, title: 'Multi-Challenge', link: '/Games/MultiGame', state: 'CAMPAIGNS', description: 'Structured 5-game campaign episodes (Sabahoo style).', icon: <Gamepad2 className="w-6 h-6" />, color: 'from-red-500/30 to-red-950/20' },
   ]
 
-  if (!isAuthChecked) return null
+  if (!isAuthChecked) {
+    return <Loader message="Initializing Football Stadium..." />
+  }
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-32 pb-24">
-      {/* Hero Section - Redesigned for Maximum Impact */}
-      <section className="relative min-h-[85vh] flex flex-col items-center justify-center overflow-hidden rounded-[5rem] border border-white/5 bg-[#050505] perspective-1000">
-        {/* Advanced Background System */}
+    <div className="w-full max-w-7xl mx-auto space-y-28 pb-24 px-4">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden rounded-[4rem] border border-white/5 bg-[#030303] shadow-3xl">
         <div className="absolute inset-0 z-0">
           <motion.div
             animate={{
-              scale: [1, 1.2, 1],
-              opacity: [0.3, 0.5, 0.3],
-              rotate: [0, 90, 0]
+              scale: [1, 1.15, 1],
+              opacity: [0.25, 0.45, 0.25],
             }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="absolute top-[-20%] left-[-10%] w-[1000px] h-[1000px] bg-primary/20 rounded-full blur-[150px]"
+            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-primary/20 rounded-full blur-[140px]"
           />
           <motion.div
             animate={{
-              scale: [1.2, 1, 1.2],
-              opacity: [0.2, 0.4, 0.2],
-              rotate: [0, -90, 0]
+              scale: [1.1, 0.95, 1.1],
+              opacity: [0.15, 0.35, 0.15],
             }}
-            transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
-            className="absolute bottom-[-10%] right-[-5%] w-[800px] h-[800px] bg-blue-900/10 rounded-full blur-[130px]"
+            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute bottom-[-15%] right-[-5%] w-[700px] h-[700px] bg-blue-900/20 rounded-full blur-[130px]"
           />
-          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 mix-blend-overlay" />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050505]" />
-        </div>
-
-        {/* Floating Interactive Icons Background */}
-        <div className="absolute inset-0 pointer-events-none opacity-20">
-          {[RiTrophyLine, Timer, RiFlashlightLine, RiFocus2Line].map((Icon, i) => (
-            <motion.div
-              key={i}
-              className="absolute text-6xl text-white/10"
-              initial={{ x: Math.random() * 1000, y: Math.random() * 600 }}
-              animate={{
-                y: [0, -40, 0],
-                rotate: [0, 20, 0]
-              }}
-              transition={{ duration: 5 + i, repeat: Infinity, ease: "easeInOut" }}
-              style={{ left: `${20 * i}%`, top: `${15 * i}%` }}
-            >
-              <Icon />
-            </motion.div>
-          ))}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,#030303_100%)]" />
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 text-center px-6 py-4 max-w-5xl space-y-12">
+        <div className="relative z-10 text-center px-6 py-4 max-w-5xl space-y-10">
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full glass border border-white/10 text-[11px] font-black tracking-[0.4em] text-primary uppercase shadow-2xl shadow-primary/20"
+            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.4em] text-primary uppercase shadow-2xl shadow-primary/15"
           >
             <span className="relative flex h-2.5 w-2.5">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
             </span>
-            Season 04: The Rise of Legends
+            Season 04: The Arena of Champions
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <h1 className="text-7xl md:text-[9rem] font-black italic text-white tracking-tighter leading-[0.85] uppercase">
-              ULTIMATE <br />
-              <span className="text-stroke-2 text-transparent">CHALLENGE</span>
+            <h1 className="text-6xl md:text-[8.5rem] font-black italic text-white tracking-tighter leading-[0.85] uppercase">
+              SHALAN <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-500 to-orange-500">CHALLENGE</span>
             </h1>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="text-white/40 font-medium text-xl md:text-2xl max-w-3xl mx-auto leading-relaxed"
+            transition={{ delay: 0.4 }}
+            className="text-white/55 font-medium text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
           >
-            The definitive football knowledge arena. Join <span className="text-white font-bold">{activeFans.toLocaleString()}</span> fanatics and dominate the global leaderboard.
+            The premium stadium for football experts. Test your depth, unlock achievements, and compete with <span className="text-white font-black">{activeFans.toLocaleString()}</span> active fans.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            className="flex flex-col md:flex-row items-center justify-center gap-8"
+            transition={{ delay: 0.6 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
             {isLogin ? (
               <button
                 onClick={() => document.getElementById('hub').scrollIntoView({ behavior: 'smooth' })}
-                className="group relative px-12 py-6 bg-primary text-white font-black text-xs rounded-2xl shadow-2xl shadow-primary/50 transition-all hover:scale-105 active:scale-95 flex items-center gap-4 uppercase tracking-[0.3em]"
+                className="group relative px-10 py-5 bg-primary text-white font-black text-xs rounded-2xl shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 uppercase tracking-[0.3em]"
               >
-                <div className="absolute inset-0 bg-white opacity-0 group-hover:opacity-10 transition-opacity rounded-2xl" />
-                <RiPlayFill size={24} className="group-hover:rotate-12 transition-transform" />
-                Enter The Arena
+                <RiPlayFill size={20} className="group-hover:rotate-12 transition-transform" />
+                Select Arena
               </button>
             ) : (
               <Link
                 href="/Auth/Login"
-                className="px-12 py-6 bg-white text-carbon-dark font-black text-xs rounded-2xl shadow-2xl transition-all hover:scale-105 active:scale-95 flex items-center gap-4 uppercase tracking-[0.3em]"
+                className="px-10 py-5 bg-white text-black font-black text-xs rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 uppercase tracking-[0.3em]"
               >
-                Unlock Elite Access
+                Unlock Club Access
               </Link>
             )}
 
-            <div className="flex items-center gap-4 p-3 glass rounded-2xl border border-white/5">
+            <div className="flex items-center gap-3 p-3 glass rounded-2xl border border-white/5">
               <div className="flex -space-x-3">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-xl border-2 border-carbon-dark overflow-hidden transform hover:-translate-y-1 transition-transform cursor-pointer">
-                    <img src={`https://i.pravatar.cc/100?img=${i + 20}`} alt="user" />
+                  <div key={i} className="w-8 h-8 rounded-full border-2 border-[#030303] overflow-hidden transform hover:-translate-y-1 transition-transform">
+                    <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="player" />
                   </div>
                 ))}
               </div>
-              <span className="text-[10px] font-black text-white/60 uppercase tracking-widest">Active Players</span>
+              <span className="text-[9px] font-black text-white/50 uppercase tracking-widest">Compete Globally</span>
             </div>
           </motion.div>
         </div>
-
-        {/* Decorative elements */}
-        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent -rotate-12 pointer-events-none" />
-        <div className="absolute top-1/2 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent rotate-12 pointer-events-none" />
       </section>
 
-      {/* Stats Board - Premium Glass Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+      {/* Stats Board */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
         {[
-          { label: 'Live Arenas', value: '14 ACTIVE', icon: <RiFlashlightLine />, trend: '+3 New' },
-          { label: 'Global Ranking', value: '#12,840', icon: <RiTrophyLine />, trend: 'Top 5%' },
-          { label: 'Points Pool', value: '1.2M+', icon: <Users />, trend: 'Weekly' },
-          { label: 'Daily XP', value: '2.5X BOOST', icon: <Timer />, trend: 'Active' },
+          { label: 'Active Arenas', value: '14 Arenas', icon: <Gamepad2 className="w-6 h-6" />, desc: 'Live football quizzes' },
+          { label: 'Global Ranking', value: '12K+ Players', icon: <RiTrophyLine />, desc: 'Interactive leaderboard' },
+          { label: 'Squad Battles', value: 'Multi-Game', icon: <RiTeamLine />, desc: 'Sabahoo tahdy style' },
+          { label: 'Platform Status', value: 'Fully Stable', icon: <RiLineChartLine />, desc: 'Realtime sync' },
         ].map((stat, i) => (
           <motion.div
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -4 }}
             key={i}
-            className="group relative glass-dark border border-white/5 p-8 rounded-[3rem] overflow-hidden"
+            className="group relative glass-dark border border-white/5 p-6 rounded-[2.5rem] overflow-hidden flex flex-col justify-between min-h-[140px]"
           >
-            <div className="absolute top-0 right-0 p-6 text-primary group-hover:scale-110 transition-transform opacity-20 group-hover:opacity-100">
+            <div className="absolute top-4 right-4 text-primary opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all">
               {stat.icon}
             </div>
             <div className="space-y-1">
-              <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.3em]">{stat.label}</span>
-              <h3 className="text-3xl font-black text-white italic tracking-tighter uppercase">{stat.value}</h3>
-              <p className="text-[9px] font-bold text-primary uppercase tracking-widest mt-2">{stat.trend}</p>
+              <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">{stat.label}</span>
+              <h3 className="text-2xl font-black text-white italic tracking-tighter uppercase">{stat.value}</h3>
+              <p className="text-[10px] font-semibold text-white/45 mt-2">{stat.desc}</p>
             </div>
           </motion.div>
         ))}
       </div>
 
-      {/* The Games Hub - Bento Style Premium Grid */}
-      <section id="hub" className="space-y-16 px-4">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-white/5 pb-10">
+      {/* The Games Hub */}
+      <section id="hub" className="space-y-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
           <div className="space-y-2">
-            <span className="text-[11px] font-black text-primary uppercase tracking-[0.5em]">Game Universe</span>
-            <h2 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">
-              Explore <span className="text-stroke-1 text-white opacity-40">The</span> Hub
+            <span className="text-[10px] font-black text-primary uppercase tracking-[0.5em]">Game Universe</span>
+            <h2 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase leading-none">
+              Matchday <span className="text-white/40">Arenas</span>
             </h2>
           </div>
-          <div className="flex bg-white/5 p-2 rounded-2xl border border-white/5">
-            <button className="px-6 py-3 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-primary/20">All Challenges</button>
-            <button className="px-6 py-3 text-white/40 hover:text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all">New Releases</button>
+          <div className="flex bg-white/5 p-1.5 rounded-2xl border border-white/5">
+            <span className="px-5 py-2.5 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg">Quizzes & Challenges</span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[280px]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {games.map((game, i) => (
             <motion.div
               key={game.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              className={`group relative overflow-hidden rounded-[2.5rem] border border-white/10 ${i === 0 || i === 7 ? 'md:col-span-2' : '' // Highlighting some games by expanding them
-                } ${i === 3 ? 'lg:row-span-2 h-full' : ''} ${i === 14 ? 'lg:row-span-4' : ''}`}
+              transition={{ delay: i * 0.04 }}
+              className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 flex flex-col justify-between min-h-[260px]"
             >
-              {/* Card Background Visual */}
+              {/* Card Gradient Background */}
               <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-40 group-hover:opacity-60 transition-opacity duration-700`} />
-              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10" />
 
-              <Link href={game.link} className="absolute inset-0 p-8 flex flex-col justify-between z-10">
+              <Link href={game.link} className="absolute inset-0 p-6 flex flex-col justify-between z-10">
                 <div className="flex items-start justify-between">
-                  <div className="w-14 h-14 rounded-2xl glass-dark border border-white/10 flex items-center justify-center text-2xl text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500 group-hover:rotate-12 group-hover:scale-110">
+                  <div className="w-12 h-12 rounded-2xl glass-dark border border-white/10 flex items-center justify-center text-xl text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500 group-hover:scale-105">
                     {game.icon}
                   </div>
-                  <div className="px-3 py-1 bg-white/10 border border-white/10 rounded-full text-[8px] font-black text-white/50 uppercase tracking-widest group-hover:text-white group-hover:bg-primary/20 transition-all">
+                  <div className="px-2.5 py-0.5 bg-white/5 border border-white/10 rounded-full text-[8px] font-black text-white/50 uppercase tracking-widest">
                     {game.state}
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <h3 className="text-2xl font-black text-white italic leading-tight uppercase tracking-tighter group-hover:text-primary transition-colors">
+                <div className="space-y-1.5">
+                  <h3 className="text-xl font-black text-white italic leading-tight uppercase tracking-tighter group-hover:text-primary transition-colors">
                     {game.title}
                   </h3>
-                  <p className="text-white/40 text-[11px] font-medium leading-relaxed line-clamp-2 group-hover:text-white/70 transition-colors">
+                  <p className="text-white/40 text-[11px] font-semibold leading-relaxed line-clamp-2">
                     {game.description}
                   </p>
-                  <div className="pt-4 flex items-center gap-2 text-primary opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-500 text-[10px] font-black uppercase tracking-[0.2em]">
-                    Play Now <RiPlayFill />
+                  <div className="pt-2 flex items-center gap-1.5 text-primary opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 text-[9px] font-black uppercase tracking-[0.2em]">
+                    Enter Match <RiPlayFill size={10} />
                   </div>
                 </div>
               </Link>
-
-              {/* Shine effect on hover */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
             </motion.div>
           ))}
         </div>
-      </section>
-
-
-      {/* Footer Branding Area */}
-      <section className="text-center py-10 space-y-4">
-        <div className="text-5xl md:text-7xl font-black italic text-white/5 uppercase tracking-tighter select-none">
-          CHALLENGE UNMATCHED
-        </div>
-        <p className="text-white/10 text-[10px] font-black uppercase tracking-[0.8em]">Designed for the 1% of Football Experts</p>
       </section>
     </div>
   )

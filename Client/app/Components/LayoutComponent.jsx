@@ -15,6 +15,7 @@ import AuctionContextProvider from "../Context/Games/AuctionContext";
 import { TopTenContextProvider } from "../Context/Games/TopTenContext";
 import { SquadContextProvider } from "../Context/Games/SquadContext";
 import { ClubsContextProvider } from "../Context/Games/ClubsContext";
+import MultiGameContextProvider from "../Context/Games/MultiGameContext";
 import { AnimatePresence, motion } from "framer-motion";
 
 const LayoutComponent = ({ children }) => {
@@ -34,37 +35,39 @@ const LayoutComponent = ({ children }) => {
                         <TopTenContextProvider>
                           <SquadContextProvider>
                             <ClubsContextProvider>
-                              <div className="min-h-screen bg-background selection:bg-primary selection:text-white">
-                                <Nav setShowProfile={setShowProfile} />
+                              <MultiGameContextProvider>
+                                <div className="min-h-screen bg-background selection:bg-primary selection:text-white">
+                                  <Nav setShowProfile={setShowProfile} />
 
-                                <main className="w-full pt-32 pb-20 px-4">
-                                  {children}
-                                </main>
+                                  <main className="w-full pt-32 pb-20 px-4">
+                                    {children}
+                                  </main>
 
-                                {/* Modal Container */}
-                                <AnimatePresence>
-                                  {showProfile && (
-                                    <motion.div
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      exit={{ opacity: 0 }}
-                                      className="fixed inset-0 w-full h-full flex items-center justify-center z-[1000] p-4"
-                                    >
-                                      {/* Backdrop */}
+                                  {/* Modal Container */}
+                                  <AnimatePresence>
+                                    {showProfile && (
                                       <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        onClick={() => setShowProfile(false)}
-                                        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
-                                      />
+                                        className="fixed inset-0 w-full h-full flex items-center justify-center z-[1000] p-4"
+                                      >
+                                        {/* Backdrop */}
+                                        <motion.div
+                                          initial={{ opacity: 0 }}
+                                          animate={{ opacity: 1 }}
+                                          exit={{ opacity: 0 }}
+                                          onClick={() => setShowProfile(false)}
+                                          className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+                                        />
 
-                                      {/* Modal Content */}
-                                      <Profile setShowProfile={setShowProfile} />
-                                    </motion.div>
-                                  )}
-                                </AnimatePresence>
-                              </div>
+                                        {/* Modal Content */}
+                                        <Profile setShowProfile={setShowProfile} />
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
+                                </div>
+                              </MultiGameContextProvider>
                             </ClubsContextProvider>
                           </SquadContextProvider>
                         </TopTenContextProvider>

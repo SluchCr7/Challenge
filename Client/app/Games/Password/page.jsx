@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { PassContext } from '@/app/Context/Games/PassContext';
 import GameIntro from '@/app/Components/GameIntro';
+import Loader from '@/app/Components/Loader';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Password = () => {
@@ -16,6 +17,10 @@ const Password = () => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPass') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...pass]);
   }, [pass]);
+
+  if (!pass || pass.length === 0) {
+    return <Loader message="Decrypting Registry Keys..." />;
+  }
 
   return (
     <div className='flex items-center justify-center w-full min-h-[85vh] py-20 flex-col gap-10 relative overflow-hidden'>

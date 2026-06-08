@@ -51,6 +51,7 @@ app.use("/api/auction", require("./routes/AuctionRoute"))
 app.use("/api/topten", require("./routes/TopTenRoute"))
 app.use("/api/squad", require("./routes/SquadRoute"))
 app.use("/api/clubs", require("./routes/ClubsRoute"))
+app.use("/api/multigame", require('./routes/MultiGameRoute'))
 app.use(errorhandler)
 
 // Listen

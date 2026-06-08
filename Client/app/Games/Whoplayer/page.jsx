@@ -5,6 +5,7 @@ import { PlayerContext } from '@/app/Context/Games/PlayersContext';
 import selectRandomObject from '@/utils/getUniqueObject';
 import { motion, AnimatePresence } from 'framer-motion';
 import GameIntro from '@/app/Components/GameIntro';
+import Loader from '@/app/Components/Loader';
 
 const Game = () => {
   const [show, setShow] = useState(false);
@@ -16,6 +17,10 @@ const Game = () => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPlayer') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...player]);
   }, [player]);
+
+  if (!player || player.length === 0) {
+    return <Loader message="Synchronizing Player Dossiers..." />;
+  }
 
   return (
     <div className="min-h-[80vh] py-10 px-4 flex flex-col items-center justify-center w-full max-w-5xl mx-auto">

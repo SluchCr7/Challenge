@@ -30,6 +30,7 @@ const AdminPage = () => {
     { name: 'TopTen', link: '/Admin/TopTen', icon: <RiTrophyLine />, desc: 'Ranking records' },
     { name: 'Squad', link: '/Admin/Squad', icon: <RiGameLine />, desc: 'Tactical formations' },
     { name: 'Player Carrer', link: '/Admin/Clubs', icon: <RiUserSettingsLine />, desc: 'Historical clubs' },
+    { name: 'Multi Game', link: '/Admin/MultiGame', icon: <RiGameLine />, desc: 'Assemble campaigns (5 fixed games)' },
   ];
 
   const adminStats = [

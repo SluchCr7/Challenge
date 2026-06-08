@@ -5,6 +5,7 @@ import { RiRefreshLine, RiArrowDownSLine, RiArrowUpSLine, RiShieldUserLine, RiCa
 import { PictureContext } from '@/app/Context/Games/PictureContext';
 import selectRandomObject from '@/utils/getUniqueObject';
 import GameIntro from '@/app/Components/GameIntro';
+import Loader from '@/app/Components/Loader';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Page = () => {
@@ -17,6 +18,10 @@ const Page = () => {
     const stored = typeof window !== 'undefined' ? localStorage.getItem('remainingObjectsPicture') : null;
     setRemainingObjects(stored ? JSON.parse(stored) : [...team]);
   }, [team]);
+
+  if (!team || team.length === 0) {
+    return <Loader message="Analyzing Visual Archives..." />;
+  }
 
   return (
     <div className='flex items-center justify-center w-full min-h-[85vh] py-20 flex-col gap-10 relative overflow-hidden rtl'>
