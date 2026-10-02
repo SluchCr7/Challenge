@@ -33,28 +33,28 @@ const RegisterNewUser = asyncHandler(async (req, res) => {
     })
 
     await user.save()
-    const VerificationToken = new Verification({
-        userId: user._id,
-        tokenVer: crypto.randomBytes(32).toString('hex'),
-    })
-    await VerificationToken.save()
+    // const VerificationToken = new Verification({
+    //     userId: user._id,
+    //     tokenVer: crypto.randomBytes(32).toString('hex'),
+    // })
+    // await VerificationToken.save()
 
-    const link = `${process.env.DOMAIN_NAME}/Auth/users/${user._id}/verify/${VerificationToken.tokenVer}`
+    // const link = `${process.env.DOMAIN_NAME}/Auth/users/${user._id}/verify/${VerificationToken.tokenVer}`
 
-    const htmlTemp = `
-        <h4>Dear ${user.Name}!</h4>
+    // const htmlTemp = `
+    //     <h4>Dear ${user.Name}!</h4>
 
-        <p>Thank you for signing up with Challenge Football!. Please verify your email address to complete your registration.</p>
+    //     <p>Thank you for signing up with Challenge Football!. Please verify your email address to complete your registration.</p>
         
-        <p><a href="${link}">Verify Email</a></p>
+    //     <p><a href="${link}">Verify Email</a></p>
         
-        <p>If you did not sign up for this account, you can safely ignore this email.</p>
+    //     <p>If you did not sign up for this account, you can safely ignore this email.</p>
         
-        <span>Best regards,</span>
+    //     <span>Best regards,</span>
         
-        <span>The Challenge Football Team</span>
-    `
-    await sendEmail(user.Email , "Verify your Email" , htmlTemp)
+    //     <span>The Challenge Football Team</span>
+    // `
+    // await sendEmail(user.Email , "Verify your Email" , htmlTemp)
 
     res.status(201).json({ message: "User Created Successfully and we sent an email now , go to verify your email" });
 })
@@ -78,34 +78,34 @@ const LoginUser = asyncHandler(async (req, res) => {
     if (!validPassword) {
         return res.status(400).send("Invalid email or password");
     }
-    if (!user.isVerify) {
-        let verificationToken = await Verification.findOne({
-            userId: user._id,
-        })
-        if (!verificationToken) {
-            verificationToken = new Verification({
-                userId: user._id,
-                tokenVer: crypto.randomBytes(32).toString('hex'),
-            })
-            await verificationToken.save()
-        }
-        const link = `${process.env.DOMAIN_NAME}/Auth/users/${user._id}/verify/${verificationToken.tokenVer}`
-        const htmlTemp = `
-            <h4>Dear ${user.Name}!</h4>
+    // if (!user.isVerify) {
+    //     let verificationToken = await Verification.findOne({
+    //         userId: user._id,
+    //     })
+    //     if (!verificationToken) {
+    //         verificationToken = new Verification({
+    //             userId: user._id,
+    //             tokenVer: crypto.randomBytes(32).toString('hex'),
+    //         })
+    //         await verificationToken.save()
+    //     }
+    //     const link = `${process.env.DOMAIN_NAME}/Auth/users/${user._id}/verify/${verificationToken.tokenVer}`
+    //     const htmlTemp = `
+    //         <h4>Dear ${user.Name}!</h4>
 
-            <p>Thank you for signing up with Challenge Football!. Please verify your email address to complete your registration.</p>
+    //         <p>Thank you for signing up with Challenge Football!. Please verify your email address to complete your registration.</p>
             
-            <p><a href="${link}">Verify Email</a></p>
+    //         <p><a href="${link}">Verify Email</a></p>
             
-            <p>If you did not sign up for this account, you can safely ignore this email.</p>
+    //         <p>If you did not sign up for this account, you can safely ignore this email.</p>
             
-            <span>Best regards,</span>
+    //         <span>Best regards,</span>
             
-            <span>The Challenge Football Team</span>
-        `
-        await sendEmail(user.Email, 'Verify Email', htmlTemp)
-        return res.status(400).json({ message: 'Email not verified' })
-    }
+    //         <span>The Challenge Football Team</span>
+    //     `
+    //     await sendEmail(user.Email, 'Verify Email', htmlTemp)
+    //     return res.status(400).json({ message: 'Email not verified' })
+    // }
     const token = jwt.sign({ _id: user._id , isAdmain: user.isAdmain }, process.env.TOKEN_SECRET);
     const { Password, ...others } = user._doc
     res.send({ ...others, token });
