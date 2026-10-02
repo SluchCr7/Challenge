@@ -14,54 +14,54 @@ const TeamPoints = ({ team, circles, setCircles, pass, setPass }) => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-6 p-8 glass-dark border border-white/10 rounded-[2.5rem] shadow-2xl w-full max-w-sm relative overflow-hidden group">
+    <div className="flex flex-col items-center gap-5 p-6 bg-surface-card border border-white/10 rounded-2xl shadow-xl w-full max-w-sm relative overflow-hidden group">
       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
 
       {/* Team Signature */}
       <div className="text-center space-y-1">
-        <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/20 leading-none">Status Monitor</span>
-        <h4 className="text-2xl font-black italic text-white tracking-tighter uppercase">{team.name}</h4>
+        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-slate-500 leading-none">Status Monitor</span>
+        <h4 className="text-xl font-black italic text-white tracking-tight uppercase">{team.name}</h4>
       </div>
 
       {/* Strike Indicators */}
-      <div className="flex items-center justify-center gap-4">
+      <div className="flex items-center justify-center gap-3">
         {circles.map((isFilled, index) => (
           <motion.div
             key={index}
             animate={{
-              scale: isFilled ? [1, 1.2, 1] : 1,
-              backgroundColor: isFilled ? '#E10600' : 'rgba(255,255,255,0.05)'
+              scale: isFilled ? [1, 1.15, 1] : 1,
+              backgroundColor: isFilled ? '#EF4444' : 'rgba(255,255,255,0.04)'
             }}
-            className={`w-10 h-10 rounded-2xl border border-white/5 flex items-center justify-center transition-all duration-500 shadow-2xl ${isFilled ? 'shadow-primary/30 border-primary/50' : ''
+            className={`w-9 h-9 rounded-xl border border-white/5 flex items-center justify-center transition-all duration-300 shadow-md ${isFilled ? 'shadow-rose-500/20 border-rose-500/40' : ''
               }`}
           >
-            {isFilled && <RiCloseLine className="text-white text-2xl" />}
+            {isFilled && <RiCloseLine className="text-white text-xl" />}
           </motion.div>
         ))}
       </div>
 
       {/* Operational Controls */}
-      <div className="grid grid-cols-2 gap-4 w-full mt-4">
+      <div className="grid grid-cols-2 gap-3 w-full mt-2">
         {/* Pass Button */}
         <button
           onClick={() => setPass(!pass)}
           disabled={pass}
-          className={`flex flex-col items-center justify-center gap-2 py-4 rounded-2xl border transition-all ${pass
-              ? 'bg-white/5 border-white/5 text-white/10 cursor-not-allowed opacity-20'
-              : 'glass border-white/10 text-white/40 hover:text-primary hover:border-primary'
+          className={`flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl border transition-all ${pass
+              ? 'bg-white/5 border-white/5 text-slate-600 cursor-not-allowed opacity-30'
+              : 'bg-surface-subtle border-white/10 text-slate-400 hover:text-primary hover:border-primary/40'
             }`}
         >
-          <RiProhibitedLine className="text-2xl" />
-          <span className="text-[9px] font-black uppercase tracking-widest">Pass Protocol</span>
+          <RiProhibitedLine className="text-xl" />
+          <span className="text-[9px] font-black uppercase tracking-wider">Pass</span>
         </button>
 
         {/* Strike Button */}
         <button
           onClick={fillNextCircle}
-          className="flex flex-col items-center justify-center gap-2 py-4 bg-primary/10 border border-primary/20 rounded-2xl text-primary hover:bg-primary hover:text-white transition-all shadow-xl shadow-primary/10 active:scale-95"
+          className="flex flex-col items-center justify-center gap-1.5 py-3 bg-surface-subtle border border-rose-500/30 rounded-xl text-rose-400 hover:bg-rose-500 hover:text-white transition-all shadow-sm active:scale-95"
         >
-          <RiFocus2Line className="text-2xl" />
-          <span className="text-[9px] font-black uppercase tracking-widest">Execute Strike</span>
+          <RiFocus2Line className="text-xl" />
+          <span className="text-[9px] font-black uppercase tracking-wider">Strike</span>
         </button>
       </div>
     </div>

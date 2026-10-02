@@ -4,9 +4,9 @@ import GameIntro from '@/app/Components/GameIntro'
 import { TopTenContext } from '@/app/Context/Games/TopTenContext'
 import selectRandomObject from '@/utils/getUniqueObject'
 import { RiRefreshLine, RiBookOpenLine, RiTrophyLine, RiSkullLine, RiShieldUserLine, RiArrowLeftRightLine } from 'react-icons/ri'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
-const Page = () => {
+const TopTenPage = () => {
   const { topTenData } = useContext(TopTenContext)
   const [valueTeamOne, setValueTeamOne] = useState(0)
   const [valueTeamTwo, setValueTeamTwo] = useState(0)
@@ -51,120 +51,137 @@ const Page = () => {
   ]
 
   return (
-    <div className='w-full max-w-7xl mx-auto py-12 px-6 space-y-16 rtl'>
+    <div className="w-full max-w-7xl mx-auto py-12 px-6 rtl space-y-8">
       {lastSelected ? (
-        <div className='space-y-16'>
-
-          {/* Header & Score Track */}
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-            <div className="text-center lg:text-right space-y-4 order-2 lg:order-1">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.3em] text-primary uppercase">
-                <RiBookOpenLine /> استعادة الأرشيف النخبة
+        <div className="space-y-8">
+          {/* Header & Teams Turn */}
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 pb-6 border-b border-border">
+            <div className="text-center lg:text-right space-y-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary">
+                <RiBookOpenLine className="text-sm" /> قائمة العشرة الأوائل
               </div>
-              <h1 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase leading-none">
+              <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
                 توب <span className="text-primary">تـين</span>
               </h1>
-              <p className="text-white/40 font-bold uppercase tracking-widest text-[10px] max-w-md">{lastSelected?.title}</p>
+              <p className="text-muted text-xs font-semibold max-w-xl">{lastSelected?.title}</p>
             </div>
 
-            <div className="flex flex-col items-center gap-6 order-1 lg:order-2">
-              <div className="flex items-center gap-4">
-                <div className={`px-8 py-5 rounded-[2rem] border-2 transition-all duration-500 ${round === 'First' ? 'bg-primary/10 border-primary shadow-[0_0_20px_rgba(225,6,0,0.2)]' : 'glass border-white/10 opacity-30'}`}>
-                  <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 block mb-1">الكتيبة الأولى</span>
-                  <span className="text-4xl font-black italic text-white tracking-tighter">{valueTeamOne}</span>
-                </div>
-                <RiArrowLeftRightLine className="text-white/20 text-2xl" />
-                <div className={`px-8 py-5 rounded-[2rem] border-2 transition-all duration-500 ${round === 'Second' ? 'bg-primary/10 border-primary shadow-[0_0_20px_rgba(225,6,0,0.2)]' : 'glass border-white/10 opacity-30'}`}>
-                  <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 block mb-1">الكتيبة الثانية</span>
-                  <span className="text-4xl font-black italic text-white tracking-tighter">{valueTeamTwo}</span>
-                </div>
+            <div className="flex items-center gap-4">
+              <div className={`px-5 py-3 rounded-xl border transition-all text-center ${
+                round === 'First'
+                  ? 'border-primary bg-primary/5 shadow-md shadow-primary/10'
+                  : 'card-surface border-border opacity-70'
+              }`}>
+                <span className="text-[10px] font-bold text-muted uppercase block">الفريق الأول</span>
+                <span className="text-2xl font-black text-foreground">{valueTeamOne}</span>
               </div>
+
               <button
                 onClick={() => setRound(prev => prev === 'First' ? 'Second' : 'First')}
-                className="px-8 py-3 glass border border-white/10 rounded-full text-[9px] font-black uppercase tracking-[0.4em] text-white/40 hover:text-white hover:border-primary transition-all"
+                className="p-2.5 rounded-xl card-surface border border-border text-muted hover:text-primary transition-colors"
+                title="تبديل الدور"
               >
-                تبديل الدور يدوياً
+                <RiArrowLeftRightLine size={18} />
+              </button>
+
+              <div className={`px-5 py-3 rounded-xl border transition-all text-center ${
+                round === 'Second'
+                  ? 'border-primary bg-primary/5 shadow-md shadow-primary/10'
+                  : 'card-surface border-border opacity-70'
+              }`}>
+                <span className="text-[10px] font-bold text-muted uppercase block">الفريق الثاني</span>
+                <span className="text-2xl font-black text-foreground">{valueTeamTwo}</span>
+              </div>
+
+              <button
+                onClick={handleRefresh}
+                className="p-3 rounded-xl card-surface border border-border text-primary hover:bg-surface-elevated transition-colors"
+                title="قائمة جديدة"
+              >
+                <RiRefreshLine size={20} />
               </button>
             </div>
           </div>
 
           {/* Cards Grid */}
-          <div className='relative'>
-            <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
-              {questionKeys.map((key, index) => {
-                const question = lastSelected[key]
-                const isAnswered = answeredCards.includes(index)
-                const isNegative = index >= 10;
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3.5">
+            {questionKeys.map((key, index) => {
+              const question = lastSelected[key]
+              const isAnswered = answeredCards.includes(index)
+              const isNegative = index >= 10;
 
-                return question ? (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    whileHover={{ y: isAnswered ? 0 : -5 }}
-                    onClick={() => handleCardClick(index, question.value)}
-                    className={`relative aspect-[4/5] rounded-[2.5rem] border-2 transition-all duration-500 p-6 flex flex-col items-center justify-center text-center gap-4 overflow-hidden group cursor-pointer ${isAnswered
-                        ? 'bg-primary border-primary shadow-[0_0_30px_rgba(225,6,0,0.3)]'
-                        : 'glass-dark border-white/5 hover:border-primary/50'
-                      }`}
-                  >
-                    {/* Background Number */}
-                    <div className={`absolute -right-4 -bottom-4 text-7xl font-black italic select-none transition-all duration-500 ${isAnswered ? 'text-white/10' : 'text-white/[0.02] group-hover:text-primary/10'}`}>
-                      {index + 1}
-                    </div>
-
-                    {isNegative && !isAnswered && <RiSkullLine className="absolute top-6 right-6 text-primary/40 text-xl" />}
-                    {!isNegative && !isAnswered && <RiTrophyLine className="absolute top-6 right-6 text-white/10 text-xl" />}
-
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-xl transition-all ${isAnswered ? 'bg-white/20 text-white' : 'bg-white/5 text-primary'}`}>
-                      {isAnswered ? (isNegative ? <RiSkullLine /> : <RiTrophyLine />) : <RiShieldUserLine />}
-                    </div>
-
-                    <div className="space-y-1 relative z-10">
-                      <span className={`text-[9px] font-black uppercase tracking-widest ${isAnswered ? 'text-white/60' : 'text-white/20'}`}>
-                        {isAnswered ? 'تمت الاستعادة' : `تسلسل ${index + 1}`}
-                      </span>
-                      <h4 className={`text-sm md:text-base font-black italic uppercase tracking-tighter leading-tight transition-all ${isAnswered ? 'text-white' : 'text-white/40'}`}>
-                        {isAnswered ? question.name : 'بيانات مشفرة'}
-                      </h4>
-                    </div>
-
-                    {isAnswered && (
-                      <div className="px-4 py-1.5 glass bg-white/10 rounded-full text-[10px] font-black tracking-widest">
-                        {question.value > 0 ? `+${question.value}` : question.value} XP
-                      </div>
+              return question ? (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: index * 0.03 }}
+                  onClick={() => handleCardClick(index, question.value)}
+                  className={`p-4 rounded-xl border transition-all cursor-pointer text-center flex flex-col items-center justify-between min-h-[140px] relative ${
+                    isAnswered
+                      ? isNegative
+                        ? 'bg-rose-500/10 border-rose-500/40 text-rose-300'
+                        : 'bg-primary/10 border-primary/40 text-primary'
+                      : 'card-surface border-border hover:border-border/80'
+                  }`}
+                >
+                  <div className="w-full flex items-center justify-between text-xs font-bold">
+                    <span className="text-muted">#{index + 1}</span>
+                    {isNegative ? (
+                      <RiSkullLine className={isAnswered ? 'text-rose-400' : 'text-muted/40'} />
+                    ) : (
+                      <RiTrophyLine className={isAnswered ? 'text-primary' : 'text-muted/40'} />
                     )}
-                  </motion.div>
-                ) : null
-              })}
-            </div>
+                  </div>
+
+                  <div className="py-2">
+                    {isAnswered ? (
+                      <h4 className="text-sm sm:text-base font-black leading-tight">{question.name}</h4>
+                    ) : (
+                      <span className="text-xs text-muted font-bold">إجابة مخفية</span>
+                    )}
+                  </div>
+
+                  <div className="w-full">
+                    {isAnswered ? (
+                      <span className={`text-xs font-black px-2 py-0.5 rounded-full ${
+                        question.value > 0 ? 'bg-primary/20 text-primary' : 'bg-rose-500/20 text-rose-400'
+                      }`}>
+                        {question.value > 0 ? `+${question.value}` : question.value} نقطة
+                      </span>
+                    ) : (
+                      <span className="text-[10px] text-muted font-mono">اضغط للكشف</span>
+                    )}
+                  </div>
+                </motion.div>
+              ) : null
+            })}
           </div>
 
-          {/* Action Footer */}
-          <div className="flex justify-center pt-8">
+          {/* Footer Next Button */}
+          <div className="flex justify-center pt-4">
             <button
               onClick={handleRefresh}
-              className="group relative px-12 py-6 bg-primary hover:bg-primary-hover text-white font-black text-xs uppercase tracking-[0.4em] rounded-[2rem] shadow-2xl shadow-primary/30 transition-all hover:scale-110 active:scale-95 flex items-center gap-3"
+              className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-background font-black text-xs uppercase tracking-wider rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center gap-2 active:scale-95"
             >
-              <RiRefreshLine size={20} className="group-hover:rotate-180 transition-transform duration-700" />
-              طلب سجل جديد
+              <RiRefreshLine size={18} />
+              <span>القائمة التالية</span>
             </button>
           </div>
-
         </div>
       ) : (
         <GameIntro
-          name={'سجلات النخبة'}
+          name="توب تين"
           team={topTenData}
           selectRandomObject={selectRandomObject}
           remainingObjects={remainingObjects}
           setLastSelected={setLastSelected}
           setRemainingObjects={setRemainingObjects}
-          text='مهمتك هي استعادة قائمة "العشرة الأوائل" في سجل معين. التسلسلات من 1 إلى 10 تمنحك نقاطاً إيجابية، بينما التسلسلات من 11 إلى 13 تحتوي على فخاخ سلبية.'
+          text="تحدي التوب تين: خمنوا أسماء المتصدرين في هذا السجل الكروي. البطاقات من 1 إلى 10 تمنح نقاطاً، بينما البطاقات من 11 إلى 13 تمثل فخاخاً تخصم نقاطاً!"
         />
       )}
     </div>
   )
 }
 
-export default Page
+export default TopTenPage

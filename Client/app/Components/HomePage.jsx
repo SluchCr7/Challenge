@@ -49,175 +49,155 @@ const HomePage = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl mx-auto space-y-28 pb-24 px-4">
+    <div className="w-full max-w-7xl mx-auto space-y-20 pb-20 px-4">
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] flex flex-col items-center justify-center overflow-hidden rounded-[4rem] border border-white/5 bg-[#030303] shadow-3xl">
-        <div className="absolute inset-0 z-0">
-          <motion.div
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: [0.25, 0.45, 0.25],
-            }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] bg-primary/20 rounded-full blur-[140px]"
-          />
-          <motion.div
-            animate={{
-              scale: [1.1, 0.95, 1.1],
-              opacity: [0.15, 0.35, 0.15],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-[-15%] right-[-5%] w-[700px] h-[700px] bg-blue-900/20 rounded-full blur-[130px]"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_40%,#030303_100%)]" />
+      <section className="relative min-h-[72vh] flex flex-col items-center justify-center overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(ellipse_at_top,_#0E1C2E_0%,_#09101C_50%,_#080C14_100%)] shadow-2xl">
+        <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-72 bg-gradient-to-b from-primary/15 to-transparent blur-3xl" />
         </div>
 
         {/* Content Container */}
-        <div className="relative z-10 text-center px-6 py-4 max-w-5xl space-y-10">
+        <div className="relative z-10 text-center px-6 py-12 max-w-5xl space-y-8">
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex items-center gap-3 px-6 py-2.5 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.4em] text-primary uppercase shadow-2xl shadow-primary/15"
+            className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-surface-subtle/80 border border-primary/20 text-[10px] font-black tracking-[0.3em] text-primary uppercase shadow-md shadow-primary/10"
           >
-            <span className="relative flex h-2.5 w-2.5">
+            <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
             </span>
             Season 04: The Arena of Champions
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
+            transition={{ duration: 0.5 }}
           >
-            <h1 className="text-6xl md:text-[8.5rem] font-black italic text-white tracking-tighter leading-[0.85] uppercase">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black italic text-white tracking-tighter leading-[0.9] uppercase">
               SHALAN <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-red-500 to-orange-500">CHALLENGE</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-emerald-300 to-sky-400">CHALLENGE</span>
             </h1>
           </motion.div>
 
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-white/55 font-medium text-lg md:text-xl max-w-2xl mx-auto leading-relaxed"
+            transition={{ delay: 0.2 }}
+            className="text-slate-400 font-medium text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
           >
-            The premium stadium for football experts. Test your depth, unlock achievements, and compete with <span className="text-white font-black">{activeFans.toLocaleString()}</span> active fans.
+            The premier stadium for football tactical trivia. Test your knowledge, master difficulty tiers, and compete with <span className="text-white font-bold">{activeFans.toLocaleString()}</span> active fans.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2"
           >
             {isLogin ? (
               <button
                 onClick={() => document.getElementById('hub').scrollIntoView({ behavior: 'smooth' })}
-                className="group relative px-10 py-5 bg-primary text-white font-black text-xs rounded-2xl shadow-2xl shadow-primary/30 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 uppercase tracking-[0.3em]"
+                className="group px-8 py-4 bg-primary hover:bg-primary-hover text-slate-950 font-black text-xs rounded-xl shadow-lg shadow-primary/25 hover:scale-[1.02] active:scale-98 transition-all flex items-center gap-2.5 uppercase tracking-[0.2em]"
               >
-                <RiPlayFill size={20} className="group-hover:rotate-12 transition-transform" />
+                <RiPlayFill size={18} className="group-hover:rotate-6 transition-transform" />
                 Select Arena
               </button>
             ) : (
               <Link
                 href="/Auth/Login"
-                className="px-10 py-5 bg-white text-black font-black text-xs rounded-2xl shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3 uppercase tracking-[0.3em]"
+                className="px-8 py-4 bg-white hover:bg-slate-100 text-slate-950 font-black text-xs rounded-xl shadow-lg hover:scale-[1.02] active:scale-98 transition-all flex items-center gap-2.5 uppercase tracking-[0.2em]"
               >
                 Unlock Club Access
               </Link>
             )}
 
-            <div className="flex items-center gap-3 p-3 glass rounded-2xl border border-white/5">
-              <div className="flex -space-x-3">
+            <div className="flex items-center gap-2.5 px-4 py-2.5 bg-surface-subtle/80 rounded-xl border border-white/5">
+              <div className="flex -space-x-2">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="w-8 h-8 rounded-full border-2 border-[#030303] overflow-hidden transform hover:-translate-y-1 transition-transform">
-                    <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="player" />
+                  <div key={i} className="w-7 h-7 rounded-full border border-slate-900 overflow-hidden">
+                    <img src={`https://i.pravatar.cc/100?img=${i + 15}`} alt="player" className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>
-              <span className="text-[9px] font-black text-white/50 uppercase tracking-widest">Compete Globally</span>
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Live Community</span>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Stats Board */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Active Arenas', value: '14 Arenas', icon: <Gamepad2 className="w-6 h-6" />, desc: 'Live football quizzes' },
-          { label: 'Global Ranking', value: '12K+ Players', icon: <RiTrophyLine />, desc: 'Interactive leaderboard' },
-          { label: 'Squad Battles', value: 'Multi-Game', icon: <RiTeamLine />, desc: 'Sabahoo tahdy style' },
-          { label: 'Platform Status', value: 'Fully Stable', icon: <RiLineChartLine />, desc: 'Realtime sync' },
+          { label: 'Active Arenas', value: '14 Arenas', icon: <Gamepad2 className="w-5 h-5" />, desc: 'Live football quizzes' },
+          { label: 'Global Ranking', value: '12K+ Players', icon: <RiTrophyLine className="w-5 h-5" />, desc: 'Interactive leaderboard' },
+          { label: 'Squad Battles', value: 'Multi-Game', icon: <RiTeamLine className="w-5 h-5" />, desc: 'Sabahoo tahdy style' },
+          { label: 'Platform Status', value: 'Fully Stable', icon: <RiLineChartLine className="w-5 h-5" />, desc: 'Realtime sync' },
         ].map((stat, i) => (
-          <motion.div
-            whileHover={{ y: -4 }}
+          <div
             key={i}
-            className="group relative glass-dark border border-white/5 p-6 rounded-[2.5rem] overflow-hidden flex flex-col justify-between min-h-[140px]"
+            className="group relative glass-dark border border-white/5 p-5 rounded-2xl flex flex-col justify-between min-h-[120px] transition-colors hover:border-primary/20"
           >
-            <div className="absolute top-4 right-4 text-primary opacity-20 group-hover:opacity-100 group-hover:scale-110 transition-all">
-              {stat.icon}
+            <div className="flex items-center justify-between">
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</span>
+              <div className="text-primary opacity-60 group-hover:opacity-100 transition-opacity">
+                {stat.icon}
+              </div>
             </div>
-            <div className="space-y-1">
-              <span className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em]">{stat.label}</span>
-              <h3 className="text-2xl font-black text-white italic tracking-tighter uppercase">{stat.value}</h3>
-              <p className="text-[10px] font-semibold text-white/45 mt-2">{stat.desc}</p>
+            <div className="space-y-0.5 mt-2">
+              <h3 className="text-xl font-black text-white italic tracking-tight uppercase">{stat.value}</h3>
+              <p className="text-[10px] font-medium text-slate-500">{stat.desc}</p>
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 
       {/* The Games Hub */}
-      <section id="hub" className="space-y-12">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-white/5 pb-8">
-          <div className="space-y-2">
-            <span className="text-[10px] font-black text-primary uppercase tracking-[0.5em]">Game Universe</span>
-            <h2 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase leading-none">
-              Matchday <span className="text-white/40">Arenas</span>
+      <section id="hub" className="space-y-8">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-white/5 pb-6">
+          <div className="space-y-1">
+            <span className="text-[10px] font-black text-primary uppercase tracking-[0.3em]">Game Universe</span>
+            <h2 className="text-3xl md:text-5xl font-black italic text-white tracking-tight uppercase leading-none">
+              Matchday <span className="text-slate-500">Arenas</span>
             </h2>
           </div>
-          <div className="flex bg-white/5 p-1.5 rounded-2xl border border-white/5">
-            <span className="px-5 py-2.5 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-xl shadow-lg">Quizzes & Challenges</span>
+          <div className="flex">
+            <span className="px-4 py-2 bg-surface-subtle border border-primary/20 text-primary text-[10px] font-black uppercase tracking-widest rounded-xl shadow-sm">
+              14 Quizzes & Challenges
+            </span>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {games.map((game, i) => (
-            <motion.div
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {games.map((game) => (
+            <div
               key={game.id}
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.04 }}
-              className="group relative overflow-hidden rounded-[2.5rem] border border-white/10 flex flex-col justify-between min-h-[260px]"
+              className="group relative card-surface rounded-2xl border border-white/5 hover:border-primary/40 transition-all duration-200 p-5 flex flex-col justify-between min-h-[220px]"
             >
-              {/* Card Gradient Background */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${game.color} opacity-40 group-hover:opacity-60 transition-opacity duration-700`} />
-
-              <Link href={game.link} className="absolute inset-0 p-6 flex flex-col justify-between z-10">
-                <div className="flex items-start justify-between">
-                  <div className="w-12 h-12 rounded-2xl glass-dark border border-white/10 flex items-center justify-center text-xl text-white group-hover:bg-primary group-hover:border-primary transition-all duration-500 group-hover:scale-105">
+              <Link href={game.link} className="flex flex-col justify-between h-full">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-10 h-10 rounded-xl bg-surface-subtle border border-white/5 flex items-center justify-center text-lg text-primary group-hover:bg-primary group-hover:text-slate-950 transition-colors">
                     {game.icon}
                   </div>
-                  <div className="px-2.5 py-0.5 bg-white/5 border border-white/10 rounded-full text-[8px] font-black text-white/50 uppercase tracking-widest">
+                  <span className="px-2 py-0.5 bg-white/5 border border-white/5 rounded-full text-[8px] font-bold text-slate-400 uppercase tracking-wider">
                     {game.state}
-                  </div>
+                  </span>
                 </div>
 
                 <div className="space-y-1.5">
-                  <h3 className="text-xl font-black text-white italic leading-tight uppercase tracking-tighter group-hover:text-primary transition-colors">
+                  <h3 className="text-lg font-black text-white italic leading-snug uppercase tracking-tight group-hover:text-primary transition-colors">
                     {game.title}
                   </h3>
-                  <p className="text-white/40 text-[11px] font-semibold leading-relaxed line-clamp-2">
+                  <p className="text-slate-400 text-xs font-normal leading-relaxed line-clamp-2">
                     {game.description}
                   </p>
-                  <div className="pt-2 flex items-center gap-1.5 text-primary opacity-0 group-hover:opacity-100 transform translate-y-1 group-hover:translate-y-0 transition-all duration-300 text-[9px] font-black uppercase tracking-[0.2em]">
+                  <div className="pt-2 flex items-center gap-1.5 text-primary text-[10px] font-black uppercase tracking-wider opacity-80 group-hover:opacity-100 transition-opacity">
                     Enter Match <RiPlayFill size={10} />
                   </div>
                 </div>
               </Link>
-            </motion.div>
+            </div>
           ))}
         </div>
       </section>

@@ -10,11 +10,13 @@ import {
   RiRestartLine,
   RiTrophyLine,
   RiTeamLine,
-  RiFlashlightLine
+  RiFlashlightLine,
+  RiAlertLine
 } from "react-icons/ri";
 import { RiskContext } from "@/app/Context/Games/RiskContext";
 import getRandomObjects from "@/utils/getRandomObjects";
 import { CategoriesGrid } from "@/app/Components/RiskCategories";
+import Loader from "@/app/Components/Loader";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Risk = () => {
@@ -27,7 +29,7 @@ const Risk = () => {
   const [turn, setTurn] = useState("First");
   const [values, setValues] = useState([]);
   const [randomDouble, setRandomDouble] = useState(0);
-  const { risk } = useContext(RiskContext);
+  const { risk, loading, error, fetchRisk } = useContext(RiskContext);
   const Numbers = [5, 10, 20, 40];
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -51,16 +53,32 @@ const Risk = () => {
 
   const randomData = () => {
     const random = getRandomObjects(risk);
-    setRandomRiskCategories(random);
-    randomNumber();
-    setValues([]);
-    setValueTeamOne(0);
-    setValueTeamTwo(0);
-    setTurn("First");
-    setTime(0);
-    setIsRunning(true);
+    if (Array.isArray(random) && random.length > 0) {
+      setRandomRiskCategories(random);
+      randomNumber();
+      setValues([]);
+      setValueTeamOne(0);
+      setValueTeamTwo(0);
+      setTurn("First");
+      setTime(0);
+      setIsRunning(true);
+    }
   };
 
+  const handleStartSession = () => {
+    const random = getRandomObjects(risk);
+    if (Array.isArray(random) && random.length > 0) {
+      setRandomRiskCategories(random);
+      setShow(true);
+      randomNumber();
+      setValues([]);
+      setValueTeamOne(0);
+      setValueTeamTwo(0);
+      setTurn("First");
+      setTime(0);
+      setIsRunning(true);
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-[85vh] py-10 px-4 text-white relative max-w-7xl mx-auto">
       {/* Floating Info Toggle */}
@@ -172,68 +190,122 @@ const Risk = () => {
       </AnimatePresence>
 
       <div className="w-full">
-        {show ? (
+        {loading ? (
+          <Loader message="Loading Arena..." />
+        ) : error ? (
+          <div className="w-full flex justify-center py-12">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="glass-dark border border-primary/20 p-12 rounded-[3rem] text-center space-y-6 max-w-lg w-full shadow-2xl"
+            >
+              <div className="w-20 h-20 mx-auto rounded-3xl bg-primary/10 flex items-center justify-center text-primary text-4xl border border-primary/20">
+                <RiAlertLine />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-2xl font-black italic text-white uppercase tracking-tighter">
+                  Unable to load arena data
+                </h2>
+                <p className="text-white/40 text-xs font-medium">
+                  {error}
+                </p>
+              </div>
+              <button
+                onClick={fetchRisk}
+                className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-black text-xs rounded-2xl uppercase tracking-[0.2em] shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2 mx-auto"
+              >
+                <RiRestartLine size={18} /> Retry
+              </button>
+            </motion.div>
+          </div>
+        ) : risk.length < 4 ? (
+          <div className="w-full flex justify-center py-12">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="glass-dark border border-white/10 p-12 rounded-[3rem] text-center space-y-6 max-w-lg w-full shadow-2xl"
+            >
+              <div className="w-20 h-20 mx-auto rounded-3xl bg-white/5 flex items-center justify-center text-white/40 text-4xl border border-white/10">
+                <RiInformationLine />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-2xl font-black italic text-white uppercase tracking-tighter">
+                  No categories available
+                </h2>
+                <p className="text-white/40 text-xs font-medium">
+                  At least 4 categories are required to enter the arena.
+                </p>
+              </div>
+              <button
+                onClick={fetchRisk}
+                className="px-8 py-4 bg-primary hover:bg-primary-hover text-white font-black text-xs rounded-2xl uppercase tracking-[0.2em] shadow-xl shadow-primary/20 transition-all flex items-center justify-center gap-2 mx-auto"
+              >
+                <RiRestartLine size={18} /> Reload Categories
+              </button>
+            </motion.div>
+          </div>
+        ) : show ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="space-y-12"
+            className="space-y-8"
           >
             {/* Game Dashboard */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-stretch">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
               {/* Timer & Controls */}
-              <div className="glass-dark border border-white/10 rounded-[3rem] p-8 flex flex-col justify-between items-center gap-6 shadow-2xl">
+              <div className="glass-dark border border-white/10 rounded-2xl p-6 flex flex-col justify-between items-center gap-4 shadow-lg">
                 <div className="flex flex-col items-center">
-                  <span className="text-[10px] font-black text-white/30 uppercase tracking-[0.3em] mb-2">Match Clock</span>
-                  <div className="text-5xl font-black italic text-white tracking-tighter">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Match Clock</span>
+                  <div className="text-4xl font-black italic text-white tracking-tight">
                     {Math.floor(time / 60)}:{(time % 60).toString().padStart(2, "0")}
                   </div>
                 </div>
 
-                <div className="flex gap-3 w-full">
+                <div className="flex gap-2.5 w-full">
                   <button
                     onClick={() => setIsRunning(!isRunning)}
-                    className={`flex-1 h-12 rounded-2xl flex items-center justify-center text-sm font-black uppercase tracking-widest transition-all ${isRunning ? 'bg-amber-500 text-black' : 'bg-green-500 text-white'
+                    className={`flex-1 h-11 rounded-xl flex items-center justify-center text-xs font-black uppercase tracking-wider transition-all shadow-sm ${isRunning ? 'bg-amber-400 text-slate-950' : 'bg-primary text-slate-950 hover:bg-primary-hover'
                       }`}
                   >
-                    {isRunning ? <RiPauseFill size={20} /> : <RiPlayFill size={20} />}
+                    {isRunning ? <RiPauseFill size={18} /> : <RiPlayFill size={18} />}
                   </button>
                   <button
                     onClick={() => { setTime(0); setIsRunning(false); }}
-                    className="w-12 h-12 glass border border-white/10 rounded-2xl flex items-center justify-center text-white hover:text-primary transition-colors"
+                    className="w-11 h-11 bg-surface-subtle border border-white/10 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:border-primary/40 transition-colors"
                   >
-                    <RiRestartLine size={20} />
+                    <RiRestartLine size={18} />
                   </button>
                 </div>
               </div>
 
               {/* Team Scores */}
               {["Team Alpha", "Team Bravo"].map((label, i) => (
-                <div key={i} className={`glass-dark border rounded-[3rem] p-8 space-y-6 relative overflow-hidden transition-all duration-500 ${(turn === "First" && i === 0) || (turn === "Second" && i === 1)
-                  ? "border-primary shadow-[0_0_30px_rgba(225,6,0,0.15)] bg-primary/5"
-                  : "border-white/5"
+                <div key={i} className={`glass-dark border rounded-2xl p-6 space-y-4 relative overflow-hidden transition-all duration-300 ${(turn === "First" && i === 0) || (turn === "Second" && i === 1)
+                  ? "border-primary shadow-[0_0_20px_rgba(0,229,153,0.15)] bg-surface-subtle/90 ring-1 ring-primary/30"
+                  : "border-white/5 opacity-80"
                   }`}>
                   {(turn === "First" && i === 0) || (turn === "Second" && i === 1) ? (
-                    <div className="absolute top-4 right-6 text-[10px] font-black text-primary uppercase tracking-widest flex items-center gap-2">
-                      <span className="h-1 w-1 rounded-full bg-primary animate-ping" /> Active Turn
+                    <div className="absolute top-3.5 right-4 text-[9px] font-black text-primary uppercase tracking-widest flex items-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-primary animate-ping" /> Active Turn
                     </div>
                   ) : null}
 
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center text-2xl ${i === 0 ? 'bg-blue-500/10 text-blue-500' : 'bg-red-500/10 text-red-500'
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl ${i === 0 ? 'bg-sky-500/15 text-sky-400' : 'bg-emerald-500/15 text-primary'
                       }`}>
                       <RiTeamLine />
                     </div>
                     <div>
-                      <h4 className="text-white font-black italic uppercase tracking-tighter leading-none">{label}</h4>
-                      <p className="text-[10px] font-bold text-white/20 uppercase tracking-widest mt-1">Player Group</p>
+                      <h4 className="text-white font-black italic uppercase tracking-tight leading-none text-base">{label}</h4>
+                      <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mt-1">Player Group</p>
                     </div>
                   </div>
 
-                  <div className="text-center py-4 border-y border-white/5">
-                    <span className="text-5xl font-black italic text-white tracking-tighter">
+                  <div className="text-center py-2 border-y border-white/5">
+                    <span className="text-4xl font-black italic text-white tracking-tight">
                       {i === 0 ? valueTeamOne : valueTeamTwo}
                     </span>
-                    <span className="block text-[10px] font-black text-primary uppercase tracking-[0.4em] mt-1">Total Score</span>
+                    <span className="block text-[9px] font-black text-primary uppercase tracking-[0.3em] mt-0.5">Total Score</span>
                   </div>
 
                   <div className="grid grid-cols-4 gap-2">
@@ -241,7 +313,7 @@ const Risk = () => {
                       <button
                         key={n}
                         onClick={() => i === 0 ? setValueTeamOne(valueTeamOne + n) : setValueTeamTwo(valueTeamTwo + n)}
-                        className="h-10 glass border border-white/5 text-white/50 text-[10px] font-black rounded-xl hover:bg-primary hover:text-white hover:border-primary transition-all"
+                        className="h-8 bg-surface-subtle border border-white/5 text-slate-400 text-[10px] font-bold rounded-lg hover:bg-primary hover:text-slate-950 hover:border-primary transition-all"
                       >
                         +{n}
                       </button>
@@ -253,7 +325,7 @@ const Risk = () => {
 
             {/* Questions Grid */}
             <CategoriesGrid
-              randomReskCategories={randomRiskCategories}
+              randomRiskCategories={randomRiskCategories}
               setQategory={setQategory}
               values={values}
               randomDouble={randomDouble}
@@ -261,9 +333,9 @@ const Risk = () => {
             />
 
             {/* Footer Navigation */}
-            <div className="flex justify-center border-t border-white/5 pt-12">
+            <div className="flex justify-center border-t border-white/5 pt-8">
               <button
-                className="px-12 py-6 bg-primary hover:bg-primary-hover text-white font-black text-xs rounded-full uppercase tracking-[0.3em] shadow-2xl shadow-primary/30 transition-all hover:scale-105"
+                className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-slate-950 font-black text-xs rounded-xl uppercase tracking-widest shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95"
                 onClick={randomData}
               >
                 Generate New Arena
@@ -273,35 +345,32 @@ const Risk = () => {
         ) : (
           <div className="w-full flex justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="glass-dark border border-white/10 p-16 rounded-[4rem] text-center space-y-8 max-w-2xl w-full"
+              className="card-surface border border-white/10 p-10 sm:p-14 rounded-3xl text-center space-y-6 max-w-xl w-full shadow-2xl"
             >
               <div className="flex justify-center">
-                <div className="w-24 h-24 rounded-3xl bg-primary/10 flex items-center justify-center text-primary text-5xl border border-primary/20">
+                <div className="w-20 h-20 rounded-2xl bg-surface-subtle border border-primary/20 flex items-center justify-center text-primary text-4xl shadow-md shadow-primary/10">
                   <RiTrophyLine />
                 </div>
               </div>
-              <div className="space-y-4">
-                <h1 className="text-5xl font-black italic text-white uppercase tracking-tighter leading-tight">
+              <div className="space-y-3">
+                <h1 className="text-4xl sm:text-5xl font-black italic text-white uppercase tracking-tight leading-tight">
                   Risk Assessment <br /><span className="text-primary">Arena</span>
                 </h1>
-                <p className="text-white/50 text-lg leading-relaxed">
+                <p className="text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
                   Test your tactical knowledge in a high-stakes arena. Choose your categories, manage your risk, and dominate the leaderboard.
                 </p>
               </div>
               <button
-                onClick={() => {
-                  setShow(true);
-                  randomData();
-                }}
-                className="w-full h-20 bg-primary hover:bg-primary-hover text-white font-black text-lg uppercase tracking-widest rounded-[2rem] shadow-2xl shadow-primary/30 transition-all hover:scale-[1.02] active:scale-95 flex items-center justify-center gap-4"
+                onClick={handleStartSession}
+                className="w-full h-14 bg-primary hover:bg-primary-hover text-slate-950 font-black text-xs uppercase tracking-widest rounded-xl shadow-lg shadow-primary/25 transition-all hover:scale-[1.01] active:scale-98 flex items-center justify-center gap-2.5"
               >
-                <RiPlayFill size={28} /> Start Session
+                <RiPlayFill size={20} /> Start Session
               </button>
-              <div className="pt-4 flex items-center justify-center gap-2 text-white/20">
-                <RiTimerLine />
-                <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Estimated Duration: 15-20 Min</span>
+              <div className="pt-2 flex items-center justify-center gap-1.5 text-slate-500">
+                <RiTimerLine size={14} />
+                <span className="text-[10px] font-bold uppercase tracking-widest">Estimated Duration: 15-20 Min</span>
               </div>
             </motion.div>
           </div>

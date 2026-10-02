@@ -16,83 +16,83 @@ const Profile = ({ setShowProfile }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.9, y: 20 }}
+      initial={{ opacity: 0, scale: 0.95, y: 15 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.9, y: 20 }}
-      className='relative glass-dark border border-white/10 rounded-[3rem] w-[95%] max-w-lg overflow-hidden flex flex-col max-h-[90vh]'
+      exit={{ opacity: 0, scale: 0.95, y: 15 }}
+      className='relative bg-surface-card border border-white/10 rounded-2xl w-[95%] max-w-lg overflow-hidden flex flex-col max-h-[90vh] shadow-2xl'
     >
       {/* Sticky Header with Close Button */}
-      <div className="sticky top-0 z-50 flex items-center justify-between p-6 bg-carbon-dark/80 backdrop-blur-md border-b border-white/5">
-        <h2 className="text-xl font-black italic text-white uppercase tracking-tighter">Player Profile</h2>
+      <div className="sticky top-0 z-50 flex items-center justify-between p-5 bg-surface-card/95 border-b border-white/5">
+        <h2 className="text-lg font-black italic text-white uppercase tracking-tight">Player Profile</h2>
         <button
           onClick={() => setShowProfile(false)}
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+          className="w-9 h-9 flex items-center justify-center rounded-xl bg-surface-subtle hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
         >
-          <RiCloseLine size={24} />
+          <RiCloseLine size={20} />
         </button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+      <div className="flex-1 overflow-y-auto p-6 custom-scrollbar">
         {/* Profile Card Header */}
-        <div className="flex flex-col items-center gap-6 mb-10">
+        <div className="flex flex-col items-center gap-5 mb-8">
           <div className="relative">
-            <div className="w-32 h-32 rounded-[2.5rem] p-1 bg-gradient-to-tr from-primary to-orange-500 rotate-6 overflow-hidden">
-              <div className="w-full h-full rounded-[2rem] bg-carbon-dark overflow-hidden -rotate-6">
+            <div className="w-28 h-28 rounded-2xl p-1 bg-gradient-to-tr from-primary to-emerald-300 overflow-hidden shadow-lg shadow-primary/10">
+              <div className="w-full h-full rounded-xl bg-slate-950 overflow-hidden">
                 <Image
                   src={user?.profilePhoto?.url || '/default-avatar.png'}
                   alt="profile photo"
-                  width={128}
-                  height={128}
+                  width={112}
+                  height={112}
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
-            <div className="absolute -bottom-2 -right-2 bg-primary text-white text-[10px] font-black px-3 py-1 rounded-full uppercase italic shadow-xl">
+            <div className="absolute -bottom-2 -right-2 bg-primary text-slate-950 text-[9px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider shadow-md">
               Pro Player
             </div>
           </div>
 
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white italic tracking-tighter mb-1 uppercase">
+            <h1 className="text-2xl font-black text-white italic tracking-tight mb-0.5 uppercase">
               {user?.Name || 'Anonymous'}
             </h1>
-            <p className="text-primary font-bold tracking-[0.2em] text-xs uppercase opacity-80">
+            <p className="text-primary font-bold tracking-[0.2em] text-xs uppercase opacity-90">
               {user?.nickName || 'Elite Marksman'}
             </p>
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-3 gap-4 mb-10">
+        <div className="grid grid-cols-3 gap-3 mb-8">
           {stats.map((stat, i) => (
-            <div key={i} className="glass border border-white/5 p-4 rounded-3xl flex flex-col items-center gap-2 group hover:border-primary/50 transition-colors">
-              <span className="text-xl">{stat.icon}</span>
-              <span className="text-lg font-black text-white italic leading-none">{stat.value}</span>
-              <span className="text-[9px] font-bold text-white/40 uppercase tracking-widest">{stat.label}</span>
+            <div key={i} className="bg-surface-subtle border border-white/5 p-3.5 rounded-xl flex flex-col items-center gap-1.5 transition-colors hover:border-primary/40">
+              <span className="text-lg">{stat.icon}</span>
+              <span className="text-base font-black text-white italic leading-none">{stat.value}</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wider">{stat.label}</span>
             </div>
           ))}
         </div>
 
         {/* Info Rows */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-4 p-4 glass border border-white/5 rounded-2xl">
-            <RiMapPinLine className="text-primary text-xl" />
+        <div className="space-y-3">
+          <div className="flex items-center gap-3.5 p-3.5 bg-surface-subtle border border-white/5 rounded-xl">
+            <RiMapPinLine className="text-primary text-lg" />
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Region</span>
-              <span className="text-sm font-bold text-white">Egypt (Middle East)</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Region</span>
+              <span className="text-xs font-bold text-white">Egypt (Middle East)</span>
             </div>
           </div>
-          <div className="flex items-center gap-4 p-4 glass border border-white/5 rounded-2xl">
-            <RiCalendarLine className="text-primary text-xl" />
+          <div className="flex items-center gap-3.5 p-3.5 bg-surface-subtle border border-white/5 rounded-xl">
+            <RiCalendarLine className="text-primary text-lg" />
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-white/40 uppercase tracking-widest">Joined Since</span>
-              <span className="text-sm font-bold text-white">October 2024</span>
+              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Joined Since</span>
+              <span className="text-xs font-bold text-white">October 2024</span>
             </div>
           </div>
         </div>
 
         {/* Action Button */}
-        <button className="w-full mt-10 py-5 bg-primary hover:bg-primary-hover text-white text-sm font-black uppercase tracking-widest rounded-3xl shadow-2xl shadow-primary/20 transition-all hover:scale-[1.02] active:scale-95">
+        <button className="w-full mt-8 py-3.5 bg-primary hover:bg-primary-hover text-slate-950 text-xs font-black uppercase tracking-widest rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-[1.01] active:scale-98">
           Edit Profile Credentials
         </button>
       </div>

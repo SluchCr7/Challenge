@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react';
-import { RiRefreshLine, RiFlashlightLine, RiQuestionLine, RiLightbulbLine, RiEyeLine } from "react-icons/ri";
+import { RiRefreshLine, RiQuestionLine, RiLightbulbLine, RiEyeLine, RiEyeOffLine } from "react-icons/ri";
 import { GuessContext } from '@/app/Context/Games/GuessContext';
 import selectRandomObject from '@/utils/getUniqueObject';
 import GameIntro from '@/app/Components/GameIntro';
@@ -20,90 +20,102 @@ const Guess = () => {
   const handleRefresh = () => {
     setShowAnswer(false);
     selectRandomObject(data, remainingObjects, setLastSelected, setRemainingObjects, "Guess");
-  }
+  };
 
   return (
-    <div className='flex items-center justify-center w-full min-h-[85vh] py-20 flex-col gap-10 relative overflow-hidden rtl'>
-      <div className="absolute top-0 left-0 p-12 opacity-[0.03] text-[200px] font-black italic select-none pointer-events-none">ENIGMA</div>
-
+    <div className="w-full max-w-4xl mx-auto py-12 px-6 flex flex-col items-center justify-center min-h-[85vh] rtl">
       <AnimatePresence mode="wait">
         {lastSelected ? (
           <motion.div
-            key={lastSelected?._id}
-            initial={{ opacity: 0, y: 30 }}
+            key={lastSelected?._id || lastSelected?.question}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            className="flex flex-col items-center gap-12 w-full max-w-4xl px-6"
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="w-full space-y-8"
           >
-            {/* Header Status */}
-            <div className="flex flex-col items-center gap-4">
-              <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center text-primary text-4xl shadow-2xl shadow-primary/10 border border-primary/20">
-                <RiQuestionLine />
+            {/* Header */}
+            <div className="flex items-center justify-between pb-6 border-b border-border">
+              <div className="space-y-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary">
+                  <RiQuestionLine className="text-sm" /> لعبة اللغز الكروي
+                </div>
+                <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
+                  تحدي <span className="text-primary">اللغز</span>
+                </h1>
               </div>
-              <div className="text-center">
-                <h1 className="text-4xl md:text-6xl font-black italic text-white tracking-tighter uppercase leading-none">تحدي <span className="text-primary">اللغز</span></h1>
-                <p className="text-white/40 font-bold uppercase tracking-[0.3em] text-[10px] mt-2">حل الأحاجي الكروية المعقدة</p>
-              </div>
+
+              <button
+                onClick={handleRefresh}
+                className="p-3 rounded-xl card-surface border border-border text-primary hover:bg-surface-elevated transition-colors"
+                title="لغز جديد"
+              >
+                <RiRefreshLine size={20} />
+              </button>
             </div>
 
-            {/* Question Module */}
-            <div className="w-full relative">
-              <div className="absolute -top-6 -left-6 text-7xl text-primary/20 opacity-50"><RiFlashlightLine /></div>
-              <div className="glass-dark border border-white/10 rounded-[3rem] p-12 md:p-20 shadow-2xl relative overflow-hidden text-center group">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <h2 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-tight relative z-10">
-                  {lastSelected?.question}
-                </h2>
-              </div>
-              <div className="absolute -bottom-6 -right-6 text-7xl text-primary/20 opacity-50 rotate-180"><RiFlashlightLine /></div>
+            {/* Question Card */}
+            <div className="card-surface border border-border rounded-2xl p-8 sm:p-14 text-center space-y-6 shadow-xl relative overflow-hidden">
+              <span className="text-xs font-bold text-primary uppercase tracking-widest block">نص اللغز</span>
+              <h2 className="text-2xl sm:text-4xl font-black text-foreground leading-relaxed">
+                {lastSelected?.question}
+              </h2>
             </div>
 
-            {/* Answer Sector */}
-            <div className="flex flex-col items-center gap-8 w-full">
+            {/* Answer Box */}
+            <div className="flex flex-col items-center gap-6">
               <AnimatePresence mode="wait">
                 {!showAnswer ? (
                   <motion.button
-                    key="reveal-trigger"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    key="reveal-btn"
                     onClick={() => setShowAnswer(true)}
-                    className="px-12 py-6 bg-white/5 border border-white/10 rounded-[2rem] text-white/50 font-black text-[10px] uppercase tracking-[0.4em] hover:bg-primary hover:text-white hover:border-primary transition-all flex items-center gap-3"
+                    className="px-8 py-3.5 rounded-xl bg-surface-elevated hover:bg-surface border border-border text-foreground font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2"
                   >
-                    <RiEyeLine size={20} /> عرض الإجابة النموذجية
+                    <RiEyeLine size={18} className="text-primary" />
+                    <span>عرض الإجابة النموذجية</span>
                   </motion.button>
                 ) : (
                   <motion.div
                     key="answer-box"
-                    initial={{ opacity: 0, scale: 0.8 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="glass-dark border border-primary/40 rounded-[2.5rem] p-8 md:p-12 text-center w-full max-w-lg relative"
+                    className="card-surface border border-primary/30 rounded-2xl p-8 text-center w-full max-w-md space-y-3"
                   >
-                    <RiLightbulbLine className="text-primary text-5xl mx-auto mb-4 animate-pulse" />
-                    <div className="space-y-1">
-                      <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">التحليل النهائي</span>
-                      <h3 className="text-4xl font-black italic text-primary tracking-tighter uppercase leading-none">{lastSelected?.Answer}</h3>
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-2xl mx-auto">
+                      <RiLightbulbLine />
                     </div>
+                    <span className="text-xs font-bold text-muted uppercase">الإجابة الصحيحة</span>
+                    <h3 className="text-3xl sm:text-4xl font-black text-primary tracking-tight">
+                      {lastSelected?.Answer}
+                    </h3>
+                    <button
+                      onClick={() => setShowAnswer(false)}
+                      className="text-xs text-muted hover:text-foreground font-medium pt-2 transition-colors block mx-auto"
+                    >
+                      إخفاء الإجابة
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
 
               <button
                 onClick={handleRefresh}
-                className="group w-16 h-16 rounded-full glass border border-white/10 flex items-center justify-center text-white/20 hover:text-primary hover:border-primary transition-all duration-500 shadow-xl"
+                className="px-10 py-4 bg-primary hover:bg-primary-hover text-background font-black text-sm rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2"
               >
-                <RiRefreshLine size={24} className="group-hover:rotate-180 transition-transform duration-700" />
+                <RiRefreshLine size={18} />
+                <span>اللغز التالي</span>
               </button>
             </div>
           </motion.div>
         ) : (
           <GameIntro
-            name="مختبر الألغاز"
+            name="لعبة اللغز"
             team={data}
             selectRandomObject={selectRandomObject}
             remainingObjects={remainingObjects}
             setLastSelected={setLastSelected}
             setRemainingObjects={setRemainingObjects}
-            text="اختبر ذكاءك الكروي مع مجموعة من الألغاز المحيرة. هل يمكنك الوصول للحل الصحيح قبل انتهاء الوقت؟"
+            text="اختبر ذكاءك الكروي مع باقة من الألغاز والأحاجي الكروية. فكر جيداً وحاول الوصول للإجابة الدقيقة قبل كشف الستار!"
           />
         )}
       </AnimatePresence>

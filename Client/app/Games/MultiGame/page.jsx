@@ -234,14 +234,14 @@ const MultiGame = () => {
           <motion.div
             animate={{
               scale: currentStep === i ? 1.2 : 1,
-              borderColor: currentStep >= i ? '#E10600' : 'rgba(255,255,255,0.1)'
+              borderColor: currentStep >= i ? '#00E599' : 'rgba(255,255,255,0.1)'
             }}
             className={`w-14 h-14 rounded-2xl glass border-2 flex items-center justify-center text-xl transition-all ${
               currentStep === i
-                ? 'bg-primary/20 text-primary shadow-[0_0_20px_rgba(225,6,0,0.3)]'
+                ? 'bg-primary/20 text-primary shadow-[0_0_20px_rgba(0,229,153,0.3)]'
                 : currentStep > i
-                ? 'bg-primary text-white'
-                : 'bg-carbon-light text-white/20'
+                ? 'bg-primary text-background font-bold'
+                : 'bg-surface-elevated text-white/20'
             }`}
           >
             {currentStep > i ? <RiCheckLine /> : g.icon}
@@ -290,7 +290,7 @@ const MultiGame = () => {
   if (gameState === 'results') {
     return (
       <div className="w-full max-w-7xl mx-auto py-20 px-6 flex flex-col items-center justify-center min-h-[85vh]">
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(225,6,0,0.05)_0%,transparent_100%)] -z-10" />
+        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(0,229,153,0.05)_0%,transparent_100%)] -z-10" />
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -447,15 +447,11 @@ const MultiGame = () => {
             {currentStep === 0 && ( // PASSWORD
               <div className="flex flex-col items-center gap-8 max-w-2xl mx-auto">
                 <div className="glass-dark border border-white/10 rounded-[4rem] p-12 text-center space-y-8 w-full relative overflow-hidden group">
-                  <div className="absolute top-0 left-0 w-full h-1 bg-primary" />
-                  <div className="relative w-64 h-64 mx-auto rounded-[3rem] border-4 border-primary p-2 overflow-hidden shadow-2xl">
-                    {activeData?.Photo?.[0]?.url ? (
-                      <Image src={activeData.Photo[0].url} layout="fill" objectFit="cover" alt="ID" className="grayscale group-hover:grayscale-0 transition-all duration-700" />
-                    ) : (
-                      <div className="w-full h-full bg-carbon-dark flex items-center justify-center text-white/20">No Image</div>
-                    )}
+                  <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-surface-elevated border border-border text-xs font-bold text-muted mx-auto">
+                    <RiShieldKeyholeLine className="text-primary text-sm" />
+                    <span>كلمة السر المشفرة</span>
                   </div>
-                  <h2 className="text-4xl md:text-6xl font-black italic text-white uppercase tracking-tighter">{activeData?.name}</h2>
+                  <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase tracking-tight py-4">{activeData?.name}</h2>
                   <div className="flex gap-4 justify-center">
                     <button onClick={() => { updateScore(1, 1); nextStage() }} className="px-8 py-4 bg-green-500/10 border border-green-500/30 text-green-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-green-500 hover:text-white transition-all">T1 Correct</button>
                     <button onClick={() => { updateScore(2, 1); nextStage() }} className="px-8 py-4 bg-blue-500/10 border border-blue-500/30 text-blue-500 rounded-2xl font-black text-[10px] uppercase tracking-widest hover:bg-blue-500 hover:text-white transition-all">T2 Correct</button>

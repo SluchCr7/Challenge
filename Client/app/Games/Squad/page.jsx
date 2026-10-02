@@ -1,12 +1,12 @@
 'use client'
 import React, { useContext, useEffect, useState } from 'react'
 import { SquadContext } from '../../Context/Games/SquadContext'
-import { RiRefreshLine, RiTeamLine, RiUserSearchLine, RiFocus2Line, RiTrophyLine } from 'react-icons/ri'
+import { RiRefreshLine, RiTeamLine, RiCheckLine, RiTrophyLine } from 'react-icons/ri'
 import GameIntro from '@/app/Components/GameIntro'
 import selectRandomObject from '@/utils/getUniqueObject'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const Page = () => {
+const SquadPage = () => {
   const { squads } = useContext(SquadContext)
   const [valueTeamOne, setValueTeamOne] = useState(0)
   const [valueTeamTwo, setValueTeamTwo] = useState(0)
@@ -31,93 +31,90 @@ const Page = () => {
     setSelectedPlayersTeamTwo([])
   }
 
-  const TeamPanel = ({ team, score, setter, selected, setSelected, side }) => (
-    <div className={`relative glass-dark border border-white/10 rounded-[3rem] p-10 overflow-hidden flex flex-col gap-8 transition-all duration-500 hover:border-primary/30 h-full`}>
-      {/* Background Branding */}
-      <div className={`absolute -right-10 -bottom-10 text-[180px] font-black italic select-none opacity-[0.02] pointer-events-none -rotate-12`}>SQUAD</div>
-
-      <div className="flex items-center justify-between border-b border-white/5 pb-6">
-        <div className="flex flex-col gap-1">
-          <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">Operations Unit</span>
-          <h3 className="text-3xl font-black italic text-white uppercase tracking-tighter leading-none">{team?.name}</h3>
+  const TeamPanel = ({ team, score, setter, selected, setSelected, teamLabel }) => (
+    <div className="card-surface border border-border rounded-2xl p-6 sm:p-8 space-y-6 flex flex-col justify-between">
+      <div className="flex items-center justify-between border-b border-border pb-4">
+        <div>
+          <span className="text-[10px] font-bold text-muted uppercase block">{teamLabel}</span>
+          <h3 className="text-xl sm:text-2xl font-black text-foreground">{team?.name}</h3>
         </div>
-        <div className="flex flex-col items-end gap-2">
-          <span className="text-[9px] font-black text-primary uppercase tracking-widest">Efficiency</span>
-          <div className="flex items-center gap-3">
-            <span className="text-4xl font-black italic text-white tracking-tighter leading-none">{score}</span>
-            <button
-              onClick={() => setter(prev => prev + 1)}
-              className="w-10 h-10 rounded-xl bg-primary/20 border border-primary/40 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all active:scale-95"
-            >
-              +1
-            </button>
-          </div>
+        <div className="flex items-center gap-2">
+          <span className="text-2xl font-black text-primary font-mono">{score}</span>
+          <span className="text-xs text-muted">/ {team?.members?.length || 11}</span>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-3">
-        {team?.members.map((player, idx) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {team?.members?.map((player, idx) => {
           const isSelected = selected.includes(player);
           return (
-            <motion.button
+            <button
               key={idx}
-              whileHover={{ x: isSelected ? 0 : 5 }}
               onClick={() => {
                 if (!isSelected) {
                   setSelected([...selected, player]);
                   setter(prev => prev + 1);
+                } else {
+                  setSelected(selected.filter(p => p !== player));
+                  setter(prev => Math.max(0, prev - 1));
                 }
               }}
-              className={`w-full p-4 rounded-2xl border transition-all duration-300 text-right flex items-center justify-between group ${isSelected
-                  ? 'bg-primary/20 border-primary/40 text-white/20 cursor-default'
-                  : 'glass border-white/5 text-white/70 hover:border-primary/50 hover:bg-white/5'
-                }`}
+              className={`p-3 rounded-xl border text-right flex items-center justify-between transition-all ${
+                isSelected
+                  ? 'bg-primary/10 border-primary/40 text-primary font-bold'
+                  : 'bg-surface-elevated border-border text-muted hover:text-foreground hover:border-border/80'
+              }`}
             >
-              <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${isSelected ? 'bg-primary text-white' : 'bg-white/5 text-white/20 group-hover:text-primary'}`}>
-                {isSelected ? <RiFocus2Line /> : <RiUserSearchLine />}
+              <span className={`text-xs sm:text-sm font-semibold ${isSelected ? 'text-primary' : ''}`}>
+                {player}
+              </span>
+              <div className={`w-5 h-5 rounded-md flex items-center justify-center text-xs ${
+                isSelected ? 'bg-primary text-background' : 'bg-surface border border-border text-transparent'
+              }`}>
+                <RiCheckLine size={14} />
               </div>
-              <span className={`text-sm font-black italic uppercase tracking-tighter ${isSelected ? 'line-through' : ''}`}>{player}</span>
-            </motion.button>
-          )
+            </button>
+          );
         })}
       </div>
     </div>
-  )
+  );
 
   return (
-    <div className="w-full max-w-7xl mx-auto py-12 px-6 space-y-16 rtl">
+    <div className="w-full max-w-6xl mx-auto py-12 px-6 rtl space-y-8">
       <AnimatePresence mode="wait">
         {lastSelected ? (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-16">
-
+          <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
             {/* Header */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-              <div className="text-center md:text-right space-y-2 order-2 md:order-1">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.3em] text-primary uppercase">
-                  <RiTeamLine /> تحليل التشكيلات القتالية
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pb-6 border-b border-border">
+              <div className="text-center sm:text-right space-y-1">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary">
+                  <RiTeamLine className="text-sm" /> تشكيلة المباراة
                 </div>
-                <h1 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">
-                  مسح <span className="text-primary">التشكيلات</span>
+                <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
+                  تحدي <span className="text-primary">التشكيل</span>
                 </h1>
-                <p className="text-white/40 font-bold uppercase tracking-widest text-xs">{lastSelected?.title}</p>
+                <p className="text-muted text-xs font-semibold">{lastSelected?.title}</p>
               </div>
 
-              <div className="flex gap-4 order-1 md:order-2">
-                <button onClick={handleRefresh} className="w-16 h-16 rounded-[2rem] glass border border-white/10 flex items-center justify-center text-primary text-3xl hover:bg-primary/10 hover:rotate-180 transition-all duration-700 shadow-2xl">
-                  <RiRefreshLine />
-                </button>
-              </div>
+              <button
+                onClick={handleRefresh}
+                className="p-3 rounded-xl card-surface border border-border text-primary hover:bg-surface-elevated transition-colors"
+                title="مباراة جديدة"
+              >
+                <RiRefreshLine size={20} />
+              </button>
             </div>
 
-            {/* Battlefields */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Squads Matchup */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <TeamPanel
                 team={lastSelected?.TeamOne}
                 score={valueTeamOne}
                 setter={setValueTeamOne}
                 selected={selectedPlayersTeamOne}
                 setSelected={setSelectedPlayersTeamOne}
-                side="right"
+                teamLabel="الفريق الأول"
               />
               <TeamPanel
                 team={lastSelected?.TeamTwo}
@@ -125,37 +122,34 @@ const Page = () => {
                 setter={setValueTeamTwo}
                 selected={selectedPlayersTeamTwo}
                 setSelected={setSelectedPlayersTeamTwo}
-                side="left"
+                teamLabel="الفريق الثاني"
               />
             </div>
 
-            {/* Victory Condition Bar */}
-            <div className="glass border border-white/5 rounded-[3rem] p-12 text-center space-y-6 overflow-hidden relative">
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent" />
-              <RiTrophyLine className="text-primary text-5xl mx-auto mb-2 opacity-50" />
-              <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-20">
-                <div className="space-y-1">
-                  <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">أهداف الكتيبة 1</span>
-                  <p className="text-4xl font-black italic text-white tracking-tighter">{valueTeamOne}</p>
-                </div>
-                <div className="h-10 w-px bg-white/10 hidden md:block" />
-                <div className="space-y-1">
-                  <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">أهداف الكتيبة 2</span>
-                  <p className="text-4xl font-black italic text-white tracking-tighter">{valueTeamTwo}</p>
-                </div>
+            {/* Summary Bar */}
+            <div className="card-surface border border-border rounded-xl p-4 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-xs text-muted font-bold">
+                <RiTrophyLine className="text-primary text-base" />
+                <span>المجموع: الفريق الأول ({valueTeamOne}) - الفريق الثاني ({valueTeamTwo})</span>
               </div>
+              <button
+                onClick={handleRefresh}
+                className="px-5 py-2 rounded-lg bg-primary hover:bg-primary-hover text-background text-xs font-black transition-all flex items-center gap-1.5"
+              >
+                <RiRefreshLine size={14} />
+                <span>المباراة التالية</span>
+              </button>
             </div>
-
           </motion.div>
         ) : (
           <GameIntro
-            name={'تحليل التشكيلات'}
+            name="تحدي التشكيلات"
             team={squads}
             selectRandomObject={selectRandomObject}
             remainingObjects={remainingObjects}
             setLastSelected={setLastSelected}
             setRemainingObjects={setRemainingObjects}
-            text='سيتم عرض تشكيلتين تاريخيتين. تنافس مع الفريق الآخر في تخمين أسماء اللاعبين الموجودين في كل تشكيلة. كل تخمين صحيح يمنحك نقطة استراتيجية.'
+            text="اختبار الذاكرة التاريخية: سنعرض لكم مباراة تاريخية شهيرة، ومهمتكم هي ذكر وتذكر التشكيل الأساسي لكلا الفريقين في تلك القمة!"
           />
         )}
       </AnimatePresence>
@@ -163,4 +157,4 @@ const Page = () => {
   )
 }
 
-export default Page
+export default SquadPage

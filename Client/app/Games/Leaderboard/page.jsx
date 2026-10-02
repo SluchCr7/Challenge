@@ -26,20 +26,20 @@ const Leaderboard = () => {
     return (
         <div className="w-full max-w-6xl mx-auto space-y-12 py-10">
             {/* Header */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="text-center md:text-left">
-                    <h1 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">
+                    <h1 className="text-4xl md:text-6xl font-black italic text-white tracking-tight uppercase leading-none">
                         Hall of <br /><span className="text-primary">Legends</span>
                     </h1>
-                    <p className="text-white/40 font-bold uppercase tracking-[0.3em] text-[10px] mt-4">Real-time Global Rankings • Season 04</p>
+                    <p className="text-slate-400 font-bold uppercase tracking-[0.25em] text-[10px] mt-2">Real-time Global Rankings • Season 04</p>
                 </div>
 
-                <div className="flex bg-carbon-light p-2 rounded-[2rem] border border-white/5 shadow-2xl">
+                <div className="flex bg-surface-subtle p-1.5 rounded-xl border border-white/5 shadow-lg">
                     {['Global', 'Regional', 'Friends'].map(tab => (
                         <button
                             key={tab}
                             onClick={() => setActiveTab(tab)}
-                            className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${activeTab === tab ? 'bg-primary text-white shadow-xl shadow-primary/20' : 'text-white/40 hover:text-white'
+                            className={`px-6 py-2.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all ${activeTab === tab ? 'bg-primary text-slate-950 shadow-md shadow-primary/20' : 'text-slate-400 hover:text-white'
                                 }`}
                         >
                             {tab}
@@ -49,79 +49,78 @@ const Leaderboard = () => {
             </div>
 
             {/* Podium Section */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-end pt-20">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end pt-12">
                 {/* Rank 2 */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="relative h-[400px] glass-dark border border-white/10 rounded-t-[3rem] p-8 flex flex-col items-center justify-end gap-6 overflow-hidden md:order-1"
+                    className="relative h-[360px] bg-surface-card border border-slate-600/30 rounded-t-2xl p-6 flex flex-col items-center justify-end gap-5 overflow-hidden md:order-1"
                 >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gray-400" />
+                    <div className="absolute top-0 left-0 w-full h-1 bg-slate-400" />
                     <div className="relative group">
-                        <div className="w-24 h-24 rounded-full border-4 border-gray-400 p-1 bg-carbon-dark relative z-10">
-                            <img src={`https://i.pravatar.cc/150?u=${topThree[0].avatar}`} className="w-full h-full rounded-full grayscale" alt="rank2" />
+                        <div className="w-20 h-20 rounded-full border-2 border-slate-400 p-0.5 bg-slate-900 relative z-10">
+                            <img src={`https://i.pravatar.cc/150?u=${topThree[0].avatar}`} className="w-full h-full rounded-full object-cover" alt="rank2" />
                         </div>
-                        <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-gray-400 flex items-center justify-center text-white border-4 border-carbon-dark z-20">
-                            <RiMedalLine size={20} />
+                        <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center text-slate-950 border-2 border-slate-900 z-20 shadow-md">
+                            <RiMedalLine size={16} />
                         </div>
                     </div>
                     <div className="text-center">
-                        <h3 className="text-xl font-black italic text-white uppercase tracking-tighter">{topThree[0].name}</h3>
-                        <span className="text-primary font-bold text-2xl italic tracking-tighter">{topThree[0].points}</span>
+                        <h3 className="text-lg font-black italic text-white uppercase tracking-tight">{topThree[0].name}</h3>
+                        <span className="text-slate-300 font-bold text-xl italic tracking-tight">{topThree[0].points}</span>
                     </div>
-                    <div className="w-full h-32 bg-gray-400/10 rounded-t-3xl flex items-center justify-center text-gray-400 font-black text-6xl italic opacity-20">2ND</div>
+                    <div className="w-full h-28 bg-slate-400/5 rounded-t-xl flex items-center justify-center text-slate-400 font-black text-5xl italic opacity-25">2ND</div>
                 </motion.div>
 
                 {/* Rank 1 */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative h-[480px] glass-dark border border-primary/30 rounded-t-[4rem] p-10 flex flex-col items-center justify-end gap-6 overflow-hidden md:order-2 shadow-2xl shadow-primary/10"
+                    className="relative h-[430px] bg-surface-card border border-primary/40 rounded-t-2xl p-8 flex flex-col items-center justify-end gap-5 overflow-hidden md:order-2 shadow-xl shadow-primary/10 ring-1 ring-primary/20"
                 >
-                    <div className="absolute top-0 left-0 w-full h-2 bg-primary animate-pulse" />
+                    <div className="absolute top-0 left-0 w-full h-1.5 bg-primary" />
                     <div className="relative group">
-                        <div className="w-32 h-32 rounded-full border-4 border-primary p-1 bg-carbon-dark relative z-10">
-                            <img src={`https://i.pravatar.cc/150?u=${topThree[1].avatar}`} className="w-full h-full rounded-full" alt="rank1" />
+                        <div className="w-28 h-28 rounded-full border-2 border-primary p-0.5 bg-slate-900 relative z-10 shadow-lg shadow-primary/20">
+                            <img src={`https://i.pravatar.cc/150?u=${topThree[1].avatar}`} className="w-full h-full rounded-full object-cover" alt="rank1" />
                         </div>
-                        <div className="absolute -bottom-2 -right-2 w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white border-4 border-carbon-dark z-20 shadow-2xl">
-                            <RiTrophyLine size={24} />
+                        <div className="absolute -bottom-1 -right-1 w-10 h-10 rounded-full bg-primary flex items-center justify-center text-slate-950 border-2 border-slate-900 z-20 shadow-lg">
+                            <RiTrophyLine size={20} />
                         </div>
-                        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/20 blur-[60px] -z-10" />
                     </div>
                     <div className="text-center">
-                        <h3 className="text-2xl font-black italic text-white uppercase tracking-tighter">{topThree[1].name}</h3>
-                        <span className="text-primary font-bold text-4xl italic tracking-tighter">{topThree[1].points}</span>
+                        <h3 className="text-xl font-black italic text-white uppercase tracking-tight">{topThree[1].name}</h3>
+                        <span className="text-primary font-bold text-3xl italic tracking-tight">{topThree[1].points}</span>
                     </div>
-                    <div className="w-full h-40 bg-primary/10 rounded-t-[2.5rem] flex items-center justify-center text-primary font-black text-8xl italic opacity-20">1ST</div>
+                    <div className="w-full h-36 bg-primary/10 rounded-t-xl flex items-center justify-center text-primary font-black text-7xl italic opacity-25">1ST</div>
                 </motion.div>
 
                 {/* Rank 3 */}
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
+                    initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="relative h-[360px] glass-dark border border-white/10 rounded-t-[3rem] p-8 flex flex-col items-center justify-end gap-6 overflow-hidden md:order-3"
+                    className="relative h-[320px] bg-surface-card border border-amber-600/30 rounded-t-2xl p-6 flex flex-col items-center justify-end gap-5 overflow-hidden md:order-3"
                 >
-                    <div className="absolute top-0 left-0 w-full h-1 bg-amber-700" />
+                    <div className="absolute top-0 left-0 w-full h-1 bg-amber-600" />
                     <div className="relative group">
-                        <div className="w-20 h-20 rounded-full border-4 border-amber-700 p-1 bg-carbon-dark relative z-10">
-                            <img src={`https://i.pravatar.cc/150?u=${topThree[2].avatar}`} className="w-full h-full rounded-full grayscale brightness-75" alt="rank3" />
+                        <div className="w-18 h-18 rounded-full border-2 border-amber-600 p-0.5 bg-slate-900 relative z-10">
+                            <img src={`https://i.pravatar.cc/150?u=${topThree[2].avatar}`} className="w-full h-full rounded-full object-cover" alt="rank3" />
                         </div>
-                        <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-full bg-amber-700 flex items-center justify-center text-white border-4 border-carbon-dark z-20">
-                            <RiMedalLine size={20} />
+                        <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-slate-950 border-2 border-slate-900 z-20 shadow-md">
+                            <RiMedalLine size={16} />
                         </div>
                     </div>
                     <div className="text-center">
-                        <h3 className="text-lg font-black italic text-white uppercase tracking-tighter">{topThree[2].name}</h3>
-                        <span className="text-primary font-bold text-xl italic tracking-tighter">{topThree[2].points}</span>
+                        <h3 className="text-base font-black italic text-white uppercase tracking-tight">{topThree[2].name}</h3>
+                        <span className="text-amber-400 font-bold text-lg italic tracking-tight">{topThree[2].points}</span>
                     </div>
-                    <div className="w-full h-24 bg-amber-700/10 rounded-t-3xl flex items-center justify-center text-amber-700 font-black text-5xl italic opacity-20">3RD</div>
+                    <div className="w-full h-20 bg-amber-600/5 rounded-t-xl flex items-center justify-center text-amber-600 font-black text-4xl italic opacity-25">3RD</div>
                 </motion.div>
             </div>
 
             {/* Table Section */}
-            <div className="glass-dark border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl">
+            <div className="bg-surface-card border border-white/10 rounded-2xl overflow-hidden shadow-xl">
                 <div className="grid grid-cols-6 p-8 border-b border-white/5 text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">
                     <div className="col-span-1 pl-4">Rank</div>
                     <div className="col-span-2">Player</div>

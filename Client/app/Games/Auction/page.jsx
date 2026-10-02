@@ -1,11 +1,11 @@
 "use client";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import selectRandomObject from "@/utils/getUniqueObject";
-import { RiRefreshLine, RiAddLine, RiSubtractLine, RiFlashlightLine, RiFocus2Line, RiTrophyLine } from "react-icons/ri";
+import { RiRefreshLine, RiAddLine, RiSubtractLine, RiFocus2Line, RiTrophyLine } from "react-icons/ri";
 import { AuctionContext } from "@/app/Context/Games/AuctionContext";
 import GameIntro from "@/app/Components/GameIntro";
 import { motion, AnimatePresence } from "framer-motion";
-import {Gavel} from 'lucide-react';
+import { Gavel } from 'lucide-react';
 
 const Auction = () => {
   const [numAuction, setNumAuction] = useState(0);
@@ -83,140 +83,165 @@ const Auction = () => {
   }, [time]);
 
   const ScoreCard = ({ team, score, side }) => (
-    <div className={`px-8 py-5 rounded-[2rem] border-2 glass transition-all duration-500 overflow-hidden relative ${side === 'left' ? 'border-primary/20' : 'border-white/10'}`}>
-      <div className={`absolute -right-6 -bottom-6 text-7xl font-black italic select-none opacity-[0.03] pointer-events-none -rotate-12`}>TEAM</div>
-      <div className="flex flex-col gap-1 relative z-10">
-        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/20">{team}</span>
-        <span className="text-4xl font-black italic text-white tracking-tighter">{score}</span>
-      </div>
+    <div className={`px-5 py-3 rounded-xl border card-surface text-center ${side === 'left' ? 'border-primary/30' : 'border-border'}`}>
+      <span className="text-[10px] font-bold text-muted uppercase block">{team}</span>
+      <span className="text-2xl font-black text-foreground">{score}</span>
     </div>
-  )
+  );
 
   return (
-    <div className='flex items-center justify-center w-full min-h-[85vh] py-16 px-6 relative overflow-hidden rtl'>
-      <div className="absolute top-0 left-0 p-20 opacity-[0.03] text-[250px] font-black italic select-none pointer-events-none -rotate-12">AUCTION</div>
+    <div className="w-full max-w-5xl mx-auto py-12 px-6 rtl space-y-8">
+      {/* Top Header */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pb-6 border-b border-border">
+        <div className="text-center sm:text-right space-y-1">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-[11px] font-bold text-primary">
+            <Gavel className="w-3.5 h-3.5" /> لعبة المزاد الكروي
+          </div>
+          <h1 className="text-3xl sm:text-4xl font-black text-foreground tracking-tight">
+            تحدي <span className="text-primary">المزاد</span>
+          </h1>
+        </div>
 
-      <div className='w-full max-w-6xl space-y-16 relative z-10'>
+        <div className="flex items-center gap-4">
+          <ScoreCard team="الفريق الأول" score={teamOneScore} side="left" />
+          <div className="text-center">
+            <span className="text-[10px] font-bold text-muted block">المؤقت</span>
+            <div className={`text-2xl font-black font-mono ${time <= 5 && isRunning ? 'text-danger animate-pulse' : 'text-primary'}`}>
+              {time}s
+            </div>
+          </div>
+          <ScoreCard team="الفريق الثاني" score={teamTwoScore} side="right" />
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
         {lastSelected ? (
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="space-y-12">
-
-            {/* Header / Timer */}
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-              <div className="text-center lg:text-right space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/10 text-[10px] font-black tracking-[0.3em] text-primary uppercase">
-                  <Gavel /> سوق المزايدات النشط
-                </div>
-                <h1 className="text-5xl md:text-7xl font-black italic text-white tracking-tighter uppercase leading-none">تحدي <span className="text-primary">المزايدة</span></h1>
-              </div>
-
-              <div className="flex items-center gap-8">
-                <ScoreCard team="الكتيبة الأولى" score={teamOneScore} side="left" />
-                <div className="flex flex-col items-center gap-2">
-                  <span className="text-[10px] font-black text-white/20 uppercase tracking-[0.4em]">المؤقت</span>
-                  <div className={`w-24 h-24 rounded-[2.5rem] border-4 flex items-center justify-center text-4xl font-black italic transition-all duration-500 ${time <= 5 && isRunning ? 'border-primary text-primary animate-pulse scale-110' : 'border-white/10 text-white'}`}>
-                    {time}
-                  </div>
-                </div>
-                <ScoreCard team="الكتيبة الثانية" score={teamTwoScore} side="right" />
-              </div>
+          <motion.div
+            key={lastSelected?._id || lastSelected?.question}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="space-y-8"
+          >
+            {/* Task Card */}
+            <div className="card-surface border border-border rounded-2xl p-8 sm:p-12 text-center space-y-3 shadow-xl">
+              <span className="text-xs font-bold text-primary uppercase tracking-widest block">المهمة المطلوبة للمزاد</span>
+              <h2 className="text-2xl sm:text-4xl font-black text-foreground leading-relaxed">
+                {lastSelected?.question}
+              </h2>
             </div>
 
-            {/* Core Question Module */}
-            <div className="relative">
-              <div className="absolute -top-6 -left-6 text-7xl text-primary/20 opacity-50"><RiFlashlightLine /></div>
-              <div className="glass-dark border border-white/10 rounded-[4rem] p-12 md:p-20 shadow-2xl relative overflow-hidden text-center group">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent" />
-                <span className="text-[10px] font-black text-primary uppercase tracking-[0.5em] mb-4 block">المهمة المطلوبة</span>
-                <h2 className="text-3xl md:text-5xl font-black italic text-white uppercase tracking-tighter leading-tight relative z-10">
-                  {lastSelected?.question}
-                </h2>
-              </div>
-              <div className="absolute -bottom-6 -right-6 text-7xl text-primary/20 opacity-50 rotate-180"><RiFlashlightLine /></div>
-            </div>
-
-            {/* Interaction Sector */}
-            <div className="w-full max-w-4xl mx-auto">
+            {/* Auction Action Area */}
+            <div className="max-w-2xl mx-auto">
               <AnimatePresence mode="wait">
                 {questionMode ? (
                   <motion.div
                     key="execution-mode"
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="glass-dark border border-primary/30 rounded-[3rem] p-12 text-center space-y-10"
+                    className="card-surface border border-primary/30 rounded-2xl p-8 text-center space-y-6"
                   >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-center gap-3 text-primary">
-                        <RiFocus2Line className="text-3xl animate-spin-slow" />
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em]">مرحلة التنفيذ</span>
+                    <div className="space-y-2">
+                      <div className="inline-flex items-center gap-2 text-primary font-bold text-xs uppercase">
+                        <RiFocus2Line className="animate-spin" />
+                        <span>مرحلة التنفيذ المباشر</span>
                       </div>
-                      <h3 className="text-3xl font-black italic text-white uppercase tracking-tighter">
-                        فريق المزايدة: {teamChose === "First" ? "الكتيبة الأولى" : "الكتيبة الثانية"}
+                      <h3 className="text-2xl font-black text-foreground">
+                        الفريق المنفّذ: {teamChose === "First" ? "الفريق الأول" : "الفريق الثاني"}
                       </h3>
                     </div>
 
-                    <div className="flex flex-col items-center gap-8">
+                    <div className="flex flex-col items-center gap-6">
                       {!isRunning ? (
-                        <button onClick={startTimer} className="px-12 py-6 bg-primary text-white font-black text-xs uppercase tracking-[0.3em] rounded-2xl shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
-                          بدء بروتوكول التنفيذ
+                        <button
+                          onClick={startTimer}
+                          className="px-8 py-3.5 bg-primary hover:bg-primary-hover text-background font-black text-xs rounded-xl shadow-lg shadow-primary/20 transition-all hover:scale-105"
+                        >
+                          بدء عداد الـ 30 ثانية
                         </button>
                       ) : (
-                        <div className="flex items-center gap-12">
-                          <button onClick={handleMinus} className="w-20 h-20 rounded-full glass border border-white/10 flex items-center justify-center text-primary text-4xl hover:bg-primary hover:text-white transition-all shadow-xl">
+                        <div className="flex items-center gap-8">
+                          <button
+                            onClick={handleMinus}
+                            className="w-16 h-16 rounded-xl bg-primary hover:bg-primary-hover text-background flex items-center justify-center text-3xl font-black shadow-lg shadow-primary/20 transition-all active:scale-95"
+                            title="إجابة صحيحة (-1)"
+                          >
                             <RiSubtractLine />
                           </button>
-                          <div className="space-y-2">
-                            <span className="text-[10px] font-black text-white/20 uppercase tracking-widest">المتبقي</span>
-                            <div className="text-7xl font-black italic text-white tracking-tighter">{numAuction}</div>
+                          <div className="space-y-1">
+                            <span className="text-xs font-bold text-muted block">المتبقي</span>
+                            <div className="text-6xl font-black text-primary font-mono">{numAuction}</div>
                           </div>
-                          <button disabled className="w-20 h-20 rounded-full glass border border-white/5 opacity-10 flex items-center justify-center text-white/20">
-                            <RiAddLine />
-                          </button>
                         </div>
                       )}
                     </div>
 
                     {(time === 0 || numAuction === 0) && (
-                      <button onClick={resetGame} className="text-primary text-[10px] font-black uppercase tracking-[0.3em] hover:text-white transition-all flex items-center gap-2 mx-auto pt-6 border-t border-white/5">
-                        إعادة تهيئة النظام <RiRefreshLine />
-                      </button>
+                      <div className="pt-4 border-t border-border">
+                        <button
+                          onClick={resetGame}
+                          className="px-6 py-2.5 rounded-xl bg-surface-elevated text-primary hover:text-foreground text-xs font-bold flex items-center gap-2 mx-auto transition-colors"
+                        >
+                          <span>السؤال التالي</span>
+                          <RiRefreshLine />
+                        </button>
+                      </div>
                     )}
                   </motion.div>
                 ) : (
                   <motion.div
                     key="bidding-mode"
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="glass-dark border border-white/10 rounded-[3rem] p-12 space-y-10"
+                    className="card-surface border border-border rounded-2xl p-8 space-y-6"
                   >
-                    <div className="text-center space-y-2">
-                      <h3 className="text-2xl font-black italic text-white uppercase tracking-tighter">تحديد المزايد الأعلى</h3>
-                      <p className="text-[10px] font-black text-white/20 uppercase tracking-[0.2em]">اختر الفريق وقم بتعيين القيمة</p>
+                    <div className="text-center space-y-1">
+                      <h3 className="text-xl font-black text-foreground">تحديد المزايد الأعلى والقيمة</h3>
+                      <p className="text-xs text-muted">من الفريق المستعد لذكر أكبر عدد؟</p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-6 h-16">
+                    {/* Team Selector */}
+                    <div className="grid grid-cols-2 gap-4">
                       <button
                         onClick={() => setButton("First")}
-                        className={`rounded-2xl border-2 font-black text-[10px] uppercase tracking-[0.3em] transition-all ${button === "First" ? "bg-primary border-primary text-white shadow-xl shadow-primary/20" : "glass border-white/10 text-white/30 hover:border-primary"}`}
+                        className={`py-3.5 rounded-xl border text-xs font-black transition-all ${
+                          button === "First"
+                            ? "bg-primary text-background border-primary shadow-md shadow-primary/20"
+                            : "bg-surface-elevated border-border text-muted hover:text-foreground"
+                        }`}
                       >
-                        الكتيبة الأولى
+                        الفريق الأول
                       </button>
                       <button
                         onClick={() => setButton("Second")}
-                        className={`rounded-2xl border-2 font-black text-[10px] uppercase tracking-[0.3em] transition-all ${button === "Second" ? "bg-primary border-primary text-white shadow-xl shadow-primary/20" : "glass border-white/10 text-white/30 hover:border-primary"}`}
+                        className={`py-3.5 rounded-xl border text-xs font-black transition-all ${
+                          button === "Second"
+                            ? "bg-primary text-background border-primary shadow-md shadow-primary/20"
+                            : "bg-surface-elevated border-border text-muted hover:text-foreground"
+                        }`}
                       >
-                        الكتيبة الثانية
+                        الفريق الثاني
                       </button>
                     </div>
 
-                    <div className="flex flex-col items-center gap-6 p-8 glass bg-white/5 rounded-[2rem] border border-white/5 mx-auto w-fit">
-                      <span className="text-[10px] font-black text-white/20 uppercase tracking-widest leading-none">تحديد القيمة</span>
-                      <div className="flex items-center gap-12">
-                        <button onClick={() => setNumAuction(Math.max(0, numAuction - 1))} className="w-14 h-14 rounded-xl glass border border-white/10 flex items-center justify-center text-white/40 hover:text-primary transition-all">
-                          <RiSubtractLine />
+                    {/* Number Counter */}
+                    <div className="flex flex-col items-center gap-3 p-5 rounded-xl bg-surface-elevated border border-border mx-auto w-fit">
+                      <span className="text-xs font-bold text-muted">عدد العناصر في المزاد</span>
+                      <div className="flex items-center gap-6">
+                        <button
+                          onClick={() => setNumAuction(Math.max(0, numAuction - 1))}
+                          className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center text-muted hover:text-primary transition-colors"
+                        >
+                          <RiSubtractLine size={18} />
                         </button>
-                        <div className="text-6xl font-black italic text-primary tracking-tighter min-w-[80px] text-center">{numAuction}</div>
-                        <button onClick={() => setNumAuction(numAuction + 1)} className="w-14 h-14 rounded-xl glass border border-white/10 flex items-center justify-center text-white/40 hover:text-primary transition-all">
-                          <RiAddLine />
+                        <div className="text-4xl font-black text-primary font-mono min-w-[50px] text-center">
+                          {numAuction}
+                        </div>
+                        <button
+                          onClick={() => setNumAuction(numAuction + 1)}
+                          className="w-10 h-10 rounded-lg bg-surface border border-border flex items-center justify-center text-muted hover:text-primary transition-colors"
+                        >
+                          <RiAddLine size={18} />
                         </button>
                       </div>
                     </div>
@@ -227,15 +252,14 @@ const Auction = () => {
                         setTeamChose(button);
                       }}
                       disabled={!button || numAuction === 0}
-                      className="w-full py-6 bg-white text-black font-black text-xs uppercase tracking-[0.5em] rounded-2xl shadow-xl hover:bg-primary hover:text-white transition-all disabled:opacity-10 active:scale-95"
+                      className="w-full py-4 bg-primary hover:bg-primary-hover text-background font-black text-xs uppercase tracking-widest rounded-xl shadow-lg shadow-primary/20 transition-all disabled:opacity-30 disabled:cursor-not-allowed active:scale-95"
                     >
-                      بدء المباراة
+                      تثبيت المزاد وبدء التحدي
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </div>
-
           </motion.div>
         ) : (
           <GameIntro
@@ -245,10 +269,10 @@ const Auction = () => {
             remainingObjects={remainingObjects}
             setLastSelected={setLastSelected}
             setRemainingObjects={setRemainingObjects}
-            text="زايد على الفريق الآخر بقدرتك على استحضار المعلومات. الفريق الذي يقدم أعلى عرض ملتزم بالتنفيذ خلال 30 ثانية. المخاطرة هي مفتاح الربح."
+            text="زايد على الفريق المنافس بقدرتكم على استحضار الأسماء الصحيحة. الفريق صاحب العرض الأعلى يحصل على 30 ثانية لإثبات مزايدته وكسب النقطة!"
           />
         )}
-      </div>
+      </AnimatePresence>
     </div>
   );
 };
