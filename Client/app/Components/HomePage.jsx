@@ -29,12 +29,12 @@ const HomePage = () => {
 
   const games = [
     { id: 1, title: 'Who is the Player?', link: '/Games/Whoplayer', state: 'AVAILABLE', description: 'Guess the legend based on career clues and stats.', icon: <RiFocus2Line />, color: 'from-red-600/20 to-red-950/10' },
-    { id: 2, title: 'Secret Password', link: '/Games/Password', state: 'AVAILABLE', description: 'Unlock the hidden player identity with minimal hints.', icon: <RiFlashlightLine />, color: 'from-blue-600/20 to-blue-950/10' },
-    { id: 3, title: 'Risk Arena', link: '/Games/Risk', state: 'AVAILABLE', description: 'High-stakes football trivia across multiple difficulty tiers.', icon: <RiTrophyLine />, color: 'from-amber-600/20 to-amber-950/10' },
-    { id: 4, title: 'The Banking Round', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer className="w-6 h-6" />, color: 'from-emerald-600/20 to-emerald-950/10' },
+    { id: 2, title: 'Password Challange', link: '/Games/Password', state: 'AVAILABLE', description: 'Unlock the hidden player identity with minimal hints.', icon: <RiFlashlightLine />, color: 'from-blue-600/20 to-blue-950/10' },
+    { id: 3, title: 'Risk', link: '/Games/Risk', state: 'AVAILABLE', description: 'High-stakes football trivia across multiple difficulty tiers.', icon: <RiTrophyLine />, color: 'from-amber-600/20 to-amber-950/10' },
+    { id: 4, title: 'Bank', link: '/Games/Bank', state: 'AVAILABLE', description: 'Answer rapidly to stack points before the time expires.', icon: <Timer className="w-6 h-6" />, color: 'from-emerald-600/20 to-emerald-950/10' },
     { id: 5, title: 'True Guess', link: '/Games/Guess', state: 'AVAILABLE', description: 'Challenge friends with obscure football facts.', icon: <RiCompass3Line />, color: 'from-purple-600/20 to-purple-950/10' },
-    { id: 6, title: 'Visual Identity', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-rose-600/20 to-rose-950/10' },
-    { id: 7, title: 'Elite Auction', link: '/Games/Auction', state: 'AVAILABLE', description: 'Bid against rivals and prove your depth of knowledge.', icon: <Gavel className="w-6 h-6" />, color: 'from-orange-600/20 to-orange-950/10' },
+    { id: 6, title: 'who in Picture', link: '/Games/whoinPicture', state: 'AVAILABLE', description: 'Recognize iconic moments and players from cropped images.', icon: <RiBarChartGroupedLine />, color: 'from-rose-600/20 to-rose-950/10' },
+    { id: 7, title: 'Auction', link: '/Games/Auction', state: 'AVAILABLE', description: 'Bid against rivals and prove your depth of knowledge.', icon: <Gavel className="w-6 h-6" />, color: 'from-orange-600/20 to-orange-950/10' },
     { id: 8, title: 'Club Legends', link: '/Games/Clubs', state: 'AVAILABLE', description: 'Identify global clubs from their history, crests, and stars.', icon: <Users className="w-6 h-6" />, color: 'from-cyan-600/20 to-cyan-950/10' },
     { id: 9, title: 'Offside Rule', link: '/Games/Offside', state: 'AVAILABLE', description: 'Test your knowledge on tactical rules and referee decisions.', icon: <Flag className="w-6 h-6" />, color: 'from-yellow-600/20 to-yellow-950/10' },
     { id: 10, title: 'Infinity Round', link: '/Games/Round', state: 'AVAILABLE', description: 'Continuous rounds of increasing difficulty to test stamina.', icon: <RotateCcw className="w-6 h-6" />, color: 'from-indigo-600/20 to-indigo-950/10' },
